@@ -15,4 +15,10 @@ class ParserTest extends FunSuite {
     assert(twoPlusTwo == 4)
   }
 
+  test("test2") {
+    println("2")
+    val twoPlusTwo = 2 + 2
+    assert(twoPlusTwo == 4)
+  }
+
 }

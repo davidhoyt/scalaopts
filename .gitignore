@@ -5,6 +5,7 @@
 *.DS_Store
 
 #Miscellaneous
+.cache
 out/
 target/
 lib_managed/
