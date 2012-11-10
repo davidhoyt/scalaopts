@@ -1,0 +1,12 @@
+!.gitignore
+
+#OS junk files
+[Tt]humbs.db
+*.DS_Store
+
+#Miscellaneous
+out/
+target/
+lib_managed/
+project/project/
+project/target/
