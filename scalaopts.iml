@@ -23,6 +23,9 @@
       <sourceFolder url="file://$MODULE_DIR$/target/generated-test-sources/test-annotations" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/target/generated-sources/annotations" isTestSource="false" />
       <excludeFolder url="file://$MODULE_DIR$/target/classes" />
+      <excludeFolder url="file://$MODULE_DIR$/target/resolution-cache" />
+      <excludeFolder url="file://$MODULE_DIR$/target/scala-2.9.2" />
+      <excludeFolder url="file://$MODULE_DIR$/target/streams" />
       <excludeFolder url="file://$MODULE_DIR$/target/test-classes" />
     </content>
     <orderEntry type="jdk" jdkName="1.7" jdkType="JavaSDK" />

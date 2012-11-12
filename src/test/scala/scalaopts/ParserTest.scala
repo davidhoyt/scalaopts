@@ -9,6 +9,11 @@ import org.junit.runner.RunWith
 @RunWith(classOf[JUnitRunner])
 class ParserTest extends FunSuite {
 
+  test("translate") {
+    val t = new Parser().translate("a", (t => t))
+    assert(t.isInstanceOf[String])
+  }
+
   test("test1") {
     println("1")
     val twoPlusTwo = 2 + 2
