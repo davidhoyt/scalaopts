@@ -14,13 +14,13 @@
   * }}}
  */
 package object scalaopts extends AnyRef with ParserTransforms {
-  object Arguments {
-    object DEFAULT_CONFIGURATION extends Configuration(
+  object CommandLineOptions {
+    object DEFAULT_PARSER_CONFIGURATION extends ParserConfiguration(
       argumentNameSeparator = '-'
     )
 
-    def apply(args: TypedArgument[_]*): Parser = Arguments(DEFAULT_CONFIGURATION)(args: _*)
-    def apply(configuration: Configuration)(args: TypedArgument[_]*) = {
+    def apply(args: TypedCommandLineOption[_]*): Parser = apply(DEFAULT_PARSER_CONFIGURATION)(args: _*)
+    def apply(configuration: ParserConfiguration)(args: TypedCommandLineOption[_]*) = {
       createParser(configuration, args)
     }
   }

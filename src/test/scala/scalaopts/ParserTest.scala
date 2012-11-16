@@ -26,12 +26,12 @@ options {
     //
     //assert(t.isInstanceOf[String])
 
-    val result_1 = Argument.named("a")
-    val result_2 = Argument named "a"
-    val result_3 = Argument named "a" alias "b" alias "c" describedAs "my description" parseAs DefaultIntegerOpt
-    val args = Arguments(Arguments.DEFAULT_CONFIGURATION)(
-      Argument named "size" alias "s" alias "sz" describedAs "size description" parseAs IntegerOpt(defaultValue = 100),
-      Argument named "verbose" alias "v" dependsOn "size" dependsOn "somethingElse" describedAs "verbose description" parseAs DefaultFlagOpt
+    val result_1 = CommandLineOption.named("a")
+    val result_2 = CommandLineOption named "a"
+    val result_3 = CommandLineOption named "a" alias "b" alias "c" describedAs "my description" parseAs DefaultIntegerOption
+    val args = CommandLineOptions(
+      CommandLineOption named "size" alias "s" alias "sz" describedAs "size description" parseAs IntegerOption(defaultValue = 100),
+      CommandLineOption named "verbose" alias "v" dependsOn "size" dependsOn "somethingElse" describedAs "verbose description" parseAs DefaultFlagOption
     )
     println(result_3.aliases)
     println(result_3("234").getOrElse(98765))

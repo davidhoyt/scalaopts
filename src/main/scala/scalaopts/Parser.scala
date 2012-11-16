@@ -3,7 +3,7 @@ package scalaopts
 import common.StringUtils._
 import annotation.tailrec
 
-class Parser(configuration: Configuration, arguments: Map[String, TypedArgument[_]]) {
+class Parser(configuration: ParserConfiguration, arguments: Map[String, TypedCommandLineOption[_]]) {
 
   def parseArgs(values: String*) = parse(values.toSeq)
 

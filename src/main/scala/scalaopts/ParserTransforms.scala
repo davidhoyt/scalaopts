@@ -1,7 +1,7 @@
 package scalaopts
 
 trait ParserTransforms {
-  def createParser(configuration: Configuration, args: Seq[TypedArgument[_]]): Parser = {
+  def createParser(configuration: ParserConfiguration, args: Seq[TypedCommandLineOption[_]]): Parser = {
     //    val map = (
     //      for {
     //        a <- args
