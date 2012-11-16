@@ -185,8 +185,8 @@
   </build>
 
   <properties>
-    <jvm.class.format>1.7</jvm.class.format>
-    <jvm.class.format.target>${jvm.class.format}</jvm.class.format.target>
+    <jvm.class.format>1.6</jvm.class.format>
+    <jvm.class.format.target>1.6</jvm.class.format.target>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>${project.build.sourceEncoding}</project.reporting.outputEncoding>
   </properties>
