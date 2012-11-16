@@ -26,10 +26,10 @@ options {
     //
     //assert(t.isInstanceOf[String])
 
-    val result_1 = scalaopts.Argument.named("a")
-    val result_2 = scalaopts.Argument named "a"
-    val result_3 = scalaopts.Argument named "a" alias "b" alias "c" describedAs "my description" parseAs DefaultIntegerOpt
-    val args = Arguments(
+    val result_1 = Argument.named("a")
+    val result_2 = Argument named "a"
+    val result_3 = Argument named "a" alias "b" alias "c" describedAs "my description" parseAs DefaultIntegerOpt
+    val args = Arguments(Arguments.DEFAULT_CONFIGURATION)(
       Argument named "size" alias "s" alias "sz" describedAs "size description" parseAs IntegerOpt(defaultValue = 100),
       Argument named "verbose" alias "v" dependsOn "size" dependsOn "somethingElse" describedAs "verbose description" parseAs DefaultFlagOpt
     )

@@ -13,16 +13,15 @@
   *   option named "print" alias "p" describedAs "print description" parseAs Boolean
   * }}}
  */
-package object scalaopts {
-  def Arguments(args: TypedArgument[_]*): Parser = Arguments(DEFAULT_CONFIGURATION, args)
-  def Arguments(configuration: Configuration, arguments: Seq[TypedArgument[_]]): Parser = {
-    val map = (
-      for {
-        a <- arguments
-      }
-      yield a.name -> a
-    ).toMap
+package object scalaopts extends AnyRef with ParserTransforms {
+  object Arguments {
+    object DEFAULT_CONFIGURATION extends Configuration(
+      argumentNameSeparator = '-'
+    )
 
-    new Parser(configuration, map)
+    def apply(args: TypedArgument[_]*): Parser = Arguments(DEFAULT_CONFIGURATION)(args: _*)
+    def apply(configuration: Configuration)(args: TypedArgument[_]*) = {
+      createParser(configuration, args)
+    }
   }
 }

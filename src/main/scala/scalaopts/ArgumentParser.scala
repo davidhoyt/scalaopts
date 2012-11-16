@@ -1,7 +1,7 @@
 package scalaopts
 
 import common.StringUtils
-import Transforms._
+import StringTransforms._
 
 /**
  * Holds information that will be used later when arguments are evaluated. Used in a builder fashion and meant to

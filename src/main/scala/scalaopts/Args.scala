@@ -43,5 +43,3 @@ object Args {
     def parseAs[A](value: ArgumentParser[A]): TypedArgument[A] = TypedArgument(name, aliases, dependencies, description, Some(value))
   }
 }
-
-
