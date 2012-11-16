@@ -1,45 +1,9 @@
 package scalaopts
 
-import StringUtils._
+import common.StringUtils._
 import annotation.tailrec
 
-/**
- */
-class ParserConfiguration(val argNameSeparator: Char)
-object DEFAULT_PARSER_CONFIGURATION extends ParserConfiguration(
-  argNameSeparator = '-'
-)
-
-class Parser(config: ParserConfiguration = DEFAULT_PARSER_CONFIGURATION) {
-  type FnTranslate = String => Option[Any]
-  val TRANSLATOR_BOOLEAN: FnTranslate = s => try { Some(s.toBoolean)        } catch { case _ => None }
-  val TRANSLATOR_CHAR:    FnTranslate = s => try { s.toCharArray.headOption } catch { case _ => None }
-  val TRANSLATOR_BYTE:    FnTranslate = s => try { Some(s.toByte)           } catch { case _ => None }
-  val TRANSLATOR_SHORT:   FnTranslate = s => try { Some(s.toShort)          } catch { case _ => None }
-  val TRANSLATOR_INTEGER: FnTranslate = s => try { Some(s.toInt)            } catch { case _ => None }
-  val TRANSLATOR_LONG:    FnTranslate = s => try { Some(s.toDouble)         } catch { case _ => None }
-  val TRANSLATOR_FLOAT:   FnTranslate = s => try { Some(s.toFloat)          } catch { case _ => None }
-  val TRANSLATOR_DOUBLE:  FnTranslate = s => try { Some(s.toDouble)         } catch { case _ => None }
-
-  val DEFAULT_TRANSLATORS = Array(
-      TRANSLATOR_BOOLEAN
-    , TRANSLATOR_CHAR
-    , TRANSLATOR_BYTE
-    , TRANSLATOR_SHORT
-    , TRANSLATOR_INTEGER
-    , TRANSLATOR_LONG
-    , TRANSLATOR_FLOAT
-    , TRANSLATOR_DOUBLE
-  )
-
-/*
-  States:
-   1. Empty
-
-   2. Named
-*/
-
-  def translate[A](value: String, t: String => A): A = t(value)
+class Parser(configuration: Configuration, arguments: Map[String, TypedArgument[_]]) {
 
   def parseArgs(values: String*) = parse(values.toSeq)
 
@@ -53,7 +17,7 @@ class Parser(config: ParserConfiguration = DEFAULT_PARSER_CONFIGURATION) {
     case Seq(value, tail @_*) =>
       if (value.isNonEmpty && value.headOption.isDefined) {
         val first_char = value.head
-        if (config.argNameSeparator == first_char) {
+        if (configuration.argumentNameSeparator == first_char) {
           //We have a named parameter
           //Find associated option
           val param_name = value.tail

@@ -3,7 +3,6 @@ package scalaopts
 import org.scalatest.junit.JUnitRunner
 import org.scalatest.FunSuite
 import org.junit.runner.RunWith
-import scalaopts.Arguments.Argument
 
 /**
   */
@@ -21,21 +20,18 @@ options {
 }
 //pop scope
 */
-    val p = new Parser()
-    p.parse(Array("-a", "-p", "-c"))
+
     //p.parseArgs("-a", "-p", "-c")
     //val t = new Parser().translate("a", (t => t))
     //
     //assert(t.isInstanceOf[String])
 
-    import Arguments._
-
-    val result_1 = Argument.named("a")
-    val result_2 = Argument named "a"
-    val result_3 = Argument named "a" alias "b" alias "c" describedAs "my description" parseAs DefaultIntegerOpt
+    val result_1 = scalaopts.Argument.named("a")
+    val result_2 = scalaopts.Argument named "a"
+    val result_3 = scalaopts.Argument named "a" alias "b" alias "c" describedAs "my description" parseAs DefaultIntegerOpt
     val args = Arguments(
-      Argument named "size" alias "s" alias "sz" describedAs "size description" parseAs DefaultIntegerOpt,
-      Argument named "verbose" alias "v" describedAs "verbose description" parseAs DefaultBooleanOpt
+      Argument named "size" alias "s" alias "sz" describedAs "size description" parseAs IntegerOpt(defaultValue = 100),
+      Argument named "verbose" alias "v" dependsOn "size" dependsOn "somethingElse" describedAs "verbose description" parseAs DefaultFlagOpt
     )
     println(result_3.aliases)
     println(result_3("234").getOrElse(98765))
