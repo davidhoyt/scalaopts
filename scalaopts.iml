@@ -5,6 +5,7 @@
       <configuration>
         <option name="compilerLibraryLevel" value="Global" />
         <option name="compilerLibraryName" value="Scala 2.9.2" />
+        <option name="fsc" value="true" />
         <option name="vmOptions" value="" />
       </configuration>
     </facet>

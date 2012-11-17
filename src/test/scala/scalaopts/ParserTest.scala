@@ -36,7 +36,7 @@ options {
       CommandLineOption named "custom" parseAs CustomOptionParser[Int](transform = (s: String) => Option(s.length))
     )
     println(result_3.aliases)
-    println(result_3("234a").getOrElse(98765))
+    println(result_3("234").getOrElse(98765))
 
     parser.parse("-a", "-p", "-c")
   }

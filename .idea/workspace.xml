@@ -4,11 +4,8 @@
     <list default="true" id="194416cc-139c-4245-b94d-30497d73f6c4" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/scalaopts.iml" afterPath="$PROJECT_DIR$/scalaopts.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/scala/scalaopts/CommandLineOption.scala" afterPath="$PROJECT_DIR$/src/main/scala/scalaopts/CommandLineOption.scala" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/scala/scalaopts/OptionParser.scala" afterPath="$PROJECT_DIR$/src/main/scala/scalaopts/OptionParser.scala" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/scala/scalaopts/Parser.scala" afterPath="$PROJECT_DIR$/src/main/scala/scalaopts/Parser.scala" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/scala/scalaopts/ParserTransforms.scala" afterPath="$PROJECT_DIR$/src/main/scala/scalaopts/ParserTransforms.scala" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/scala/scalaopts/package.scala" afterPath="$PROJECT_DIR$/src/main/scala/scalaopts/package.scala" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/scala/scalaopts/StringTransforms.scala" afterPath="$PROJECT_DIR$/src/main/scala/scalaopts/StringTransforms.scala" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/test/scala/scalaopts/ParserTest.scala" afterPath="$PROJECT_DIR$/src/test/scala/scalaopts/ParserTest.scala" />
     </list>
     <ignored path="scalaopts.iws" />
@@ -67,10 +64,10 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="ParserTest.scala" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="ParserTest.scala" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/test/scala/scalaopts/ParserTest.scala">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="31" column="90" selection-start="904" selection-end="904" vertical-scroll-proportion="0.0">
+            <state line="27" column="0" selection-start="593" selection-end="593" vertical-scroll-proportion="0.3799392">
               <folding>
                 <element signature="e#220#459#0" expanded="true" />
                 <element signature="e#978#1387#0" expanded="true" />
@@ -79,13 +76,12 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Parser.scala" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="Parser.scala" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/scala/scalaopts/Parser.scala">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="5" column="53" selection-start="127" selection-end="127" vertical-scroll-proportion="0.12917933">
+            <state line="30" column="7" selection-start="1126" selection-end="1126" vertical-scroll-proportion="0.0">
               <folding>
                 <element signature="e#19#46#0" expanded="true" />
-                <element signature="e#560#1130#0" expanded="true" />
                 <element signature="e#704#1076#0" expanded="true" />
                 <element signature="e#805#1014#0" expanded="true" />
                 <element signature="e#817#844#0" expanded="true" />
@@ -111,10 +107,9 @@
       <file leaf-file-name="CommandLineOption.scala" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/scala/scalaopts/CommandLineOption.scala">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="4" column="14" selection-start="156" selection-end="156" vertical-scroll-proportion="0.0">
+            <state line="23" column="3" selection-start="1511" selection-end="1511" vertical-scroll-proportion="0.0">
               <folding>
                 <element signature="docComment;class#215:1504" expanded="true" />
-                <element signature="docComment;class#1508:1938" expanded="true" />
                 <element signature="e#1825#1936#0" expanded="true" />
               </folding>
             </state>
@@ -124,8 +119,11 @@
       <file leaf-file-name="OptionParser.scala" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/scala/scalaopts/OptionParser.scala">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="27" column="54" selection-start="1234" selection-end="1234" vertical-scroll-proportion="0.0">
-              <folding />
+            <state line="25" column="135" selection-start="1025" selection-end="1025" vertical-scroll-proportion="0.0">
+              <folding>
+                <element signature="docComment;class#72:469" expanded="true" />
+                <element signature="docComment;class#471:1451" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -133,7 +131,7 @@
       <file leaf-file-name="ParserTransforms.scala" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/scala/scalaopts/ParserTransforms.scala">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="6" column="0" selection-start="184" selection-end="184" vertical-scroll-proportion="0.0">
+            <state line="7" column="7" selection-start="211" selection-end="211" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -153,8 +151,11 @@
       <file leaf-file-name="StringTransforms.scala" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/scala/scalaopts/StringTransforms.scala">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="7" column="7" selection-start="130" selection-end="130" vertical-scroll-proportion="0.0">
-              <folding />
+            <state line="6" column="3" selection-start="122" selection-end="122" vertical-scroll-proportion="0.0">
+              <folding>
+                <element signature="docComment;class#46:1759" expanded="true" />
+                <element signature="e#151#334#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -176,18 +177,18 @@
         <option value="$PROJECT_DIR$/src/main/scala/scalaopts/common/StringUtils.scala" />
         <option value="$PROJECT_DIR$/src/main/scala/scalaopts/Arguments.scala" />
         <option value="$PROJECT_DIR$/src/main/scala/scalaopts/ParserTransform.scala" />
-        <option value="$PROJECT_DIR$/src/main/scala/scalaopts/StringTransforms.scala" />
         <option value="$PROJECT_DIR$/src/main/scala/scalaopts/common/package.scala" />
         <option value="$PROJECT_DIR$/src/main/scala/scalaopts/Configuration.scala" />
         <option value="$PROJECT_DIR$/src/main/scala/scalaopts/Args.scala" />
         <option value="$PROJECT_DIR$/src/main/scala/scalaopts/CommandLineOptionParser.scala" />
         <option value="$PROJECT_DIR$/src/main/scala/scalaopts/ParserConfiguration.scala" />
         <option value="$PROJECT_DIR$/src/main/scala/scalaopts/OptionParser.scala" />
-        <option value="$PROJECT_DIR$/src/main/scala/scalaopts/ParserTransforms.scala" />
         <option value="$PROJECT_DIR$/src/main/scala/scalaopts/package.scala" />
+        <option value="$PROJECT_DIR$/src/main/scala/scalaopts/Parser.scala" />
+        <option value="$PROJECT_DIR$/src/main/scala/scalaopts/ParserTransforms.scala" />
+        <option value="$PROJECT_DIR$/src/main/scala/scalaopts/StringTransforms.scala" />
         <option value="$PROJECT_DIR$/src/main/scala/scalaopts/CommandLineOption.scala" />
         <option value="$PROJECT_DIR$/src/test/scala/scalaopts/ParserTest.scala" />
-        <option value="$PROJECT_DIR$/src/main/scala/scalaopts/Parser.scala" />
       </list>
     </option>
   </component>
@@ -541,6 +542,66 @@
               <option name="myItemId" value="main" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="scala" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="scalaopts" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="OptionParser.scala" />
+              <option name="myItemType" value="org.jetbrains.plugins.scala.components.ScalaDefsProjectViewProvider$ScalaFileTreeNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="scalaopts" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="scalaopts" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="scala" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="scalaopts" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="CommandLineOption.scala" />
+              <option name="myItemType" value="org.jetbrains.plugins.scala.components.ScalaDefsProjectViewProvider$ScalaFileTreeNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="scalaopts" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="scalaopts" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
           </PATH>
         </subPane>
       </pane>
@@ -598,7 +659,7 @@
     <property name="FileHistory.git4idea.history.GitHistoryProvider_treeOrder3" value="3" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_treeOrder1" value="1" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_treeOrder2" value="2" />
-    <property name="options.lastSelected" value="editor.preferences.appearance" />
+    <property name="options.lastSelected" value="org.jetbrains.plugins.scala.compiler.ScalacConfigurable" />
     <property name="project.structure.side.proportion" value="0.31585082" />
     <property name="MemberChooser.copyJavadoc" value="false" />
     <property name="dynamic.classpath" value="false" />
@@ -987,14 +1048,18 @@
       <created>1353095611974</created>
       <updated>1353095611974</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="More refactoring.">
+      <created>1353114200704</created>
+      <updated>1353114200704</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
     <editor active="false" />
     <layout>
-      <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.25785482" sideWeight="0.49583334" order="11" side_tool="true" content_ui="tabs" />
+      <window_info id="Changes" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.25785482" sideWeight="0.49791667" order="11" side_tool="true" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32936078" sideWeight="0.48541668" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -1003,13 +1068,13 @@
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32908913" sideWeight="0.5090812" order="8" side_tool="true" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32719395" sideWeight="0.3296875" order="10" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32719395" sideWeight="0.328125" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3954464" sideWeight="0.6709109" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.15625" sideWeight="0.7421452" order="0" side_tool="true" content_ui="combo" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.25785482" sideWeight="0.5005208" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.25785482" sideWeight="0.4984375" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Documentation" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="FLOATING" visible="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" x="92" y="92" width="1736" height="856" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -1054,7 +1119,7 @@
     <option name="SHOW_VCS_ERROR_NOTIFICATIONS" value="true" />
     <option name="FORCE_NON_EMPTY_COMMENT" value="false" />
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="false" />
-    <option name="LAST_COMMIT_MESSAGE" value="Minor refactoring." />
+    <option name="LAST_COMMIT_MESSAGE" value="More refactoring." />
     <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="false" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_FILES_UP_TO_DATE_BEFORE_COMMIT" value="false" />
@@ -1072,6 +1137,7 @@
     <MESSAGE value="Added Eclipse support and fixed up the pom a bit." />
     <MESSAGE value="Minor fixes and refactoring." />
     <MESSAGE value="Minor refactoring." />
+    <MESSAGE value="More refactoring." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -1126,23 +1192,9 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/scala/scalaopts/StringTransforms.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="7" column="7" selection-start="130" selection-end="130" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://$MAVEN_REPOSITORY$/org/scala-lang/scala-library/2.9.2/scala-library-2.9.2-sources.jar!/scala/Option.scala">
       <provider selected="true" editor-type-id="text-editor">
         <state line="84" column="22" selection-start="2934" selection-end="2934" vertical-scroll-proportion="0.33333334">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/scala/scalaopts/ParserTransforms.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="6" column="0" selection-start="184" selection-end="184" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
@@ -1156,30 +1208,16 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/scala/scalaopts/CommandLineOption.scala">
+    <entry file="file://$PROJECT_DIR$/src/main/scala/scalaopts/Parser.scala">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="4" column="14" selection-start="156" selection-end="156" vertical-scroll-proportion="0.0">
+        <state line="30" column="7" selection-start="1126" selection-end="1126" vertical-scroll-proportion="0.0">
           <folding>
-            <element signature="docComment;class#215:1504" expanded="true" />
-            <element signature="docComment;class#1508:1938" expanded="true" />
-            <element signature="e#1825#1936#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/scala/scalaopts/OptionParser.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="27" column="54" selection-start="1234" selection-end="1234" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/scala/scalaopts/ParserTest.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="31" column="90" selection-start="904" selection-end="904" vertical-scroll-proportion="0.0">
-          <folding>
-            <element signature="e#220#459#0" expanded="true" />
-            <element signature="e#978#1387#0" expanded="true" />
+            <element signature="e#19#46#0" expanded="true" />
+            <element signature="e#704#1076#0" expanded="true" />
+            <element signature="e#805#1014#0" expanded="true" />
+            <element signature="e#817#844#0" expanded="true" />
+            <element signature="e#1020#1068#0" expanded="true" />
+            <element signature="e#1082#1126#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -1194,17 +1232,49 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/scala/scalaopts/Parser.scala">
+    <entry file="file://$PROJECT_DIR$/src/main/scala/scalaopts/StringTransforms.scala">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="5" column="53" selection-start="127" selection-end="127" vertical-scroll-proportion="0.12917933">
+        <state line="6" column="3" selection-start="122" selection-end="122" vertical-scroll-proportion="0.0">
           <folding>
-            <element signature="e#19#46#0" expanded="true" />
-            <element signature="e#560#1130#0" expanded="true" />
-            <element signature="e#704#1076#0" expanded="true" />
-            <element signature="e#805#1014#0" expanded="true" />
-            <element signature="e#817#844#0" expanded="true" />
-            <element signature="e#1020#1068#0" expanded="true" />
-            <element signature="e#1082#1126#0" expanded="true" />
+            <element signature="docComment;class#46:1759" expanded="true" />
+            <element signature="e#151#334#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/scala/scalaopts/OptionParser.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="25" column="135" selection-start="1025" selection-end="1025" vertical-scroll-proportion="0.0">
+          <folding>
+            <element signature="docComment;class#72:469" expanded="true" />
+            <element signature="docComment;class#471:1451" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/scala/scalaopts/ParserTransforms.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="7" column="7" selection-start="211" selection-end="211" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/scala/scalaopts/CommandLineOption.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="23" column="3" selection-start="1511" selection-end="1511" vertical-scroll-proportion="0.0">
+          <folding>
+            <element signature="docComment;class#215:1504" expanded="true" />
+            <element signature="e#1825#1936#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/scala/scalaopts/ParserTest.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="27" column="0" selection-start="593" selection-end="593" vertical-scroll-proportion="0.3799392">
+          <folding>
+            <element signature="e#220#459#0" expanded="true" />
+            <element signature="e#978#1387#0" expanded="true" />
           </folding>
         </state>
       </provider>

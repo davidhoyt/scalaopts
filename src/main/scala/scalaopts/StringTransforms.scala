@@ -11,7 +11,7 @@ object StringTransforms {
    *
    * @tparam A Result type of applying the function to the given [[java.lang.String]] argument.
    */
-  type FnTransform[A] = String => Option[A]
+  type FnTransform[_] = String => Option[_]
 
   val TRANSFORM_BOOLEAN: FnTransform[Boolean] = s => try { Some(s.toBoolean)                                } catch { case _: Throwable => None }
   val TRANSFORM_CHAR:    FnTransform[Char]    = s => try { s.toCharArray.headOption                         } catch { case _: Throwable => None }
