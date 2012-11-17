@@ -78,11 +78,10 @@ object OS extends Enum {
   val VMS            = EnumVal(family = OSFamily.VMS,     platformPartName = "openvms",       variants = List("OpenVMS"))
   val VMSUnknown     = EnumVal(family = OSFamily.VMS,     platformPartName = OSFamily.VMS.platformPartName)
 
-  def NAME: String = System.getProperty("os.name")
 
-  def systemOSName: String = NAME
-  def systemOS = fromName(NAME)
-  def systemOSFamily = systemOS.family
+  def systemOSName: String = System.getProperty("os.name")
+  def systemOS: EnumVal = fromName(systemOSName)
+  def systemOSFamily: OSFamily.EnumVal = systemOS.family
   def isPOSIX(os: OS.EnumVal): Boolean = OSFamily.isPOSIX(os)
 
   def fromName(name: String): EnumVal = {
@@ -92,8 +91,9 @@ object OS extends Enum {
 
     for (os <- OS.values)
       for (variant <- os.variants)
-        if (variant.equalsIgnoreCase(name))
+        if (variant.equalsIgnoreCase(name)) {
           return os
+        }
 
     val lower = name.toLowerCase
     if (lower.contains("win")) WindowsUnknown

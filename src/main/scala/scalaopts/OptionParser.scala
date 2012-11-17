@@ -43,10 +43,10 @@ sealed trait OptionParser[+A] {
  * @tparam A Result type of applying the transform.
  */
 class CustomOptionParser[+A](default: Option[Any] = None, requiresAssociatedValue: Boolean = true, transform: FnTransform[Any]) extends OptionParser[A] {
-  def withDefault(default_value: Any)                = new CustomOptionParser(Some(default_value), requiresAssociatedValue, transform)
-  def withTransform(new_transform: FnTransform[Any]) = new CustomOptionParser(default, requiresAssociatedValue, new_transform)
-  def withRequiresAssociatedValue(value: Boolean)    = new CustomOptionParser(default, value, transform)
-  def apply(value: String) = transform(value)
+  def withDefault(default_value: Any): CustomOptionParser[A]                = new CustomOptionParser(Some(default_value), requiresAssociatedValue, transform)
+  def withTransform(new_transform: FnTransform[Any]): CustomOptionParser[A] = new CustomOptionParser(default, requiresAssociatedValue, new_transform)
+  def withRequiresAssociatedValue(value: Boolean): CustomOptionParser[A]    = new CustomOptionParser(default, value, transform)
+  def apply(value: String): Option[Any] = transform(value)
 }
 
 case class ByteOption(defaultValue: Byte = 0) extends CustomOptionParser[Byte](Some(defaultValue), true, TRANSFORM_BYTE)

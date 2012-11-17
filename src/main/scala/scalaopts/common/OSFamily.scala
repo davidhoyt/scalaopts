@@ -49,8 +49,9 @@ object OSFamily extends Enum {
     }
 
     for(family <- OSFamily.values)
-      if (family.platformPartName.equalsIgnoreCase(name))
+      if (family.platformPartName.equalsIgnoreCase(name)) {
         return family
+      }
 
     val lower = name.toLowerCase
     if (lower.contains("win")) Windows

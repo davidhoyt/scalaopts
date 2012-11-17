@@ -55,21 +55,17 @@ object Arch extends Enum {
   val Alpha    = EnumVal(wordSize = ArchWordSize.Size64Bits, platformPartName = "alpha",    variants = List("alpha"))
 
 
-  def NAME: String = System.getProperty("os.arch")
-
-  def systemArchName: String = NAME
-  def systemArch = fromName(NAME)
+  def systemArchName: String = System.getProperty("os.arch")
+  def systemArch: EnumVal = fromName(systemArchName)
 
   def fromName(name: String): EnumVal = {
-    if (name.isNullOrEmpty) {
-      return Unknown
+    if (name.isNonEmpty) {
+      for (a <- Arch.values)
+        for (variant <- a.variants)
+          if (variant.equalsIgnoreCase(name)) {
+            return a
+          }
     }
-
-    for (a <- Arch.values)
-      for (variant <- a.variants)
-        if (variant.equalsIgnoreCase(name))
-          return a
-
     Unknown
   }
 }

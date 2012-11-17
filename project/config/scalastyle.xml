@@ -33,8 +33,8 @@
  <check level="warning" class="org.scalastyle.scalariform.SpacesBeforePlusChecker" enabled="true"></check>
  <check level="warning" class="org.scalastyle.file.FileLineLengthChecker" enabled="true">
   <parameters>
-   <parameter name="maxLineLength"><![CDATA[160]]></parameter>
-   <parameter name="tabSize"><![CDATA[4]]></parameter>
+   <parameter name="maxLineLength"><![CDATA[800]]></parameter>
+   <parameter name="tabSize"><![CDATA[2]]></parameter>
   </parameters>
  </check>
  <check level="warning" class="org.scalastyle.scalariform.ClassNamesChecker" enabled="true">
@@ -65,12 +65,12 @@
  </check>
  <check level="warning" class="org.scalastyle.scalariform.MagicNumberChecker" enabled="true">
   <parameters>
-   <parameter name="ignore"><![CDATA[-1,0,1,2,3]]></parameter>
+   <parameter name="ignore"><![CDATA[-1,0,1,2,3,0L]]></parameter>
   </parameters>
  </check>
  <check level="warning" class="org.scalastyle.scalariform.NoWhitespaceBeforeLeftBracketChecker" enabled="true"></check>
  <check level="warning" class="org.scalastyle.scalariform.NoWhitespaceAfterLeftBracketChecker" enabled="true"></check>
- <check level="warning" class="org.scalastyle.scalariform.ReturnChecker" enabled="true"></check>
+ <check level="warning" class="org.scalastyle.scalariform.ReturnChecker" enabled="false"></check>
  <check level="warning" class="org.scalastyle.scalariform.NullChecker" enabled="true"></check>
  <check level="warning" class="org.scalastyle.scalariform.NoCloneChecker" enabled="true"></check>
  <check level="warning" class="org.scalastyle.scalariform.NoFinalizeChecker" enabled="true"></check>
@@ -88,7 +88,7 @@
  </check>
  <check level="warning" class="org.scalastyle.scalariform.CyclomaticComplexityChecker" enabled="true">
   <parameters>
-   <parameter name="maximum"><![CDATA[10]]></parameter>
+   <parameter name="maximum"><![CDATA[20]]></parameter>
   </parameters>
  </check>
  <check level="warning" class="org.scalastyle.scalariform.UppercaseLChecker" enabled="true"></check>
@@ -96,7 +96,7 @@
  <check level="warning" class="org.scalastyle.scalariform.IfBraceChecker" enabled="true">
   <parameters>
    <parameter name="singleLineAllowed"><![CDATA[true]]></parameter>
-   <parameter name="doubleLineAllowed"><![CDATA[false]]></parameter>
+   <parameter name="doubleLineAllowed"><![CDATA[true]]></parameter>
   </parameters>
  </check>
  <check level="warning" class="org.scalastyle.scalariform.MethodLengthChecker" enabled="true">
