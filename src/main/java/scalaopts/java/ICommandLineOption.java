@@ -17,19 +17,16 @@
   limitations under the License.
 */
 
-package scalaopts
+package scalaopts.java;
 
-object ParserTransforms {
-  def createParserMap(options: Seq[TypedCommandLineOption[_]]): Map[String, TypedCommandLineOption[_]] = {
-    (
-      for {
-        opt <- options
-      }
-      yield opt.name -> opt
-    ).toMap
-  }
+import java.util.Set;
 
-  def createParser(configuration: ParserConfiguration, options: Seq[TypedCommandLineOption[_]]): Parser = {
-    new Parser(configuration, createParserMap(options))
-  }
+/**
+ */
+public interface ICommandLineOption<T> {
+  String getName();
+  String getDescription();
+  Set<String> getAliases();
+  Set<String> getDependencies();
+  IOptionParser<T> getOptionParser();
 }

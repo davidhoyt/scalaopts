@@ -17,9 +17,18 @@
   limitations under the License.
 */
 
-package scalaopts;
+package scalaopts.java;
 
 /**
  */
-public class JavaParser {
+public class ParserConfiguration implements IParserConfiguration {
+  private final char argumentNameSeparator;
+
+  public ParserConfiguration(char argumentNameSeparator) {
+    this.argumentNameSeparator = argumentNameSeparator;
+  }
+
+  public char getArgumentNameSeparator() {
+    return argumentNameSeparator;
+  }
 }

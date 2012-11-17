@@ -17,24 +17,21 @@
   limitations under the License.
 */
 
-package scalaopts;
-
-import org.junit.Test;
-
-import static org.junit.Assert.*;
+package scalaopts.java;
 
 /**
  */
-public class JavaParserTest {
-    @Test
-    public void javaTest1() {
-        System.out.println("java 1");
-        assertTrue(true);
-    }
+@SuppressWarnings("unchecked")
+public class CommandLineOptions {
+  private CommandLineOptions() {
+    //Prevent instantiation elsewhere
+  }
 
-    @Test
-    public void javaTest2() {
-        System.out.println("java 2");
-        assertTrue(true);
-    }
+  public static <T extends Object> IParser build(ICommandLineOption<T>...options) {
+    return new Parser(Translate.asParser(options));
+  }
+
+  public static <T extends Object> IParser build(ParserConfiguration configuration, ICommandLineOption<T>...options) {
+    return new Parser(Translate.asParser(configuration, options));
+  }
 }

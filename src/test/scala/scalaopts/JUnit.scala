@@ -23,4 +23,4 @@ import org.scalatest.junit.JUnitSuite
 
 /**
  */
-class JUnitJavaParserTest extends JavaParserTest with JUnitSuite
+class JUnitParserTest extends scalaopts.java.ParserTest with JUnitSuite

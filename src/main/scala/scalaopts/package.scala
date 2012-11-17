@@ -37,8 +37,11 @@ package object scalaopts {
       argumentNameSeparator = '-'
     )
 
-    def apply[A](args: TypedCommandLineOption[A]*): Parser = apply(DEFAULT_PARSER_CONFIGURATION)(args: _*)
-    def apply[A](configuration: ParserConfiguration)(args: TypedCommandLineOption[A]*): Parser = {
+    def apply(args: TypedCommandLineOption[_]*): Parser = applySeq(args)
+    def apply(configuration: ParserConfiguration)(args: TypedCommandLineOption[_]*): Parser = applySeq(configuration)(args)
+
+    def applySeq(args: Seq[TypedCommandLineOption[_]]): Parser = applySeq(DEFAULT_PARSER_CONFIGURATION)(args)
+    def applySeq(configuration: ParserConfiguration)(args: Seq[TypedCommandLineOption[_]]): Parser = {
       ParserTransforms.createParser(configuration, args)
     }
   }
