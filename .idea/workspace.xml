@@ -3,16 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="194416cc-139c-4245-b94d-30497d73f6c4" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/project/config/scalastyle.xml" afterPath="$PROJECT_DIR$/project/config/scalastyle.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/scala/scalaopts/CommandLineOption.scala" afterPath="$PROJECT_DIR$/src/main/scala/scalaopts/CommandLineOption.scala" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/scala/scalaopts/OptionParser.scala" afterPath="$PROJECT_DIR$/src/main/scala/scalaopts/OptionParser.scala" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/scala/scalaopts/Parser.scala" afterPath="$PROJECT_DIR$/src/main/scala/scalaopts/Parser.scala" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/scala/scalaopts/ParserTransforms.scala" afterPath="$PROJECT_DIR$/src/main/scala/scalaopts/ParserTransforms.scala" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/scala/scalaopts/common/Arch.scala" afterPath="$PROJECT_DIR$/src/main/scala/scalaopts/common/Arch.scala" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/scala/scalaopts/common/Enum.scala" afterPath="$PROJECT_DIR$/src/main/scala/scalaopts/common/Enum.scala" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/scala/scalaopts/common/OS.scala" afterPath="$PROJECT_DIR$/src/main/scala/scalaopts/common/OS.scala" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/scala/scalaopts/common/OSFamily.scala" afterPath="$PROJECT_DIR$/src/main/scala/scalaopts/common/OSFamily.scala" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/scala/scalaopts/common/StringUtil.scala" afterPath="$PROJECT_DIR$/src/main/scala/scalaopts/common/StringUtil.scala" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/scalaopts.iml" afterPath="$PROJECT_DIR$/scalaopts.iml" />
     </list>
     <ignored path="scalaopts.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -751,7 +742,11 @@
       <created>1353138448604</created>
       <updated>1353138448604</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="Fixed scala style issues.">
+      <created>1353140208337</created>
+      <updated>1353140208337</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -818,7 +813,7 @@
     <option name="SHOW_VCS_ERROR_NOTIFICATIONS" value="true" />
     <option name="FORCE_NON_EMPTY_COMMENT" value="false" />
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="false" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added copyright protection." />
+    <option name="LAST_COMMIT_MESSAGE" value="Fixed scala style issues." />
     <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="false" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_FILES_UP_TO_DATE_BEFORE_COMMIT" value="false" />
@@ -839,6 +834,7 @@
     <MESSAGE value="More refactoring." />
     <MESSAGE value="Minor fixes and added system detection." />
     <MESSAGE value="Added copyright protection." />
+    <MESSAGE value="Fixed scala style issues." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
