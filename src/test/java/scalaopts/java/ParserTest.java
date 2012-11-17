@@ -22,8 +22,11 @@ package scalaopts.java;
 import org.junit.Test;
 import scalaopts.DefaultFlagOption;
 import scalaopts.DefaultFlagOption$;
+import scalaopts.DefaultIntegerOption;
+import scalaopts.DefaultIntegerOption$;
 
 import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 /**
  */
@@ -31,6 +34,28 @@ import static org.junit.Assert.*;
 public class ParserTest {
   @Test
   public void javaTest1() {
+    final ICommandLineOption<Integer> option_1 = CommandLineOption
+      .named("size")
+      .alias("s")
+      .alias("sz")
+      .describedAs("size description")
+      .parseAs(new IOptionTransform<Integer>() {
+        @Override
+        public Integer apply(String value) {
+          return value.length();
+        }
+      });
+    assertEquals(Integer.valueOf(3), option_1.apply("234"));
+
+    final ICommandLineOption<Integer> option_2 = CommandLineOption
+      .named("verbose")
+      .alias("v")
+      .dependsOn("size")
+      .describedAs("verbose description")
+      .parseAs(DefaultIntegerOption$.MODULE$);
+    assertEquals(Integer.valueOf(234), option_2.apply("234"));
+    assertEquals(Integer.valueOf(0), option_2.apply("234a"));
+
     final IParser parser = CommandLineOptions.build(
         new ParserConfiguration('-'),
 

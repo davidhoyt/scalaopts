@@ -19,6 +19,7 @@
 
 package scalaopts.java;
 
+import scala.Option;
 import scalaopts.CustomOptionParser;
 import scalaopts.OptionParser;
 import scalaopts.common.StringUtil;
@@ -28,11 +29,6 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * Created with IntelliJ IDEA.
- * User: dhoyt
- * Date: 11/17/12
- * Time: 12:23 AM
- * To change this template use File | Settings | File Templates.
  */
 @SuppressWarnings("unchecked")
 public class CommandLineOption<T> {
@@ -109,7 +105,11 @@ public class CommandLineOption<T> {
     final IOptionTransform<T> optionTransform = new IOptionTransform<T>() {
       @Override
       public T apply(String value) {
-        return (T)optionParser.apply(value);
+        final Option<Object> result = optionParser.apply(value);
+        if (result == null || result.isEmpty())
+          return (T)null;
+        else
+          return (T)result.get();
       }
     };
 
@@ -145,7 +145,11 @@ public class CommandLineOption<T> {
     final IOptionTransform<T> optionTransform = new IOptionTransform<T>() {
       @Override
       public T apply(String value) {
-        return (T)optionParser.apply(value);
+        final Option<Object> result = optionParser.apply(value);
+        if (result == null || result.isEmpty())
+          return (T)null;
+        else
+          return (T)result.get();
       }
     };
 
@@ -239,6 +243,10 @@ public class CommandLineOption<T> {
     @Override
     public IOptionParser<T> getOptionParser() {
       return CommandLineOption.this.getOptionParser();
+    }
+
+    public T apply(String value) {
+      return getOptionParser().transform(value);
     }
   }
 }

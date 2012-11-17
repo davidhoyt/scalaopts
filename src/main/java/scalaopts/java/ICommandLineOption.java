@@ -29,4 +29,5 @@ public interface ICommandLineOption<T> {
   Set<String> getAliases();
   Set<String> getDependencies();
   IOptionParser<T> getOptionParser();
+  T apply(String value);
 }
