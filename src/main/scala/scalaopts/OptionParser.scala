@@ -9,10 +9,10 @@ import StringTransforms._
  *
  * @tparam A Result type of applying the transform.
  */
-sealed trait OptionParser[A] {
-  def withDefault(default: A): OptionParser[A]
-  def withTransform(transform: FnTransform[A]): OptionParser[A]
-  def apply(value: String): Option[A]
+sealed trait OptionParser[+A] {
+  def withDefault(default: Any): OptionParser[A]
+  def withTransform(transform: FnTransform[Any]): OptionParser[A]
+  def apply(value: String): Option[Any]
 }
 
 /**
@@ -23,10 +23,10 @@ sealed trait OptionParser[A] {
  * @param transform Function that transforms the [[java.lang.String]] into a value.
  * @tparam A Result type of applying the transform.
  */
-case class CustomOptionParser[A](default: Option[A] = None, requiresAssociatedValue: Boolean = true, transform: FnTransform[A]) extends OptionParser[A] {
-  def withDefault(default_value: A)                = CustomOptionParser(Some(default_value), requiresAssociatedValue, transform)
-  def withTransform(new_transform: FnTransform[A]) = CustomOptionParser(default, requiresAssociatedValue, new_transform)
-  def withRequiresAssociatedValue(value: Boolean)  = CustomOptionParser(default, value, transform)
+case class CustomOptionParser[+A](default: Option[Any] = None, requiresAssociatedValue: Boolean = true, transform: FnTransform[Any]) extends OptionParser[A] {
+  def withDefault(default_value: Any)                = CustomOptionParser(Some(default_value), requiresAssociatedValue, transform)
+  def withTransform(new_transform: FnTransform[Any]) = CustomOptionParser(default, requiresAssociatedValue, new_transform)
+  def withRequiresAssociatedValue(value: Boolean)    = CustomOptionParser(default, value, transform)
   def apply(value: String) = transform(value)
 }
 

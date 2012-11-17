@@ -29,12 +29,16 @@ options {
     val result_1 = CommandLineOption.named("a")
     val result_2 = CommandLineOption named "a"
     val result_3 = CommandLineOption named "a" alias "b" alias "c" describedAs "my description" parseAs DefaultIntegerOption
-    val args = CommandLineOptions(
+    val result_4 = CommandLineOption named "custom" parseAs CustomOptionParser[Int](transform = (s: String) => Option(s.length))
+    val parser = CommandLineOptions(
       CommandLineOption named "size" alias "s" alias "sz" describedAs "size description" parseAs IntegerOption(defaultValue = 100),
-      CommandLineOption named "verbose" alias "v" dependsOn "size" dependsOn "somethingElse" describedAs "verbose description" parseAs DefaultFlagOption
+      CommandLineOption named "verbose" alias "v" dependsOn "size" dependsOn "somethingElse" describedAs "verbose description" parseAs DefaultFlagOption,
+      CommandLineOption named "custom" parseAs CustomOptionParser[Int](transform = (s: String) => Option(s.length))
     )
     println(result_3.aliases)
-    println(result_3("234").getOrElse(98765))
+    println(result_3("234a").getOrElse(98765))
+
+    parser.parse("-a", "-p", "-c")
   }
 
   test("test1") {

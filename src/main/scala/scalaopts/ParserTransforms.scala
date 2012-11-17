@@ -1,14 +1,13 @@
 package scalaopts
 
-trait ParserTransforms {
-  def createParser(configuration: ParserConfiguration, args: Seq[TypedCommandLineOption[_]]): Parser = {
-    //    val map = (
-    //      for {
-    //        a <- args
-    //      }
-    //      yield a.name -> a
-    //      ).toMap
-    //new Parser(configuration, map)
-    null
+object ParserTransforms {
+  def createParser[A](configuration: ParserConfiguration, options: Seq[TypedCommandLineOption[A]]): Parser = {
+    val map = (
+      for {
+        opt <- options
+      }
+      yield opt.name -> opt
+    ).toMap
+    new Parser(configuration, map)
   }
 }

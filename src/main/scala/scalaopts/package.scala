@@ -13,15 +13,15 @@
   *   option named "print" alias "p" describedAs "print description" parseAs Boolean
   * }}}
  */
-package object scalaopts extends AnyRef with ParserTransforms {
+package object scalaopts {
   object CommandLineOptions {
     object DEFAULT_PARSER_CONFIGURATION extends ParserConfiguration(
       argumentNameSeparator = '-'
     )
 
-    def apply(args: TypedCommandLineOption[_]*): Parser = apply(DEFAULT_PARSER_CONFIGURATION)(args: _*)
-    def apply(configuration: ParserConfiguration)(args: TypedCommandLineOption[_]*) = {
-      createParser(configuration, args)
+    def apply[A](args: TypedCommandLineOption[A]*): Parser = apply(DEFAULT_PARSER_CONFIGURATION)(args: _*)
+    def apply[A](configuration: ParserConfiguration)(args: TypedCommandLineOption[A]*): Parser = {
+      ParserTransforms.createParser(configuration, args)
     }
   }
 }

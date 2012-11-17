@@ -3,12 +3,12 @@ package scalaopts
 import common.StringUtils._
 import annotation.tailrec
 
-class Parser(configuration: ParserConfiguration, arguments: Map[String, TypedCommandLineOption[_]]) {
+class Parser(configuration: ParserConfiguration, options: Map[String, TypedCommandLineOption[_]]) {
 
-  def parseArgs(values: String*) = parse(values.toSeq)
+  def parse(values: String*) = parseArguments(values)
 
   //We don't really want to return a boolean - that's just a placeholder for now
-  def parse(values: Seq[String]): Boolean = parse(values, None)
+  def parseArguments(values: Seq[String]): Boolean = parse(values, None)
 
   //We don't really want to return a boolean - that's just a placeholder for now
   @tailrec
