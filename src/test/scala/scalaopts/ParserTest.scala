@@ -1,5 +1,6 @@
 package scalaopts
 
+import common.{Arch, OSFamily}
 import org.scalatest.junit.JUnitRunner
 import org.scalatest.FunSuite
 import org.junit.runner.RunWith
@@ -26,19 +27,24 @@ options {
     //
     //assert(t.isInstanceOf[String])
 
+    //need a glob type that gets everything except valid other options
+
+    println(OSFamily.systemOSFamily)
+    println(Arch.systemArch)
+
     val result_1 = CommandLineOption.named("a")
     val result_2 = CommandLineOption named "a"
     val result_3 = CommandLineOption named "a" alias "b" alias "c" describedAs "my description" parseAs DefaultIntegerOption
-    val result_4 = CommandLineOption named "custom" parseAs CustomOptionParser[Int](transform = (s: String) => Option(s.length))
+    val result_4 = CommandLineOption named "custom" parseAs new CustomOptionParser[Int](transform = (s: String) => Option(s.length))
     val parser = CommandLineOptions(
       CommandLineOption named "size" alias "s" alias "sz" describedAs "size description" parseAs IntegerOption(defaultValue = 100),
       CommandLineOption named "verbose" alias "v" dependsOn "size" dependsOn "somethingElse" describedAs "verbose description" parseAs DefaultFlagOption,
-      CommandLineOption named "custom" parseAs CustomOptionParser[Int](transform = (s: String) => Option(s.length))
+      CommandLineOption named "custom" parseAs new CustomOptionParser[Int](transform = (s: String) => Option(s.length))
     )
     println(result_3.aliases)
     println(result_3("234").getOrElse(98765))
 
-    parser.parse("-a", "-p", "-c")
+    parser.parse("-a", "-verbose", "-c")
   }
 
   test("test1") {

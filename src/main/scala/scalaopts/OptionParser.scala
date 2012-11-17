@@ -1,6 +1,6 @@
 package scalaopts
 
-import common.StringUtils
+import common.StringUtil
 import StringTransforms._
 
 /**
@@ -23,10 +23,10 @@ sealed trait OptionParser[+A] {
  * @param transform Function that transforms the [[java.lang.String]] into a value.
  * @tparam A Result type of applying the transform.
  */
-case class CustomOptionParser[+A](default: Option[Any] = None, requiresAssociatedValue: Boolean = true, transform: FnTransform[Any]) extends OptionParser[A] {
-  def withDefault(default_value: Any)                = CustomOptionParser(Some(default_value), requiresAssociatedValue, transform)
-  def withTransform(new_transform: FnTransform[Any]) = CustomOptionParser(default, requiresAssociatedValue, new_transform)
-  def withRequiresAssociatedValue(value: Boolean)    = CustomOptionParser(default, value, transform)
+class CustomOptionParser[+A](default: Option[Any] = None, requiresAssociatedValue: Boolean = true, transform: FnTransform[Any]) extends OptionParser[A] {
+  def withDefault(default_value: Any)                = new CustomOptionParser(Some(default_value), requiresAssociatedValue, transform)
+  def withTransform(new_transform: FnTransform[Any]) = new CustomOptionParser(default, requiresAssociatedValue, new_transform)
+  def withRequiresAssociatedValue(value: Boolean)    = new CustomOptionParser(default, value, transform)
   def apply(value: String) = transform(value)
 }
 
@@ -57,5 +57,5 @@ object DefaultFlagOption extends FlagOption()
 case class CharOption(defaultValue: Char = '\0') extends CustomOptionParser[Char](Some(defaultValue), true, TRANSFORM_CHAR)
 object DefaultCharOption extends CharOption()
 
-case class StringOption(defaultValue: String = StringUtils.EMPTY) extends CustomOptionParser[String](Some(defaultValue), true, TRANSFORM_STRING)
+case class StringOption(defaultValue: String = StringUtil.empty) extends CustomOptionParser[String](Some(defaultValue), true, TRANSFORM_STRING)
 object DefaultStringOption extends StringOption()

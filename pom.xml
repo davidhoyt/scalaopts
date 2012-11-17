@@ -62,6 +62,9 @@
       <plugin>
         <groupId>net.alchim31.maven</groupId>
         <artifactId>scala-maven-plugin</artifactId>
+        <configuration>
+          <addScalacArgs>-deprecation</addScalacArgs>
+        </configuration>
         <executions>
           <execution>
             <id>scala-compile-first</id>

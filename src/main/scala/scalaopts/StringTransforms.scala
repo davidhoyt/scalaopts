@@ -1,6 +1,6 @@
 package scalaopts
 
-import common.StringUtils
+import common.StringUtil
 
 /**
  * Defines common transforms from a [[java.lang.String]] to a value.
@@ -21,6 +21,6 @@ object StringTransforms {
   val TRANSFORM_LONG:    FnTransform[Long]    = s => try { Some(s.toLong)                                   } catch { case _: Throwable => None }
   val TRANSFORM_FLOAT:   FnTransform[Float]   = s => try { Some(s.toFloat)                                  } catch { case _: Throwable => None }
   val TRANSFORM_DOUBLE:  FnTransform[Double]  = s => try { Some(s.toDouble)                                 } catch { case _: Throwable => None }
-  val TRANSFORM_STRING:  FnTransform[String]  = s => try { if (StringUtils.isNonEmpty(s)) Some(s) else None } catch { case _: Throwable => None }
+  val TRANSFORM_STRING:  FnTransform[String]  = s => try { if (StringUtil.isNonEmpty(s)) Some(s) else None } catch { case _: Throwable => None }
   val TRANSFORM_NOOP:    FnTransform[Boolean] = s => Some(true)
 }

@@ -1,34 +1,33 @@
 package scalaopts
 
-import common.StringUtils._
+import common.StringUtil._
 import annotation.tailrec
 
-class Parser(configuration: ParserConfiguration, options: Map[String, TypedCommandLineOption[_]]) {
+class Parser(val configuration: ParserConfiguration, options: Map[String, TypedCommandLineOption[_]]) {
 
   def parse(values: String*) = parseArguments(values)
 
   //We don't really want to return a boolean - that's just a placeholder for now
-  def parseArguments(values: Seq[String]): Boolean = parse(values, None)
+  def parseArguments(values: Seq[String]): Boolean = parse0(values.map(s => s.trim.toSeq), None)
 
   //We don't really want to return a boolean - that's just a placeholder for now
   @tailrec
-  private def parse(values: Seq[String], current_param: Option[String]): Boolean = values match {
-    case Nil => println("DONE"); true
-    case Seq(value, tail @_*) =>
-      if (value.isNonEmpty && value.headOption.isDefined) {
-        val first_char = value.head
-        if (configuration.argumentNameSeparator == first_char) {
-          //We have a named parameter
-          //Find associated option
-          val param_name = value.tail
-          println("param_name: " + param_name)
-          parse(tail, Some(param_name))
-        } else {
-          parse(tail, current_param)
+  private def parse0(values: Seq[Seq[Char]], current_param: Option[Seq[Char]]): Boolean = values match {
+    case Nil => {
+      println("DONE")
+      true
+    }
+    case Seq(value, tail @_*) => {
+      value match {
+        case Seq(first_char, param_name @_*) if first_char == configuration.argumentNameSeparator => {
+          println("param name: " + param_name.toString())
+          parse0(tail, Some(param_name))
         }
-      } else {
-        parse(tail, current_param)
+        case _ => {
+          parse0(tail, current_param)
+        }
       }
+    }
   }
 
   //def process
