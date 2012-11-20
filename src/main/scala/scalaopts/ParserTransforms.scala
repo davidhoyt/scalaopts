@@ -20,7 +20,7 @@
 package scalaopts
 
 object ParserTransforms {
-  def createParserMap(options: Seq[TypedCommandLineOption[_]]): Map[String, TypedCommandLineOption[_]] = {
+  def createParserMap(options: Seq[TypedCommandLineOption[_]]): CommandLineOptionMap = {
     (
       for {
         opt <- options

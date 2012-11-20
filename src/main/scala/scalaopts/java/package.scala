@@ -19,8 +19,8 @@
 
 package scalaopts
 
-import util.matching.Regex
-
-class ParserConfiguration(val strategy: ParserStrategy) {
+/**
+ */
+package object java {
 
 }

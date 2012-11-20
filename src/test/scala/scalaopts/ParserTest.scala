@@ -34,7 +34,7 @@ class ParserTest extends FunSuite {
 //http://stackoverflow.com/questions/1025181/hidden-features-of-scala
 
 //push new scope
-options {
+command_line_options {
   opt: "v" %% "verbose" %% "description" %% BooleanOpt/FlagOpt
   opt: "p" %% "print" %% "print description" %% BooleanOpt
 }
@@ -46,24 +46,48 @@ options {
     //
     //assert(t.isInstanceOf[String])
 
-    //need a glob type that gets everything except valid other options
+    //need a glob type that gets everything except valid other command_line_options
 
     println(OSFamily.systemOSFamily)
     println(Arch.systemArch)
 
     val result_1 = CommandLineOption.named("a")
     val result_2 = CommandLineOption named "a"
-    val result_3 = CommandLineOption named "a" alias "b" alias "c" describedAs "my description" parseAs DefaultIntegerOption
+    val result_3 = CommandLineOption named "a" shortName "b" shortName "c" describedAs "my description" parseAs DefaultIntegerOption
     val result_4 = CommandLineOption named "custom" parseAs new CustomOptionParser[Int](transform = (s: String) => Option(s.length))
     val parser = CommandLineOptions(
-      CommandLineOption named "size" alias "s" alias "sz" describedAs "size description" parseAs IntegerOption(defaultValue = 100),
-      CommandLineOption named "verbose" alias "v" dependsOn "size" dependsOn "somethingElse" describedAs "verbose description" parseAs DefaultFlagOption,
+      CommandLineOption named "size"
+        longName    "a"
+        shortName   "a"
+        shortName   "s"
+        shortName   "sz"
+        required    YES
+        describedAs "size description"
+        arity       UNBOUNDED
+        minNumberOfRequiredValues 0
+        maxNumberOfRequiredValues UNBOUNDED
+        parseAs     IntegerOption(defaultValue = 100),
+      CommandLineOption named "verbose" shortName "v" dependsOn "size" dependsOn "somethingElse" describedAs "verbose description" parseAs DefaultFlagOption,
       CommandLineOption named "custom" parseAs new CustomOptionParser[Int](transform = (s: String) => Option(s.length))
     )
-    println(result_3.aliases)
+    println(result_3.longNames)
     println(result_3("234").getOrElse(98765))
 
-    parser.parse("-a", "-verbose", "-c")
+    //parser.parse("--a", "-verbose", "-c")
+    //Tests:
+    // INVALID: --<param name> (missing equals)
+    //   VALID: --<param name>= (empty value)
+    //   VALID: -<short param name> "-value beginning with dash"
+    //   VALID: --<long param name>=-value_beginning_with_dash
+    //   VALID: -<short param name> value
+    //   VALID: --<long param name>=value
+    //   VALID: -<short param name> min values=0, max values=0, arity=1 (effectively a flag option)
+    //   unbounded max values
+    //   bounded max values
+    //parser.parse("--a", "<my value for a!>", "--a=b", "-verbose", "-c")
+    //parser.parse("-a", "<my value for a!>")
+    //parser.parse("--a=a_value", "-a", "a2_value", "--a=a3_value") //arity
+    parser.parse("-a", "a1_value", "a2_value", "a3_value")
   }
 
   test("test1") {

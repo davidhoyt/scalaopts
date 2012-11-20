@@ -26,7 +26,12 @@ import java.util.Set;
 public interface ICommandLineOption<T> {
   String getName();
   String getDescription();
-  Set<String> getAliases();
+  boolean isRequired();
+  int getArity();
+  int getMinNumberOfRequiredValues();
+  int getMaxNumberOfRequiredValues();
+  Set<String> getLongNames();
+  Set<String> getShortNames();
   Set<String> getDependencies();
   IOptionParser<T> getOptionParser();
   T apply(String value);

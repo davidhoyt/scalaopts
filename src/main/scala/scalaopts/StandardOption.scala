@@ -19,8 +19,13 @@
 
 package scalaopts
 
-import util.matching.Regex
-
-class ParserConfiguration(val strategy: ParserStrategy) {
-
+sealed trait StandardOption[+T] {
+  val name: String
+  val description: String
+  val aliases: List[String]
+  val dependencies: List[String]
+  val optionParser: Option[OptionParser[T]]
+  val values: Stream[Option[T]]
 }
+
+class CustomStandardOption[+T](val name: String, val description: String, val aliases: List[String], val dependencies: List[String], val optionParser: Option[OptionParser[T]], val values: Stream[Option[T]]) extends StandardOption[T]

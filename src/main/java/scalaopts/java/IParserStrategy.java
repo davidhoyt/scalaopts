@@ -17,10 +17,10 @@
   limitations under the License.
 */
 
-package scalaopts
+package scalaopts.java;
 
-import util.matching.Regex
-
-class ParserConfiguration(val strategy: ParserStrategy) {
+/**
+ */
+public interface IParserStrategy {
 
 }

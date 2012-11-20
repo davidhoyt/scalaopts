@@ -1,3 +1,5 @@
+import scalaopts.strategy.GNUParserStrategy
+
 /*
   Copyright (C) 2012-2013 the original author or authors.
 
@@ -10,7 +12,7 @@
 
   http://www.apache.org/licenses/LICENSE-2.0
 
-  Unless required by applicable law or agreed to in writing, software
+  Unless is_required by applicable law or agreed to in writing, software
   distributed under the License is distributed on an "AS IS" BASIS,
   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
   See the License for the specific language governing permissions and
@@ -21,20 +23,28 @@
   * Also provides implicits for [[java.lang.String]] processing.
   *
   * ==Overview==
-  * Begin by defining options. For example:
+  * Begin by defining command_line_options. For example:
   * {{{
-  *   options {
+  *   command_line_options {
   *     opt: "v" %% "verbose" %% "description" %% BooleanOpt/FlagOpt
   *     opt: "p" %% "print" %% "print description" %% BooleanOpt
   *   }
-  *   option named "verbose" alias "v" alias "q" describedAs "description" parseAs Boolean,
-  *   option named "print" alias "p" describedAs "print description" parseAs Boolean
+  *   option named "verbose" shortName "v" shortName "q" describedAs "description" parseAs Boolean,
+  *   option named "print" shortName "p" describedAs "print description" parseAs Boolean
   * }}}
  */
 package object scalaopts {
+  val UNBOUNDED = -1
+  val YES = true
+  val NO = false
+
+  type CommandLineOptionMapKey = String
+  type CommandLineOptionMapValue = TypedCommandLineOption[_]
+  type CommandLineOptionMap = Map[CommandLineOptionMapKey, CommandLineOptionMapValue]
+
   object CommandLineOptions {
     object DEFAULT_PARSER_CONFIGURATION extends ParserConfiguration(
-      argumentNameSeparator = '-'
+      strategy = new GNUParserStrategy()
     )
 
     def apply(args: TypedCommandLineOption[_]*): Parser = applySeq(args)

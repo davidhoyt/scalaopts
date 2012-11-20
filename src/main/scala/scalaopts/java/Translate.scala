@@ -32,7 +32,8 @@ object Translate {
     val java_option_parser = opt.getOptionParser()
     val java_default = java_option_parser.getDefaultValue()
     val default = Option(java_default)
-    val aliases = JavaConversions.iterableAsScalaIterable(opt.getAliases()).toList
+    val long_names = JavaConversions.iterableAsScalaIterable(opt.getLongNames()).toList
+    val short_names = JavaConversions.iterableAsScalaIterable(opt.getShortNames()).toList
     val dependencies = JavaConversions.iterableAsScalaIterable(opt.getDependencies).toList
 
     val option_parser = new CustomOptionParser[T](default, java_option_parser.isDefaultValueUsed(), java_option_parser.isAssociatedValueRequired(), (s: String) => {
@@ -42,7 +43,7 @@ object Translate {
       }
     })
 
-    new TypedCommandLineOption[T](opt.getName(), aliases, dependencies, opt.getDescription(), Some(option_parser))
+    new TypedCommandLineOption[T](opt.getName(), opt.isRequired(), long_names, short_names, dependencies, opt.getDescription(), opt.getArity(), opt.getMinNumberOfRequiredValues(), opt.getMaxNumberOfRequiredValues(), Some(option_parser))
   }
 
   def asTypedCommandLineOptionSeq[T](options: Array[ICommandLineOption[T]]): Seq[TypedCommandLineOption[_]] = {
@@ -51,7 +52,11 @@ object Translate {
   }
 
   def asParserConfiguration(configuration: IParserConfiguration): scalaopts.ParserConfiguration = {
-    new scalaopts.ParserConfiguration(configuration.getArgumentNameSeparator())
+    //TODO: Translate to ParserStrategy instance
+    //Just create a default strategy for now...
+    //val java_parser_strategy = configuration.getStrategy()
+    //new scalaopts.ParserConfiguration()...
+    scalaopts.CommandLineOptions.DEFAULT_PARSER_CONFIGURATION
   }
 
   def asParser[T](options: Array[ICommandLineOption[T]]): scalaopts.Parser = {

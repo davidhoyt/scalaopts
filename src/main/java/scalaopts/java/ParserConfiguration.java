@@ -22,13 +22,13 @@ package scalaopts.java;
 /**
  */
 public class ParserConfiguration implements IParserConfiguration {
-  private final char argumentNameSeparator;
+  private final IParserStrategy strategy;
 
-  public ParserConfiguration(char argumentNameSeparator) {
-    this.argumentNameSeparator = argumentNameSeparator;
+  public ParserConfiguration(IParserStrategy strategy) {
+    this.strategy = strategy;
   }
 
-  public char getArgumentNameSeparator() {
-    return argumentNameSeparator;
+  public IParserStrategy getStrategy() {
+    return strategy;
   }
 }

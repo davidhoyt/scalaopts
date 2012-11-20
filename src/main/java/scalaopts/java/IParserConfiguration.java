@@ -22,5 +22,5 @@ package scalaopts.java;
 /**
  */
 public interface IParserConfiguration {
-  char getArgumentNameSeparator();
+  IParserStrategy getStrategy();
 }

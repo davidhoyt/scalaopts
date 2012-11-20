@@ -36,8 +36,9 @@ public class ParserTest {
   public void javaTest1() {
     final ICommandLineOption<Integer> option_1 = CommandLineOption
       .named("size")
-      .alias("s")
-      .alias("sz")
+      .shortName("s")
+      .shortName("sz")
+      .arity(CommandLineOption.ARITY_UNBOUNDED)
       .describedAs("size description")
       .parseAs(new IOptionTransform<Integer>() {
         @Override
@@ -49,7 +50,7 @@ public class ParserTest {
 
     final ICommandLineOption<Integer> option_2 = CommandLineOption
       .named("verbose")
-      .alias("v")
+      .shortName("v")
       .dependsOn("size")
       .describedAs("verbose description")
       .parseAs(DefaultIntegerOption$.MODULE$);
@@ -57,12 +58,11 @@ public class ParserTest {
     assertEquals(Integer.valueOf(0), option_2.apply("234a"));
 
     final IParser parser = CommandLineOptions.build(
-        new ParserConfiguration('-'),
-
         CommandLineOption
             .named("size")
-            .alias("s")
-            .alias("sz")
+            .required()
+            .shortName("s")
+            .shortName("sz")
             .describedAs("size description")
             .parseAs(new IOptionTransform<Integer>() {
               @Override
@@ -73,7 +73,7 @@ public class ParserTest {
 
         CommandLineOption
           .named("verbose")
-          .alias("v")
+          .shortName("v")
           .dependsOn("size")
           .describedAs("verbose description")
           .parseAs(DefaultFlagOption$.MODULE$)

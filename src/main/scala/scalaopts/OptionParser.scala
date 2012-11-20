@@ -45,9 +45,9 @@ sealed trait OptionParser[+A] {
  */
 class CustomOptionParser[+A](val optionDefaultValue: Option[Any] = None, val useDefaultValue: Boolean = true, val requiresAssociatedValue: Boolean = true, val transform: FnTransform[Any]) extends OptionParser[A] {
   def withDefault(default_value: Any): CustomOptionParser[A]                = new CustomOptionParser(Some(default_value), useDefaultValue, requiresAssociatedValue, transform)
-  def withTransform(new_transform: FnTransform[Any]): CustomOptionParser[A] = new CustomOptionParser(optionDefaultValue,        useDefaultValue, requiresAssociatedValue, new_transform)
-  def withUseDefaultValue(value: Boolean): CustomOptionParser[A]            = new CustomOptionParser(optionDefaultValue,        value,           requiresAssociatedValue, transform)
-  def withRequiresAssociatedValue(value: Boolean): CustomOptionParser[A]    = new CustomOptionParser(optionDefaultValue,        useDefaultValue, value,                   transform)
+  def withTransform(new_transform: FnTransform[Any]): CustomOptionParser[A] = new CustomOptionParser(optionDefaultValue,  useDefaultValue, requiresAssociatedValue, new_transform)
+  def withUseDefaultValue(value: Boolean): CustomOptionParser[A]            = new CustomOptionParser(optionDefaultValue,  value,           requiresAssociatedValue, transform)
+  def withRequiresAssociatedValue(value: Boolean): CustomOptionParser[A]    = new CustomOptionParser(optionDefaultValue,  useDefaultValue, value,                   transform)
   def apply(value: String): Option[Any] = {
     val result = transform(value)
     result match {

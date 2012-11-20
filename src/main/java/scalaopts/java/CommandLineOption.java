@@ -20,8 +20,7 @@
 package scalaopts.java;
 
 import scala.Option;
-import scalaopts.CustomOptionParser;
-import scalaopts.OptionParser;
+import scalaopts.*;
 import scalaopts.common.StringUtil;
 
 import java.util.Collections;
@@ -32,10 +31,17 @@ import java.util.Set;
  */
 @SuppressWarnings("unchecked")
 public class CommandLineOption<T> {
+  public static final int ARITY_UNBOUNDED = scalaopts.package$.MODULE$.UNBOUNDED();
+
   private final Object lock = new Object();
   private final String name;
-  private final Set<String> aliases = new HashSet<String>();
+  private final Set<String> long_names = new HashSet<String>();
+  private final Set<String> short_names = new HashSet<String>();
   private final Set<String> dependencies = new HashSet<String>();
+  private boolean required = false;
+  private int arity = 1;
+  private int min_number_of_required_values = 1;
+  private int max_number_of_required_values = 1;
   private String description = StringUtil.empty();
   private IOptionParser<T> option_parser = null;
 
@@ -47,9 +53,16 @@ public class CommandLineOption<T> {
     return new CommandLineOption(name);
   }
 
-  public CommandLineOption alias(String alias) {
+  public CommandLineOption longName(String alias) {
     synchronized (lock) {
-      aliases.add(alias);
+      long_names.add(alias);
+    }
+    return this;
+  }
+
+  public CommandLineOption shortName(String alias) {
+    synchronized (lock) {
+      short_names.add(alias);
     }
     return this;
   }
@@ -64,6 +77,42 @@ public class CommandLineOption<T> {
   public CommandLineOption describedAs(String description) {
     synchronized (lock) {
       this.description = description;
+    }
+    return this;
+  }
+
+  public CommandLineOption required() {
+    return required(true);
+  }
+
+  public CommandLineOption notRequired() {
+    return required(false);
+  }
+
+  public CommandLineOption required(boolean required) {
+    synchronized (lock) {
+      this.required = required;
+    }
+    return this;
+  }
+
+  public CommandLineOption arity(int arity) {
+    synchronized (lock) {
+      this.arity = arity;
+    }
+    return this;
+  }
+
+  public CommandLineOption minNumberOfRequiredValues(int minNumberOfRequiredValues) {
+    synchronized (lock) {
+      this.min_number_of_required_values = minNumberOfRequiredValues;
+    }
+    return this;
+  }
+
+  public CommandLineOption maxNumberOfRequiredValues(int maxNumberOfRequiredValues) {
+    synchronized (lock) {
+      this.max_number_of_required_values = maxNumberOfRequiredValues;
     }
     return this;
   }
@@ -207,12 +256,32 @@ public class CommandLineOption<T> {
     return description;
   }
 
+  public boolean isRequired() {
+    return required;
+  }
+
+  public int getArity() {
+    return arity;
+  }
+
+  public int getMinNumberOfRequiredValues() {
+    return min_number_of_required_values;
+  }
+
+  public int getMaxNumberOfRequiredValues() {
+    return max_number_of_required_values;
+  }
+
   public IOptionParser<T> getOptionParser() {
     return option_parser;
   }
 
-  public Set<String> getAliases() {
-    return Collections.unmodifiableSet(aliases);
+  public Set<String> getLongNames() {
+    return Collections.unmodifiableSet(long_names);
+  }
+
+  public Set<String> getShortNames() {
+    return Collections.unmodifiableSet(short_names);
   }
 
   public Set<String> getDependencies() {
@@ -231,8 +300,33 @@ public class CommandLineOption<T> {
     }
 
     @Override
-    public Set<String> getAliases() {
-      return CommandLineOption.this.getAliases();
+    public boolean isRequired() {
+      return CommandLineOption.this.isRequired();
+    }
+
+    @Override
+    public int getArity() {
+      return CommandLineOption.this.getArity();
+    }
+
+    @Override
+    public int getMinNumberOfRequiredValues() {
+      return CommandLineOption.this.getMinNumberOfRequiredValues();
+    }
+
+    @Override
+    public int getMaxNumberOfRequiredValues() {
+      return CommandLineOption.this.getMaxNumberOfRequiredValues();
+    }
+
+    @Override
+    public Set<String> getLongNames() {
+      return CommandLineOption.this.getLongNames();
+    }
+
+    @Override
+    public Set<String> getShortNames() {
+      return CommandLineOption.this.getShortNames();
     }
 
     @Override
