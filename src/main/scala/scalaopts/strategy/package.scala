@@ -46,7 +46,7 @@ package object strategy {
   }
 
   def stripLeadingCharacter(c: Char)(s: String): String =
-    s.dropWhile(_ == '-')
+    s.dropWhile(_ == c)
 
   def splitAtCharacter(c: Char)(s: String): (String, String, Boolean) = {
     val index = s.indexOf(c)
