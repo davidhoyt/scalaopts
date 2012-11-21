@@ -25,6 +25,12 @@
       <version>2.9.2</version>
     </dependency>
     <dependency>
+      <groupId>com.dongxiguo</groupId>
+      <artifactId>zero-log_2.9.2</artifactId>
+      <version>0.1.2</version>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
       <groupId>org.scalatest</groupId>
       <artifactId>scalatest_2.9.2</artifactId>
       <version>1.8</version>
@@ -64,6 +70,7 @@
         <artifactId>scala-maven-plugin</artifactId>
         <configuration>
           <addScalacArgs>-deprecation</addScalacArgs>
+          <!-- <addScalacArgs>-deprecation -Xelide-below 900</addScalacArgs> -->
         </configuration>
         <executions>
           <execution>

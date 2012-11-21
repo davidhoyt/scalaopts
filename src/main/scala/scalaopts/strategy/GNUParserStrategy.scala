@@ -23,8 +23,16 @@ import scalaopts._
 import scalaopts.common.StringUtil._
 import scala.math._
 import annotation.tailrec
+import util.logging.Logged
 
 class GNUParserStrategy extends ParserStrategy {
+  /* Configure the logger. */
+  private[GNUParserStrategy] object log {
+    val (logger, formatter) = ZeroLoggerFactory.newLogger(this)
+  }
+  import log.logger
+  import log.formatter._
+
   /**
    * @see [[scalaopts.ParserStrategy.toStandardOptionView()]]
    */
@@ -37,44 +45,47 @@ class GNUParserStrategy extends ParserStrategy {
     def toStandardOptionView0(args: Stream[String]): Stream[StandardOption[_]] = {
       args match {
         case arg #:: tail if arg.isNonEmpty && isCommandLineOption(arg) => {
-          println("Found argument: " + arg)
+          logger.info(_ ++= "Found argument: " ++= arg)
 
           if (isLongCommandLineOption(arg)) {
             val opt = stripLeadingHyphens(arg)
             val (name, value, equals_found) = splitAtEquals(opt)
 
-            println("     long opt")
-            println("     arg name: " + name + ", value: " + value)
+            logger.info("long opt")
+            logger.info(_ ++= "arg name: " ++= name ++= ", value: " ++= value)
 
-            if (equals_found) {
-              findCommandLineOptionByLongName(name) match {
-                case None => {
-                  unrecognizedArgument(name)
-                  Stream()
-                }
-                case Some(command_line_option) => {
-                  //It's possible this is a flag value -- we might need to process this here and now!
+            findCommandLineOptionByLongName(name) match {
+              case None => {
+                unrecognizedArgument(name)
+                Stream()
+              }
+              case Some(command_line_option) => {
+                //If there's an equals sign then process this value and any remaining required values
+                if (equals_found) {
 
                   //We found at least one value, so evaluate it.
                   processCommandLineOptionValue(command_line_option, value)
 
                   //Evaluate any other remaining values.
                   toStandardOptionView0(processCommandLineOptionValues(command_line_option, empty, 1, command_line_option.maxNumberOfRequiredValues, tail))
+                } else if (command_line_option.isFlag) {
+                  //This is a flag, but it should still be evaluated.
+                  processCommandLineOptionValue(command_line_option, empty)
+
+                  //Continue processing.
+                  toStandardOptionView0(tail)
+                } else {
+                  invalidFormat(name, "Missing equals sign for option")
+                  Stream()
                 }
               }
-            } else {
-              //TODO: Fix -- possible to have 0 required values - e.g., it's a long flag name (only invalid when min required values >= 1)
-
-              invalidFormat(name, "Missing equals sign for option")
-              Stream()
             }
-
           } else if (isShortCommandLineOption(arg)) {
 
             val name = stripLeadingHyphens(arg)
 
-            println("     short opt")
-            println("     name: " + name)
+            logger.info("short opt")
+            logger.info(_ ++= "name: " ++= name)
 
             findCommandLineOptionByShortName(name) match {
               case None => {
@@ -83,17 +94,24 @@ class GNUParserStrategy extends ParserStrategy {
               }
               case Some(command_line_option) => {
                 //It's possible this is a flag value -- we might need to process this here and now!
+                if (command_line_option.isFlag) {
+                  //This is a flag, but it should still be evaluated.
+                  processCommandLineOptionValue(command_line_option, empty)
 
-                toStandardOptionView0(processCommandLineOptionValues(command_line_option, empty, 0, command_line_option.maxNumberOfRequiredValues, tail))
+                  //Continue processing.
+                  toStandardOptionView0(tail)
+                } else {
+                  //Process remaining values for this option.
+                  toStandardOptionView0(processCommandLineOptionValues(command_line_option, empty, 0, command_line_option.maxNumberOfRequiredValues, tail))
+                }
               }
             }
-
           } else {
             toStandardOptionView0(tail)
           }
         }
         case arg #:: tail => {
-          println("Failed to recognize argument: " + arg)
+          logger.warning(_ ++= "Failed to recognize argument: " ++= arg)
           toStandardOptionView0(tail)
         }
         case _ => Stream()
@@ -112,10 +130,10 @@ class GNUParserStrategy extends ParserStrategy {
     def processCommandLineOptionValues(mapValue: CommandLineOptionMapValue, currentValue: String, valuesFound: Int, valuesRemaining: Int, args: Stream[String]): Stream[String] = {
       @tailrec
       def processCommandLineOptionValues0(currentValue: String, valuesFound: Int, valuesRemaining: Int, args: Stream[String]): Stream[String] = {
-        println("     processing remaining option values")
+        logger.finer("processing remaining option values")
         args match {
           case arg #:: tail if !isCommandLineOption(arg) && findCommandLineOption(arg).isEmpty => {
-            println("     found option value: " + arg)
+            logger.finer(_ ++= "found option value: " ++= arg)
 
             //Ensure we haven't exceeded the max number of values for this argument.
             if (mapValue.maxNumberOfRequiredValues == UNBOUNDED || valuesRemaining > 0) {
@@ -135,7 +153,7 @@ class GNUParserStrategy extends ParserStrategy {
             }
           }
           case _ => {
-            println("     no more option values, continuing on...")
+            logger.finer("no more option values, continuing on")
 
             //Validate that we've met the minimum number of required values for this argument.
             if (mapValue.minNumberOfRequiredValues != UNBOUNDED && valuesFound < mapValue.minNumberOfRequiredValues)
@@ -155,23 +173,23 @@ class GNUParserStrategy extends ParserStrategy {
     }
 
     def processCommandLineOptionValue(mapValue: CommandLineOptionMapValue, currentValue: String): Unit = {
-      println("     processing value for " + mapValue.name + ": " + currentValue)
+      logger.info(_ ++= "processing value for " ++= mapValue.name ++= ": " ++= currentValue)
     }
 
     def unrecognizedArgument(argumentName: String): Unit = {
-      println("     unrecognized argument")
+      logger.warning(_ ++= "unrecognized argument: " ++= argumentName)
     }
 
     def invalidFormat(argumentName: String, description: String): Unit = {
-      println("     invalid format for argument. " + description)
+      logger.warning(_ ++= "invalid format for argument. " + description)
     }
 
     def missingMinimumNumberOfValues(argumentName: String, number_found: Int, minimum: Int): Unit = {
-      println("     missing minimum number of expected values: " + minimum + ", found: " + number_found)
+      logger.warning(_ ++= "missing minimum number of expected values: " ++= minimum.toString ++= ", found: " ++= number_found.toString)
     }
 
     def exceededMaximumNumberOfValues(argumentName: String, maximum: Int): Unit = {
-      println("     exceeded maximum number of expected values: " + maximum)
+      logger.warning(_ ++= "exceeded maximum number of expected values: " ++= maximum.toString)
     }
 
     toStandardOptionView0(args)

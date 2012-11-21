@@ -63,8 +63,8 @@ command_line_options {
         required    YES
         describedAs "size description"
         arity       UNBOUNDED
-        minNumberOfRequiredValues 0
-        maxNumberOfRequiredValues UNBOUNDED
+        minNumberOfRequiredValues 1
+        maxNumberOfRequiredValues 2
         parseAs     IntegerOption(defaultValue = 100),
       CommandLineOption named "verbose" shortName "v" dependsOn "size" dependsOn "somethingElse" describedAs "verbose description" parseAs DefaultFlagOption,
       CommandLineOption named "custom" parseAs new CustomOptionParser[Int](transform = (s: String) => Option(s.length))

@@ -4,9 +4,11 @@ version := "0.1"
 
 scalaVersion := "2.9.2"
 
-scalacOptions ++= Seq("-deprecation")
+scalacOptions ++= Seq("-deprecation", "-Xelide-below", "900")
 
 javacOptions ++= Seq("-Xlint:unchecked")
+
+libraryDependencies += "com.dongxiguo" %% "zero-log" % "0.1.2" % "compile"
 
 libraryDependencies += "org.scalatest" %% "scalatest" % "1.8" % "test"
 

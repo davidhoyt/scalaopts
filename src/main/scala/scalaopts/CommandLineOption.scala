@@ -60,11 +60,14 @@ class TypedCommandLineOption[+A](val name: String, val required: Boolean, val lo
     case Some(arg_parser) => arg_parser(value).asInstanceOf[Option[A]]
   }
 
+  def isFlag: Boolean = isMinNumberOfRequiredValuesUnbounded || minNumberOfRequiredValues == 0
+  def isMinNumberOfRequiredValuesUnbounded: Boolean = minNumberOfRequiredValues == UNBOUNDED
+  def isMaxNumberOfRequiredValuesUnbounded: Boolean = maxNumberOfRequiredValues == UNBOUNDED
   def isMatchForLongName(name_to_match: String): Boolean = longNames.find(_.equalsIgnoreCase(name_to_match)).isDefined
   def isMatchForShortName(name_to_match: String): Boolean = shortNames.find(_.equalsIgnoreCase(name_to_match)).isDefined
   def isMatchForName(name_to_match: String): Boolean = isMatchForLongName(name_to_match) || isMatchForShortName(name_to_match)
 
-  if (minNumberOfRequiredValues != UNBOUNDED && maxNumberOfRequiredValues != UNBOUNDED && maxNumberOfRequiredValues < minNumberOfRequiredValues)
+  if (!isMinNumberOfRequiredValuesUnbounded && !isMaxNumberOfRequiredValuesUnbounded && maxNumberOfRequiredValues < minNumberOfRequiredValues)
     throw new IllegalArgumentException("maxNumberOfRequiredValues must be >= minNumberOfRequiredValues")
 
   if (arity != UNBOUNDED && arity < 1)

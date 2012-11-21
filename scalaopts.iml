@@ -5,6 +5,7 @@
       <configuration>
         <option name="compilerLibraryLevel" value="Project" />
         <option name="compilerLibraryName" value="Maven: org.scala-lang:scala-compiler-bundle:2.9.2" />
+        <option name="compilerOptions" value="-Xelide-below 400" />
         <option name="fsc" value="true" />
         <option name="vmOptions" value="" />
       </configuration>
@@ -30,6 +31,7 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="Scala 2.9.2" level="application" />
     <orderEntry type="library" name="Maven: org.scala-lang:scala-library:2.9.2" level="project" />
+    <orderEntry type="library" name="Maven: com.dongxiguo:zero-log_2.9.2:0.1.2" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: org.scalatest:scalatest_2.9.2:1.8" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: junit:junit:4.10" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: org.hamcrest:hamcrest-core:1.1" level="project" />
