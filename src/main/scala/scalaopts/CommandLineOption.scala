@@ -67,9 +67,11 @@ class TypedCommandLineOption[+A](val name: String, val required: Boolean, val lo
   def isMatchForShortName(name_to_match: String): Boolean = shortNames.find(_.equalsIgnoreCase(name_to_match)).isDefined
   def isMatchForName(name_to_match: String): Boolean = isMatchForLongName(name_to_match) || isMatchForShortName(name_to_match)
 
-  if (!isMinNumberOfRequiredValuesUnbounded && !isMaxNumberOfRequiredValuesUnbounded && maxNumberOfRequiredValues < minNumberOfRequiredValues)
+  if (!isMinNumberOfRequiredValuesUnbounded && !isMaxNumberOfRequiredValuesUnbounded && maxNumberOfRequiredValues < minNumberOfRequiredValues) {
     throw new IllegalArgumentException("maxNumberOfRequiredValues must be >= minNumberOfRequiredValues")
+  }
 
-  if (arity != UNBOUNDED && arity < 1)
+  if (arity != UNBOUNDED && arity < 1) {
     throw new IllegalArgumentException("arity must be >= 1 or specified as unbounded")
+  }
 }

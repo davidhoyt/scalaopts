@@ -19,8 +19,8 @@
 
 package scalaopts
 
-import com.dongxiguo.zeroLog.formatters.SimpleFormatter
-import com.dongxiguo.zeroLog.Filter
+import com.dongxiguo.zeroLog.formatters.{Formatter, SimpleFormatter}
+import com.dongxiguo.zeroLog.{Logger, Filter}
 import util.logging.ConsoleLogger
 
 /**
@@ -28,6 +28,6 @@ import util.logging.ConsoleLogger
  * arguments down the line.
  */
 object ZeroLoggerFactory {
-  final def newLogger(singleton: Singleton) =
+  final def newLogger(singleton: Singleton): (Logger, Formatter) =
     (Filter.Finest, new SimpleFormatter(singleton) with ConsoleLogger)
 }

@@ -27,11 +27,12 @@ import util.logging.Logged
 
 class GNUParserStrategy extends ParserStrategy {
   /* Configure the logger. */
-  private[GNUParserStrategy] object log {
+  private[GNUParserStrategy] object Log {
     val (logger, formatter) = ZeroLoggerFactory.newLogger(this)
   }
-  import log.logger
-  import log.formatter._
+
+  import Log.logger
+  import Log.formatter._
 
   /**
    * @see [[scalaopts.ParserStrategy.toStandardOptionView()]]
@@ -40,6 +41,10 @@ class GNUParserStrategy extends ParserStrategy {
     val findCommandLineOption = findMatchingCommandLineOption(command_line_options)_
     val findCommandLineOptionByLongName = findMatchingCommandLineOptionByLongName(command_line_options)_
     val findCommandLineOptionByShortName = findMatchingCommandLineOptionByShortName(command_line_options)_
+
+    def isLongCommandLineOption(s: String): Boolean = s.startsWith("--")
+    def isShortCommandLineOption(s: String): Boolean = s.startsWith("-")
+    def isCommandLineOption(s: String): Boolean = isLongCommandLineOption(s) || isShortCommandLineOption(s)
 
     @tailrec
     def toStandardOptionView0(args: Stream[String]): Stream[StandardOption[_]] = {
@@ -118,15 +123,6 @@ class GNUParserStrategy extends ParserStrategy {
       }
     }
 
-    def isLongCommandLineOption(s: String): Boolean = s.startsWith("--")
-    def isShortCommandLineOption(s: String): Boolean = s.startsWith("-")
-    def isCommandLineOption(s: String): Boolean = isLongCommandLineOption(s) || isShortCommandLineOption(s)
-
-    //@tailrec
-    def processArgument() = {
-
-    }
-
     def processCommandLineOptionValues(mapValue: CommandLineOptionMapValue, currentValue: String, valuesFound: Int, valuesRemaining: Int, args: Stream[String]): Stream[String] = {
       @tailrec
       def processCommandLineOptionValues0(currentValue: String, valuesFound: Int, valuesRemaining: Int, args: Stream[String]): Stream[String] = {
@@ -156,8 +152,9 @@ class GNUParserStrategy extends ParserStrategy {
             logger.finer("no more option values, continuing on")
 
             //Validate that we've met the minimum number of required values for this argument.
-            if (mapValue.minNumberOfRequiredValues != UNBOUNDED && valuesFound < mapValue.minNumberOfRequiredValues)
+            if (mapValue.minNumberOfRequiredValues != UNBOUNDED && valuesFound < mapValue.minNumberOfRequiredValues) {
               missingMinimumNumberOfValues(mapValue.name, valuesFound, mapValue.minNumberOfRequiredValues)
+            }
 
             //return unmodified stream at this point so the caller
             //can continue inspecting the arguments at the point where

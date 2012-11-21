@@ -44,7 +44,6 @@ class Parser(val configuration: ParserConfiguration, options: CommandLineOptionM
     case Seq(value, tail @_*) => {
       value match {
 //        case Seq(first_char, param_name @_*) if first_char == configuration.simpleArgumentPattern => {
-//          println("param: " + param_name)
 //          parse0(tail, Some(param_name))
 //        }
         case _ => {
