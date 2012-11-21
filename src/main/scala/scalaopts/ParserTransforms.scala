@@ -21,11 +21,27 @@ package scalaopts
 
 object ParserTransforms {
   def createParserMap(options: Seq[TypedCommandLineOption[_]]): CommandLineOptionMap = {
+    //Ensure that we have a set of unique names across option names
+    val option_names_with_potential_duplicates = options.map(_.name)
+    val unique_option_names = option_names_with_potential_duplicates.distinct
+    val non_unique_option_names = option_names_with_potential_duplicates.diff(unique_option_names)
+    if (!non_unique_option_names.isEmpty) {
+      throw new IllegalArgumentException("Command line options must have unique names across the entire set. The following are non-unique names: " + (non_unique_option_names mkString ", "))
+    }
+
+    //Ensure that we have a set of unique names across option long names and short names
+    val names_with_potential_duplicates = options.map(_.longNames).flatten ++ options.map(_.shortNames).flatten
+    val unique_names = names_with_potential_duplicates.distinct
+    val non_unique_names = names_with_potential_duplicates.diff(unique_names)
+    if (!non_unique_names.isEmpty) {
+      throw new IllegalArgumentException("Command line options must have unique long names and short names across the entire set. The following are non-unique names: " + (non_unique_names mkString ", "))
+    }
+
     (
       for {
         opt <- options
       }
-      yield opt.name -> opt
+        yield opt.name -> opt
     ).toMap
   }
 

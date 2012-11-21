@@ -57,8 +57,7 @@ command_line_options {
     val result_4 = CommandLineOption named "custom" parseAs new CustomOptionParser[Int](transform = (s: String) => Option(s.length))
     val parser = CommandLineOptions(
       CommandLineOption named "size"
-        longName    "a"
-        shortName   "a"
+        longName    "size"
         shortName   "s"
         shortName   "sz"
         required    YES
@@ -87,7 +86,7 @@ command_line_options {
     //parser.parse("--a", "<my value for a!>", "--a=b", "-verbose", "-c")
     //parser.parse("-a", "<my value for a!>")
     //parser.parse("--a=a_value", "-a", "a2_value", "--a=a3_value") //arity
-    parser.parse("-a", "a1_value", "a2_value", "a3_value")
+    parser.parse("-sz", "sz1_value", "sz2_value", "sz3_value")
   }
 
   test("test1") {
