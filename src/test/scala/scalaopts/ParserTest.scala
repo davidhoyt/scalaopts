@@ -19,6 +19,7 @@
 
 package scalaopts
 
+import common.platform.Terminal
 import common.{Arch, OSFamily}
 import org.scalatest.junit.JUnitRunner
 import org.scalatest.FunSuite
@@ -50,6 +51,7 @@ command_line_options {
 
     println(OSFamily.systemOSFamily)
     println(Arch.systemArch)
+    println(Terminal.queryTerminalDimensions())
 
     val result_1 = CommandLineOption.named("a")
     val result_2 = CommandLineOption named "a"

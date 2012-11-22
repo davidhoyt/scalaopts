@@ -25,6 +25,11 @@
       <version>2.9.2</version>
     </dependency>
     <dependency>
+      <groupId>net.java.dev.jna</groupId>
+      <artifactId>jna</artifactId>
+      <version>3.5.1</version>
+    </dependency>
+    <dependency>
       <groupId>com.dongxiguo</groupId>
       <artifactId>zero-log_2.9.2</artifactId>
       <version>0.1.2</version>
