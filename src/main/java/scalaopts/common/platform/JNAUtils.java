@@ -27,6 +27,7 @@ import java.util.List;
 
 /**
  */
+@SuppressWarnings("unchecked")
 public class JNAUtils {
   public static <T> List<T> fromSeq(T...iterable) {
     return Arrays.asList(iterable);
