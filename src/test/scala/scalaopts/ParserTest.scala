@@ -59,12 +59,12 @@ command_line_options {
       CommandLineOption named "size"
         longName    "size"
         shortName   "s"
-        shortName   "sz"
         required    YES
         describedAs "size description"
         arity       UNBOUNDED
         minNumberOfRequiredValues 1
-        maxNumberOfRequiredValues 2
+        maxNumberOfRequiredValues 3
+        flag        NO
         parseAs     IntegerOption(defaultValue = 100),
       CommandLineOption named "verbose" shortName "v" dependsOn "size" dependsOn "somethingElse" describedAs "verbose description" parseAs DefaultFlagOption,
       CommandLineOption named "custom" parseAs new CustomOptionParser[Int](transform = (s: String) => Option(s.length))
@@ -83,10 +83,11 @@ command_line_options {
     //   VALID: -<short param name> min values=0, max values=0, arity=1 (effectively a flag option)
     //   unbounded max values
     //   bounded max values
+    //   -ooo where o is a flag and the arity is 2 (thus making this an error, but -oo would work)
     //parser.parse("--a", "<my value for a!>", "--a=b", "-verbose", "-c")
     //parser.parse("-a", "<my value for a!>")
     //parser.parse("--a=a_value", "-a", "a2_value", "--a=a3_value") //arity
-    parser.parse("-sz", "sz1_value", "sz2_value", "sz3_value")
+    parser.parse("--size=some_value", "sz1_value", "sz2_value", "sz3_value")
   }
 
   test("test1") {

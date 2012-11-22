@@ -22,12 +22,16 @@ package scalaopts
 import common.StringUtil._
 import annotation.tailrec
 
-class Parser(val configuration: ParserConfiguration, options: CommandLineOptionMap) {
+class Parser(val configuration: ParserConfiguration, val options: CommandLineOptionMap) {
 
   def parse(values: String*): Boolean = parseArguments(values)
 
   //We don't really want to return a boolean - that's just a placeholder for now
   def parseArguments(values: Seq[String]): Boolean = {
+    if (!configuration.strategy.validateOptions(options)) {
+      throw new IllegalArgumentException("The provided options do not meet the parser strategy's requirements.")
+    }
+
     configuration.strategy.toStandardOptionView(values.toStream, options)
     true
     //parse0(values.map(s => s.trim), None)

@@ -20,6 +20,8 @@
 package scalaopts
 
 trait ParserStrategy {
+  def validateOptions(options: CommandLineOptionMap): Boolean
+
   /**
    * Takes a stream of arguments and produces a stream that represents the arguments in a
    * standard format.
