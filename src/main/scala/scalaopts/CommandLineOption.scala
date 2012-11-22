@@ -46,7 +46,9 @@ case object CommandLineOption extends Command {
     def describedAs(value: String): CommandLineOptionStep2[A]                   = CommandLineOptionStep2(name, is_required, longNames,          shortNames,          dependencies,             value,       arity, minNumberOfArguments, maxNumberOfArguments, parser)
     def dependsOn(value: String): CommandLineOptionStep2[A]                     = CommandLineOptionStep2(name, is_required, longNames,          shortNames,          value :: dependencies,    description, arity, minNumberOfArguments, maxNumberOfArguments, parser)
     def dependsOn(opt: TypedCommandLineOption[Any]): CommandLineOptionStep2[A]  = CommandLineOptionStep2(name, is_required, longNames,          shortNames,          opt.name :: dependencies, description, arity, minNumberOfArguments, maxNumberOfArguments, parser)
+    def arguments(min: Int, max: Int): CommandLineOptionStep2[A]                = CommandLineOptionStep2(name, is_required, longNames,          shortNames,          dependencies,             description, arity, min,                  max,                parser)
     def arguments(value: Int): CommandLineOptionStep2[A]                        = numberOfArguments(value)
+    def arguments(range: Range): CommandLineOptionStep2[A]                      = arguments(range.start, range.end)
     def flag(value: Boolean): CommandLineOptionStep2[A]                         = if (value) { flag } else { this }
     def parseAs[B](value: OptionParser[B]): TypedCommandLineOption[B]           = new TypedCommandLineOption(name, is_required, if (longNames.isEmpty) List(name) else longNames, shortNames, dependencies, description, arity, minNumberOfArguments, maxNumberOfArguments, Some(value))
   }

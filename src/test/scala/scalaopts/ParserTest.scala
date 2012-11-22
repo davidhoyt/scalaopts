@@ -62,8 +62,7 @@ command_line_options {
         required    YES
         describedAs "size description"
         arity       UNBOUNDED
-        minNumberOfArguments 1
-        maxNumberOfArguments 3
+        arguments   (1 to 4)
         flag        NO
         parseAs     IntegerOption(defaultValue = 100),
       CommandLineOption named "verbose" shortName "v" dependsOn "size" dependsOn "somethingElse" describedAs "verbose description" parseAs DefaultFlagOption,

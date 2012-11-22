@@ -161,9 +161,8 @@ class GNUParserStrategy extends ParserStrategy {
 
             logger.info(_ ++= "Found short option(s): " ++= potentially_multiple_options)
 
-            //DOH -- An option and its argument may or may not appear as separate tokens. (In other words, the whitespace separating them is optional.) Thus, ‘-o foo’ and ‘-ofoo’ are equivalent.
             //Check if the first character is an option and *NOT* a flag. If so, treat the rest as a value for that option.
-            //Otherwise, pick it off, pre-pend to the arg stream a hyphen and the rest of the current arg and continue processing...
+            //Otherwise, pick it off, prepend to the arg stream a hyphen and the rest of the current arg and continue processing.
             potentially_multiple_options.headOption match {
               case None => {
                 //Nothing to see here...move along...
@@ -226,6 +225,7 @@ class GNUParserStrategy extends ParserStrategy {
       @tailrec
       def processOptionArguments0(valuesFound: Int, valuesRemaining: Int, args: Stream[String]): Stream[String] = {
         logger.finer("processing remaining option arguments")
+
         args match {
           case arg #:: tail if !isCommandLineOption(arg) && findCommandLineOption(arg).isEmpty => {
             logger.finer(_ ++= "found option argument: " ++= arg)
