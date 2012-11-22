@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="194416cc-139c-4245-b94d-30497d73f6c4" name="Default" comment="">
+    <list default="true" id="194416cc-139c-4245-b94d-30497d73f6c4" name="Default" comment="Minor refactoring in order to use more correct terminology.">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/scala/scalaopts/CommandLineOption.scala" afterPath="$PROJECT_DIR$/src/main/scala/scalaopts/CommandLineOption.scala" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/scala/scalaopts/Parser.scala" afterPath="$PROJECT_DIR$/src/main/scala/scalaopts/Parser.scala" />
@@ -73,69 +73,55 @@
       <file leaf-file-name="GNUParserStrategy.scala" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/scala/scalaopts/strategy/GNUParserStrategy.scala">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="190" column="32" selection-start="9223" selection-end="9223" vertical-scroll-proportion="0.40933573">
+            <state line="40" column="58" selection-start="1650" selection-end="1650" vertical-scroll-proportion="-0.94614005">
               <folding>
                 <element signature="e#747#765#0" expanded="true" />
-                <element signature="e#1069#1086#0" expanded="true" />
-                <element signature="e#1298#2501#0" expanded="true" />
-                <element signature="e#1573#1890#0" expanded="true" />
-                <element signature="e#2166#2487#0" expanded="true" />
-                <element signature="docComment;method#toStandardOptionView#0" expanded="true" />
-                <element signature="e#3522#9189#0" expanded="true" />
-                <element signature="e#3530#9183#0" expanded="true" />
-                <element signature="e#3618#8996#0" expanded="true" />
-                <element signature="e#3710#4010#0" expanded="true" />
-                <element signature="e#4046#4332#0" expanded="true" />
-                <element signature="e#4372#5789#0" expanded="true" />
-                <element signature="e#4615#5777#0" expanded="true" />
-                <element signature="e#4688#4773#0" expanded="true" />
-                <element signature="e#4822#5763#0" expanded="true" />
-                <element signature="e#4960#5332#0" expanded="true" />
-                <element signature="e#5370#5623#0" expanded="true" />
-                <element signature="e#5629#5747#0" expanded="true" />
-                <element signature="e#5830#8927#0" expanded="true" />
-                <element signature="e#5845#5873#0" expanded="true" />
-                <element signature="e#6641#8915#0" expanded="true" />
-                <element signature="e#6716#6893#0" expanded="true" />
-                <element signature="e#6932#8901#0" expanded="true" />
-                <element signature="e#7179#8885#0" expanded="true" />
-                <element signature="e#7257#7436#0" expanded="true" />
-                <element signature="e#7489#8867#0" expanded="true" />
-                <element signature="e#7739#7929#0" expanded="true" />
-                <element signature="e#7935#8847#0" expanded="true" />
-                <element signature="e#8524#8639#0" expanded="true" />
-                <element signature="e#8645#8825#0" expanded="true" />
-                <element signature="e#8933#8986#0" expanded="true" />
-                <element signature="e#9026#9148#0" expanded="true" />
-                <element signature="e#9347#11566#0" expanded="true" />
-                <element signature="e#9486#11485#0" expanded="true" />
-                <element signature="e#9555#11477#0" expanded="true" />
-                <element signature="e#9666#10776#0" expanded="true" />
-                <element signature="e#9903#10251#0" expanded="true" />
-                <element signature="e#10257#10764#0" expanded="true" />
-                <element signature="e#10367#10481#0" expanded="true" />
-                <element signature="e#10797#11467#0" expanded="true" />
-                <element signature="e#11076#11198#0" expanded="true" />
-                <element signature="e#11673#11773#0" expanded="true" />
-                <element signature="e#11834#11912#0" expanded="true" />
-                <element signature="e#11987#12068#0" expanded="true" />
-                <element signature="e#12170#12314#0" expanded="true" />
-                <element signature="e#12398#12501#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="CommandLineOption.scala" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/scala/scalaopts/CommandLineOption.scala">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="65" column="6" selection-start="6487" selection-end="6487" vertical-scroll-proportion="0.0">
-              <folding>
-                <element signature="n#!!doc" expanded="true" />
-                <element signature="docComment;class#1210:5799" expanded="true" />
-                <element signature="e#6273#6384#0" expanded="true" />
-                <element signature="e#7178#7288#0" expanded="true" />
-                <element signature="e#7329#7421#0" expanded="true" />
+                <element signature="e#2717#2734#0" expanded="true" />
+                <element signature="e#3365#4568#0" expanded="true" />
+                <element signature="e#3640#3957#0" expanded="true" />
+                <element signature="e#4233#4554#0" expanded="true" />
+                <element signature="docComment;method#processOptions#0" expanded="true" />
+                <element signature="e#4771#14418#0" expanded="true" />
+                <element signature="e#5176#11068#0" expanded="true" />
+                <element signature="e#5184#11062#0" expanded="true" />
+                <element signature="e#5328#10881#0" expanded="true" />
+                <element signature="e#5440#5784#0" expanded="true" />
+                <element signature="e#5833#6172#0" expanded="true" />
+                <element signature="e#6225#7624#0" expanded="true" />
+                <element signature="e#6468#7612#0" expanded="true" />
+                <element signature="e#6541#6624#0" expanded="true" />
+                <element signature="e#6673#7598#0" expanded="true" />
+                <element signature="e#6811#7175#0" expanded="true" />
+                <element signature="e#7213#7458#0" expanded="true" />
+                <element signature="e#7464#7582#0" expanded="true" />
+                <element signature="e#7678#10818#0" expanded="true" />
+                <element signature="e#7693#7721#0" expanded="true" />
+                <element signature="e#8477#10806#0" expanded="true" />
+                <element signature="e#8552#8723#0" expanded="true" />
+                <element signature="e#8762#10792#0" expanded="true" />
+                <element signature="e#8943#10776#0" expanded="true" />
+                <element signature="e#9021#9198#0" expanded="true" />
+                <element signature="e#9251#10758#0" expanded="true" />
+                <element signature="e#9676#9847#0" expanded="true" />
+                <element signature="e#9853#10738#0" expanded="true" />
+                <element signature="e#10440#10549#0" expanded="true" />
+                <element signature="e#10555#10716#0" expanded="true" />
+                <element signature="e#10824#10871#0" expanded="true" />
+                <element signature="e#10911#11027#0" expanded="true" />
+                <element signature="e#11218#13378#0" expanded="true" />
+                <element signature="e#11349#13305#0" expanded="true" />
+                <element signature="e#11421#13297#0" expanded="true" />
+                <element signature="e#11532#12604#0" expanded="true" />
+                <element signature="e#11768#12091#0" expanded="true" />
+                <element signature="e#12097#12592#0" expanded="true" />
+                <element signature="e#12197#12309#0" expanded="true" />
+                <element signature="e#12625#13287#0" expanded="true" />
+                <element signature="e#12898#13018#0" expanded="true" />
+                <element signature="e#13483#13583#0" expanded="true" />
+                <element signature="e#13640#13714#0" expanded="true" />
+                <element signature="e#13787#13868#0" expanded="true" />
+                <element signature="e#13971#14145#0" expanded="true" />
+                <element signature="e#14230#14370#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -144,28 +130,22 @@
       <file leaf-file-name="ParserStrategy.scala" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/scala/scalaopts/ParserStrategy.scala">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="22" column="2" selection-start="763" selection-end="822" vertical-scroll-proportion="0.0">
-              <folding>
-                <element signature="docComment;method#toStandardOptionView#0" expanded="true" />
-              </folding>
+            <state line="26" column="21" selection-start="941" selection-end="941" vertical-scroll-proportion="0.0">
+              <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Parser.scala" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/scala/scalaopts/Parser.scala">
+      <file leaf-file-name="CommandLineOption.scala" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/scala/scalaopts/CommandLineOption.scala">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="23" column="0" selection-start="791" selection-end="791" vertical-scroll-proportion="0.0">
+            <state line="64" column="0" selection-start="6332" selection-end="6332" vertical-scroll-proportion="0.0">
               <folding>
                 <element signature="n#!!doc" expanded="true" />
-                <element signature="e#738#764#0" expanded="true" />
-                <element signature="e#1081#1393#0" expanded="true" />
-                <element signature="e#1141#1261#0" expanded="true" />
-                <element signature="e#1668#2018#0" expanded="true" />
-                <element signature="e#1699#1717#0" expanded="true" />
-                <element signature="e#1751#2014#0" expanded="true" />
-                <element signature="e#1759#2008#0" expanded="true" />
-                <element signature="e#1951#2000#0" expanded="true" />
+                <element signature="docComment;class#1210:5756" expanded="true" />
+                <element signature="e#6220#6331#0" expanded="true" />
+                <element signature="e#7128#7228#0" expanded="true" />
+                <element signature="e#7268#7360#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -207,10 +187,10 @@
         <option value="$PROJECT_DIR$/project/config/scalastyle.xml" />
         <option value="$PROJECT_DIR$/src/main/scala/scalaopts/zero-log.config.scala" />
         <option value="$PROJECT_DIR$/src/main/scala/scalaopts/package.scala" />
-        <option value="$PROJECT_DIR$/src/main/scala/scalaopts/ParserStrategy.scala" />
         <option value="$PROJECT_DIR$/src/main/scala/scalaopts/Parser.scala" />
-        <option value="$PROJECT_DIR$/src/main/scala/scalaopts/CommandLineOption.scala" />
         <option value="$PROJECT_DIR$/src/test/scala/scalaopts/ParserTest.scala" />
+        <option value="$PROJECT_DIR$/src/main/scala/scalaopts/ParserStrategy.scala" />
+        <option value="$PROJECT_DIR$/src/main/scala/scalaopts/CommandLineOption.scala" />
         <option value="$PROJECT_DIR$/src/main/scala/scalaopts/strategy/GNUParserStrategy.scala" />
       </list>
     </option>
@@ -771,62 +751,6 @@
               <option name="myItemId" value="scala" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="java" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="scalaopts" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="scalaopts" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="main" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="scala" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="scalaopts" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="scalaopts" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="main" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="scala" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="scalaopts" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="zero-log.config.scala" />
-              <option name="myItemType" value="org.jetbrains.plugins.scala.components.ScalaDefsProjectViewProvider$ScalaFileTreeNode" />
-            </PATH_ELEMENT>
           </PATH>
           <PATH>
             <PATH_ELEMENT>
@@ -881,6 +805,36 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="package.scala" />
+              <option name="myItemType" value="org.jetbrains.plugins.scala.components.ScalaDefsProjectViewProvider$ScalaFileTreeNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="scalaopts" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="scalaopts" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="scala" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="scalaopts" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="OptionParser.scala" />
               <option name="myItemType" value="org.jetbrains.plugins.scala.components.ScalaDefsProjectViewProvider$ScalaFileTreeNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -1566,7 +1520,11 @@
       <created>1353486399386</created>
       <updated>1353486399386</updated>
     </task>
-    <option name="localTasksCounter" value="21" />
+    <task id="LOCAL-00021" summary="More steps towards GNU-style parsing compliance.">
+      <created>1353564835266</created>
+      <updated>1353564835266</updated>
+    </task>
+    <option name="localTasksCounter" value="22" />
     <servers />
   </component>
   <component name="TodoView" selected-index="0">
@@ -1653,7 +1611,7 @@
     <option name="SHOW_VCS_ERROR_NOTIFICATIONS" value="true" />
     <option name="FORCE_NON_EMPTY_COMMENT" value="false" />
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="false" />
-    <option name="LAST_COMMIT_MESSAGE" value="Make style check happy." />
+    <option name="LAST_COMMIT_MESSAGE" value="More steps towards GNU-style parsing compliance." />
     <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="false" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_FILES_UP_TO_DATE_BEFORE_COMMIT" value="false" />
@@ -1683,6 +1641,7 @@
     <MESSAGE value="Added logging support with zero-log." />
     <MESSAGE value="Configured logging support log level." />
     <MESSAGE value="Make style check happy." />
+    <MESSAGE value="More steps towards GNU-style parsing compliance." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -1696,34 +1655,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/main/scala/scalaopts/OptionParser.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="49" column="73" selection-start="2443" selection-end="2443" vertical-scroll-proportion="0.5908373">
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-            <element signature="docComment;class#857:1195" expanded="true" />
-            <element signature="docComment;class#1197:2922" expanded="true" />
-            <element signature="e#2627#2745#0" expanded="true" />
-            <element signature="e#2808#2920#0" expanded="true" />
-            <element signature="e#2875#2916#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/com/dongxiguo/zero-log_2.9.2/0.1.2/zero-log_2.9.2-0.1.2-sources.jar!/ZeroLoggerFactory/package.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="20" column="51" selection-start="791" selection-end="791" vertical-scroll-proportion="0.15789473">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pom.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="74" column="20" selection-start="2474" selection-end="2474" vertical-scroll-proportion="0.65806454">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/build.sbt">
       <provider selected="true" editor-type-id="text-editor">
         <state line="6" column="52" selection-start="103" selection-end="116" vertical-scroll-proportion="0.17894737">
@@ -1769,16 +1700,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/scala/scalaopts/zero-log.config.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="30" column="62" selection-start="1108" selection-end="1108" vertical-scroll-proportion="0.0">
-          <folding>
-            <element signature="e#738#806#0" expanded="true" />
-            <element signature="docComment;class#888:1185" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/scala/scalaopts/package.scala">
       <provider selected="true" editor-type-id="text-editor">
         <state line="17" column="2" selection-start="717" selection-end="717" vertical-scroll-proportion="0.0">
@@ -1789,28 +1710,52 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/scala/scalaopts/ParserStrategy.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="22" column="2" selection-start="763" selection-end="822" vertical-scroll-proportion="0.0">
-          <folding>
-            <element signature="docComment;method#toStandardOptionView#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/scala/scalaopts/Parser.scala">
       <provider selected="true" editor-type-id="text-editor">
         <state line="23" column="0" selection-start="791" selection-end="791" vertical-scroll-proportion="0.0">
           <folding>
             <element signature="n#!!doc" expanded="true" />
             <element signature="e#738#764#0" expanded="true" />
-            <element signature="e#1081#1393#0" expanded="true" />
+            <element signature="e#1081#1387#0" expanded="true" />
             <element signature="e#1141#1261#0" expanded="true" />
-            <element signature="e#1668#2018#0" expanded="true" />
-            <element signature="e#1699#1717#0" expanded="true" />
-            <element signature="e#1751#2014#0" expanded="true" />
-            <element signature="e#1759#2008#0" expanded="true" />
-            <element signature="e#1951#2000#0" expanded="true" />
+            <element signature="e#1662#2012#0" expanded="true" />
+            <element signature="e#1693#1711#0" expanded="true" />
+            <element signature="e#1745#2008#0" expanded="true" />
+            <element signature="e#1753#2002#0" expanded="true" />
+            <element signature="e#1945#1994#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/scala/scalaopts/StringTransforms.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="26" column="7" selection-start="848" selection-end="848" vertical-scroll-proportion="0.0">
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+            <element signature="docComment;class#764:2476" expanded="true" />
+            <element signature="e#869#1052#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/scala/scalaopts/zero-log.config.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="30" column="62" selection-start="1108" selection-end="1108" vertical-scroll-proportion="0.0">
+          <folding>
+            <element signature="e#738#806#0" expanded="true" />
+            <element signature="docComment;class#888:1185" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/scala/scalaopts/strategy/package.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="49" column="0" selection-start="2021" selection-end="2021" vertical-scroll-proportion="0.0">
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+            <element signature="e#738#774#0" expanded="true" />
+            <element signature="docComment;method#findMatchingMapValue#0" expanded="true" />
+            <element signature="e#1827#1937#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -1825,69 +1770,91 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/scala/scalaopts/CommandLineOption.scala">
+    <entry file="file://$PROJECT_DIR$/src/main/scala/scalaopts/OptionParser.scala">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="65" column="6" selection-start="6487" selection-end="6487" vertical-scroll-proportion="0.0">
+        <state line="32" column="20" selection-start="1086" selection-end="1086" vertical-scroll-proportion="0.0">
           <folding>
             <element signature="n#!!doc" expanded="true" />
-            <element signature="docComment;class#1210:5799" expanded="true" />
-            <element signature="e#6273#6384#0" expanded="true" />
-            <element signature="e#7178#7288#0" expanded="true" />
-            <element signature="e#7329#7421#0" expanded="true" />
+            <element signature="docComment;class#857:1195" expanded="true" />
+            <element signature="docComment;class#1197:2922" expanded="true" />
+            <element signature="e#2627#2745#0" expanded="true" />
+            <element signature="e#2808#2920#0" expanded="true" />
+            <element signature="e#2875#2916#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/scala/scalaopts/ParserStrategy.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="26" column="21" selection-start="941" selection-end="941" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/scala/scalaopts/CommandLineOption.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="64" column="0" selection-start="6332" selection-end="6332" vertical-scroll-proportion="0.0">
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+            <element signature="docComment;class#1210:5756" expanded="true" />
+            <element signature="e#6220#6331#0" expanded="true" />
+            <element signature="e#7128#7228#0" expanded="true" />
+            <element signature="e#7268#7360#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/scala/scalaopts/strategy/GNUParserStrategy.scala">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="190" column="32" selection-start="9223" selection-end="9223" vertical-scroll-proportion="0.40933573">
+        <state line="40" column="58" selection-start="1650" selection-end="1650" vertical-scroll-proportion="-0.94614005">
           <folding>
             <element signature="e#747#765#0" expanded="true" />
-            <element signature="e#1069#1086#0" expanded="true" />
-            <element signature="e#1298#2501#0" expanded="true" />
-            <element signature="e#1573#1890#0" expanded="true" />
-            <element signature="e#2166#2487#0" expanded="true" />
-            <element signature="docComment;method#toStandardOptionView#0" expanded="true" />
-            <element signature="e#3522#9189#0" expanded="true" />
-            <element signature="e#3530#9183#0" expanded="true" />
-            <element signature="e#3618#8996#0" expanded="true" />
-            <element signature="e#3710#4010#0" expanded="true" />
-            <element signature="e#4046#4332#0" expanded="true" />
-            <element signature="e#4372#5789#0" expanded="true" />
-            <element signature="e#4615#5777#0" expanded="true" />
-            <element signature="e#4688#4773#0" expanded="true" />
-            <element signature="e#4822#5763#0" expanded="true" />
-            <element signature="e#4960#5332#0" expanded="true" />
-            <element signature="e#5370#5623#0" expanded="true" />
-            <element signature="e#5629#5747#0" expanded="true" />
-            <element signature="e#5830#8927#0" expanded="true" />
-            <element signature="e#5845#5873#0" expanded="true" />
-            <element signature="e#6641#8915#0" expanded="true" />
-            <element signature="e#6716#6893#0" expanded="true" />
-            <element signature="e#6932#8901#0" expanded="true" />
-            <element signature="e#7179#8885#0" expanded="true" />
-            <element signature="e#7257#7436#0" expanded="true" />
-            <element signature="e#7489#8867#0" expanded="true" />
-            <element signature="e#7739#7929#0" expanded="true" />
-            <element signature="e#7935#8847#0" expanded="true" />
-            <element signature="e#8524#8639#0" expanded="true" />
-            <element signature="e#8645#8825#0" expanded="true" />
-            <element signature="e#8933#8986#0" expanded="true" />
-            <element signature="e#9026#9148#0" expanded="true" />
-            <element signature="e#9347#11566#0" expanded="true" />
-            <element signature="e#9486#11485#0" expanded="true" />
-            <element signature="e#9555#11477#0" expanded="true" />
-            <element signature="e#9666#10776#0" expanded="true" />
-            <element signature="e#9903#10251#0" expanded="true" />
-            <element signature="e#10257#10764#0" expanded="true" />
-            <element signature="e#10367#10481#0" expanded="true" />
-            <element signature="e#10797#11467#0" expanded="true" />
-            <element signature="e#11076#11198#0" expanded="true" />
-            <element signature="e#11673#11773#0" expanded="true" />
-            <element signature="e#11834#11912#0" expanded="true" />
-            <element signature="e#11987#12068#0" expanded="true" />
-            <element signature="e#12170#12314#0" expanded="true" />
-            <element signature="e#12398#12501#0" expanded="true" />
+            <element signature="e#2717#2734#0" expanded="true" />
+            <element signature="e#3365#4568#0" expanded="true" />
+            <element signature="e#3640#3957#0" expanded="true" />
+            <element signature="e#4233#4554#0" expanded="true" />
+            <element signature="docComment;method#processOptions#0" expanded="true" />
+            <element signature="e#4771#14418#0" expanded="true" />
+            <element signature="e#5176#11068#0" expanded="true" />
+            <element signature="e#5184#11062#0" expanded="true" />
+            <element signature="e#5328#10881#0" expanded="true" />
+            <element signature="e#5440#5784#0" expanded="true" />
+            <element signature="e#5833#6172#0" expanded="true" />
+            <element signature="e#6225#7624#0" expanded="true" />
+            <element signature="e#6468#7612#0" expanded="true" />
+            <element signature="e#6541#6624#0" expanded="true" />
+            <element signature="e#6673#7598#0" expanded="true" />
+            <element signature="e#6811#7175#0" expanded="true" />
+            <element signature="e#7213#7458#0" expanded="true" />
+            <element signature="e#7464#7582#0" expanded="true" />
+            <element signature="e#7678#10818#0" expanded="true" />
+            <element signature="e#7693#7721#0" expanded="true" />
+            <element signature="e#8477#10806#0" expanded="true" />
+            <element signature="e#8552#8723#0" expanded="true" />
+            <element signature="e#8762#10792#0" expanded="true" />
+            <element signature="e#8943#10776#0" expanded="true" />
+            <element signature="e#9021#9198#0" expanded="true" />
+            <element signature="e#9251#10758#0" expanded="true" />
+            <element signature="e#9676#9847#0" expanded="true" />
+            <element signature="e#9853#10738#0" expanded="true" />
+            <element signature="e#10440#10549#0" expanded="true" />
+            <element signature="e#10555#10716#0" expanded="true" />
+            <element signature="e#10824#10871#0" expanded="true" />
+            <element signature="e#10911#11027#0" expanded="true" />
+            <element signature="e#11218#13378#0" expanded="true" />
+            <element signature="e#11349#13305#0" expanded="true" />
+            <element signature="e#11421#13297#0" expanded="true" />
+            <element signature="e#11532#12604#0" expanded="true" />
+            <element signature="e#11768#12091#0" expanded="true" />
+            <element signature="e#12097#12592#0" expanded="true" />
+            <element signature="e#12197#12309#0" expanded="true" />
+            <element signature="e#12625#13287#0" expanded="true" />
+            <element signature="e#12898#13018#0" expanded="true" />
+            <element signature="e#13483#13583#0" expanded="true" />
+            <element signature="e#13640#13714#0" expanded="true" />
+            <element signature="e#13787#13868#0" expanded="true" />
+            <element signature="e#13971#14145#0" expanded="true" />
+            <element signature="e#14230#14370#0" expanded="true" />
           </folding>
         </state>
       </provider>

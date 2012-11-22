@@ -32,7 +32,7 @@ class Parser(val configuration: ParserConfiguration, val options: CommandLineOpt
       throw new IllegalArgumentException("The provided options do not meet the parser strategy's requirements.")
     }
 
-    configuration.strategy.toStandardOptionView(values.toStream, options)
+    configuration.strategy.processOptions(values.toStream, options)
     true
     //parse0(values.map(s => s.trim), None)
   }

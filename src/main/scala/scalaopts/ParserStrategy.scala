@@ -25,8 +25,8 @@ trait ParserStrategy {
   /**
    * Takes a stream of arguments and produces a stream that represents the arguments in a
    * standard format.
-   * @param args
+   * @param application_arguments
    * @return
    */
-  def toStandardOptionView(args: Stream[String], options: CommandLineOptionMap): Stream[StandardOption[_]]
+  def processOptions(application_arguments: Stream[String], options: CommandLineOptionMap): Stream[StandardOption[_]]
 }
