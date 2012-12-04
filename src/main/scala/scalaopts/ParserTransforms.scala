@@ -20,7 +20,7 @@
 package scalaopts
 
 object ParserTransforms {
-  def createParserMap(options: Seq[TypedCommandLineOption[_]]): CommandLineOptionMap = {
+  def createParserMap(options: Seq[CommandLineOptionMapTypedValue]): CommandLineOptionMap = {
     //Ensure that we have a set of unique names across option names
     val option_names_with_potential_duplicates = options.map(_.name)
     val unique_option_names = option_names_with_potential_duplicates.distinct
@@ -41,11 +41,11 @@ object ParserTransforms {
       for {
         opt <- options
       }
-        yield opt.name -> opt
+        yield opt.name -> (opt, opt.accumulator.initialValue)
     ).toMap
   }
 
-  def createParser(configuration: ParserConfiguration, options: Seq[TypedCommandLineOption[_]]): Parser = {
+  def createParser(configuration: ParserConfiguration, options: Seq[CommandLineOptionMapTypedValue]): Parser = {
     new Parser(configuration, createParserMap(options))
   }
 }

@@ -27,13 +27,13 @@ import annotation.tailrec
 package object strategy {
 
   def findMatchingCommandLineOption(command_line_options: CommandLineOptionMap)(name: String): Option[CommandLineOptionMapValue] =
-    findMatchingMapValue(command_line_options)(name)((value, looking_for) => value.isMatchForName(looking_for))
+    findMatchingMapValue(command_line_options)(name)((value, looking_for) => value._1.isMatchForName(looking_for))
 
   def findMatchingCommandLineOptionByLongName(command_line_options: CommandLineOptionMap)(name: String): Option[CommandLineOptionMapValue] =
-    findMatchingMapValue(command_line_options)(name)((value, looking_for) => value.isMatchForLongName(looking_for))
+    findMatchingMapValue(command_line_options)(name)((value, looking_for) => value._1.isMatchForLongName(looking_for))
 
   def findMatchingCommandLineOptionByShortName(command_line_options: CommandLineOptionMap)(name: String): Option[CommandLineOptionMapValue] =
-    findMatchingMapValue(command_line_options)(name)((value, looking_for) => value.isMatchForShortName(looking_for))
+    findMatchingMapValue(command_line_options)(name)((value, looking_for) => value._1.isMatchForShortName(looking_for))
 
   /**
    * Return the value in a map matching a given predicate p.

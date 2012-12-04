@@ -19,8 +19,9 @@
 
 package scalaopts.java
 
-import scalaopts.{CustomOptionParser, TypedCommandLineOption}
+import scalaopts.{ListOptionArgumentAccumulator, CustomOptionParser, TypedCommandLineOption}
 import collection.JavaConversions
+import scalaopts.CommandLineOption.FinalTypedCommandLineOption
 
 /**
  */
@@ -28,7 +29,7 @@ object Translate {
 
   def asStringSeq(arr: Array[String]): Seq[String] = arr
 
-  def asTypedCommandLineOption[T](opt: ICommandLineOption[T]): TypedCommandLineOption[T] = {
+  def asTypedCommandLineOption[T](opt: ICommandLineOption[T]): TypedCommandLineOption[T, List[Option[T]], List[Option[T]]] = {
     val java_option_parser = opt.getOptionParser()
     val java_default = java_option_parser.getDefaultValue()
     val default = Option(java_default)
@@ -45,10 +46,10 @@ object Translate {
 
     //TODO: Fill in the accumulator -- define this for the Java side of the house
 
-    new TypedCommandLineOption[T](opt.getName(), opt.isRequired(), long_names, short_names, dependencies, opt.getDescription(), opt.getArity(), opt.getMinNumberOfRequiredValues(), opt.getMaxNumberOfRequiredValues(), Some(option_parser), None)
+    new FinalTypedCommandLineOption(opt.getName(), opt.isRequired(), long_names, short_names, dependencies, opt.getDescription(), opt.getArity(), opt.getMinNumberOfRequiredValues(), opt.getMaxNumberOfRequiredValues(), Some(option_parser), new ListOptionArgumentAccumulator[T])
   }
 
-  def asTypedCommandLineOptionSeq[T](options: Array[ICommandLineOption[T]]): Seq[TypedCommandLineOption[_]] = {
+  def asTypedCommandLineOptionSeq[T](options: Array[ICommandLineOption[T]]): Seq[TypedCommandLineOption[_, _, _]] = {
     for (opt <- options)
       yield asTypedCommandLineOption(opt)
   }

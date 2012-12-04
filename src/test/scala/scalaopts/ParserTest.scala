@@ -59,14 +59,15 @@ command_line_options {
     val result_4 = CommandLineOption named "custom" parseAs new CustomOptionParser[Int](transform = (s: String) => Option(s.length))
     val parser = CommandLineOptions(
       CommandLineOption named "size"
-        longName    "size"
-        shortName   "s"
-        required    YES
-        describedAs "size description"
-        arity       UNBOUNDED
-        arguments   (1 to 4)
-        flag        NO
-        parseAs     IntegerOption(defaultValue = 100),
+        longName       "size"
+        shortName      "s"
+        required       YES
+        describedAs    "size description"
+        arity          UNBOUNDED
+        arguments      (1 to 4)
+        flag           NO
+        parseAs        IntegerOption(defaultValue = 100)
+        accumulateWith IntegerList(initialValues = List(1, 2, 3)),
 
       CommandLineOption named "verbose"
         shortName "v"
@@ -96,7 +97,7 @@ command_line_options {
     //parser.parse("--a", "<my value for a!>", "--a=b", "-verbose", "-c")
     //parser.parse("-a", "<my value for a!>")
     //parser.parse("--a=a_value", "-a", "a2_value", "--a=a3_value") //arity
-    parser.parse("--size=some_value", "sz1_value", "sz2_value", "sz3_value")
+    parser.parse("--size=123", "sz1_value", "sz2_value", "sz3_value")
   }
 
   test("test1") {

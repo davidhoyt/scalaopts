@@ -39,7 +39,8 @@ package object scalaopts {
   val NO = false
 
   type CommandLineOptionMapKey = String
-  type CommandLineOptionMapValue = TypedCommandLineOption[_]
+  type CommandLineOptionMapTypedValue = TypedCommandLineOption[_, _, _]
+  type CommandLineOptionMapValue = (CommandLineOptionMapTypedValue, _)
   type CommandLineOptionMap = Map[CommandLineOptionMapKey, CommandLineOptionMapValue]
   type CommandLineSpecification = Parser
 
@@ -48,11 +49,11 @@ package object scalaopts {
       strategy = new GNUParserStrategy()
     )
 
-    def apply(args: TypedCommandLineOption[_]*): CommandLineSpecification = applySeq(args)
-    def apply(configuration: ParserConfiguration)(args: TypedCommandLineOption[_]*): CommandLineSpecification = applySeq(configuration)(args)
+    def apply(args: CommandLineOptionMapTypedValue*): CommandLineSpecification = applySeq(args)
+    def apply(configuration: ParserConfiguration)(args: CommandLineOptionMapTypedValue*): CommandLineSpecification = applySeq(configuration)(args)
 
-    def applySeq(args: Seq[TypedCommandLineOption[_]]): CommandLineSpecification = applySeq(DEFAULT_PARSER_CONFIGURATION)(args)
-    def applySeq(configuration: ParserConfiguration)(args: Seq[TypedCommandLineOption[_]]): CommandLineSpecification = {
+    def applySeq(args: Seq[CommandLineOptionMapTypedValue]): CommandLineSpecification = applySeq(DEFAULT_PARSER_CONFIGURATION)(args)
+    def applySeq(configuration: ParserConfiguration)(args: Seq[CommandLineOptionMapTypedValue]): CommandLineSpecification = {
       ParserTransforms.createParser(configuration, args)
     }
   }

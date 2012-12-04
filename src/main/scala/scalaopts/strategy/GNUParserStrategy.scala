@@ -77,16 +77,16 @@ class GNUParserStrategy extends ParserStrategy {
 
   def validateOptions(options: CommandLineOptionMap): Boolean = {
     //Validate that all short names are of length 1 and each name is alphanumeric.
-    val invalid_short_name_option = options.find(_._2.shortNames.exists(name => name.length != 1 || !Character.isLetterOrDigit(name.charAt(0))))
+    val invalid_short_name_option = options.find(_._2._1.shortNames.exists(name => name.length != 1 || !Character.isLetterOrDigit(name.charAt(0))))
     if (invalid_short_name_option.isDefined) {
-      val option = invalid_short_name_option.get._2
+      val option = invalid_short_name_option.get._2._1
       throw new IllegalArgumentException("All short names must be 1 character in length and alpha-numeric for GNU-style parsing. The following option violated this rule: (name: " + option.name + ", short names: [" + (option.shortNames mkString ", ") + "])")
     }
 
     //Validate that all long names are composed of alpha-numeric characters or dashes.
-    val invalid_long_name_option = options.find(_._2.longNames.exists(name => name.exists(c => !Character.isLetterOrDigit(c) && !('-' == c))))
+    val invalid_long_name_option = options.find(_._2._1.longNames.exists(name => name.exists(c => !Character.isLetterOrDigit(c) && !('-' == c))))
     if (invalid_long_name_option.isDefined) {
-      val option = invalid_long_name_option.get._2
+      val option = invalid_long_name_option.get._2._1
       throw new IllegalArgumentException("All long names must be composed of alpha-numeric characters or hyphens for GNU-style parsing. The following option violated this rule: (name: " + option.name + ", long names: [" + (option.longNames mkString ", ") + "])")
     }
 
@@ -132,7 +132,7 @@ class GNUParserStrategy extends ParserStrategy {
                 unrecognizedOption(name)
                 Stream()
               }
-              case Some(command_line_option) => {
+              case Some((command_line_option, initial_accumulated_value)) => {
                 //If there's an equals sign then process this value and any remaining required values
                 if (equals_found) {
 
@@ -180,7 +180,7 @@ class GNUParserStrategy extends ParserStrategy {
                     unrecognizedOption(name)
                     Stream()
                   }
-                  case Some(command_line_option) => {
+                  case Some((command_line_option, initial_accumulated_value)) => {
                     //Found an option by that name. Excellent.
                     //Let's see if you're a flag or not. If you're not, then the remaining
                     //text is a value.
@@ -221,7 +221,7 @@ class GNUParserStrategy extends ParserStrategy {
       }
     }
 
-    def processOptionArguments(mapValue: CommandLineOptionMapValue, valuesFound: Int, valuesRemaining: Int, args: Stream[String]): Stream[String] = {
+    def processOptionArguments(mapValue: CommandLineOptionMapTypedValue, valuesFound: Int, valuesRemaining: Int, args: Stream[String]): Stream[String] = {
       @tailrec
       def processOptionArguments0(valuesFound: Int, valuesRemaining: Int, args: Stream[String]): Stream[String] = {
         logger.finer("processing remaining option arguments")
@@ -268,7 +268,7 @@ class GNUParserStrategy extends ParserStrategy {
       processOptionArguments0(valuesFound, valuesRemaining, args)
     }
 
-    def processSingleOptionArgument(mapValue: CommandLineOptionMapValue, currentValue: String): Unit = {
+    def processSingleOptionArgument(mapValue: CommandLineOptionMapTypedValue, currentValue: String): Unit = {
       logger.info(_ ++= "processing value for " ++= mapValue.name ++= ": " ++= currentValue)
       val result = mapValue(currentValue)
       logger.fine(_ ++= "ran option parser for " ++= mapValue.name ++= ", result: " ++= result.toString)
