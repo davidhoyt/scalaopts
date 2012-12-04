@@ -40,6 +40,9 @@ class Parser(val configuration: ParserConfiguration, val options: CommandLineOpt
   //TODO: Use futures for getting result of parsing or waiting for parsing to complete fully...
 
   //TODO: Use macros to create an object representing the options (translates the option map into the results of processing it...)
+  //        This will require splitting out the macro definition into a separate module. They have to be compiled separately and
+  //        before the code that will use it. Please see:
+  //        http://www.warski.org/blog/2012/12/starting-with-scala-macros-a-short-tutorial/
 
   //We don't really want to return a boolean - that's just a placeholder for now
   @tailrec
