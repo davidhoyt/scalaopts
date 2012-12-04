@@ -69,15 +69,16 @@ command_line_options {
         parseAs        IntegerOption(defaultValue = 100)
         accumulateWith IntegerList(initialValues = List(1, 2, 3)),
 
+      CommandLineOption named "custom"
+        parseAs new CustomOptionParser[Int](transform = (s: String) => Some(s.length))
+        accumulateWith AsyncInteger(callback = i => println("async: " + i)),
+
       CommandLineOption named "verbose"
         shortName "v"
         dependsOn "size"
         dependsOn "somethingElse"
         describedAs "verbose description"
-        parseAs DefaultFlagOption,
-
-      CommandLineOption named "custom"
-        parseAs new CustomOptionParser[Int](transform = (s: String) => Option(s.length))
+        parseAs DefaultFlagOption
     )
     println(result_3.longNames)
     println(result_3("234").getOrElse(98765))
@@ -98,6 +99,7 @@ command_line_options {
     //parser.parse("-a", "<my value for a!>")
     //parser.parse("--a=a_value", "-a", "a2_value", "--a=a3_value") //arity
     parser.parse("--size=123", "sz1_value", "sz2_value", "sz3_value")
+    parser.parse("--custom=my_value_here")
   }
 
   test("test1") {

@@ -28,4 +28,6 @@ object Accumulators {
    */
   type FnAccumulator[A, B] = (Option[A], B) => B
   type FnAccumulatorDone[B, C] = B => C
+  type FnAsyncAccumulatorCallback[A] = Option[A] => Unit
+  type FnAsyncAccumulatorDone = Unit => Unit
 }

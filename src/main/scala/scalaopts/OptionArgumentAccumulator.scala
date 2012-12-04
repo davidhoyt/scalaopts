@@ -38,6 +38,18 @@ class CustomOptionArgumentAccumulator[A, B, C](val initialValue: B, val fnAccumu
   def done(accumulatedValues: B): C = onDone(accumulatedValues)
 }
 
+class AsyncOptionArgumentAccumulator[A](val initialValues: List[A] = List(), val callback: FnAsyncAccumulatorCallback[A], val doneCallback: Option[FnAsyncAccumulatorDone] = None) extends OptionArgumentAccumulator[A, Unit, Unit] {
+  def initialValue: Unit = {
+    for (value <- initialValues)
+      callback(Some(value))
+  }
+  def accumulate(value: Option[A], accumulator: Unit): Unit = callback(value)
+  def done(accumulatedValues: Unit): Unit =
+    if (doneCallback.isDefined) {
+      doneCallback.get()
+    }
+}
+
 class ListOptionArgumentAccumulator[A](val initialValues: List[A] = List()) extends OptionArgumentAccumulator[A, List[Option[A]], List[Option[A]]] {
   def initialValue: List[Option[A]] = initialValues.map(Some(_)).reverse
   def accumulate(value: Option[A], accumulator: List[Option[A]]): List[Option[A]] = value :: accumulator
@@ -60,6 +72,17 @@ case class BooleanList(override val initialValues: List[Boolean] = List()) exten
 case class CharList   (override val initialValues: List[Char]    = List()) extends ListOptionArgumentAccumulator[Char]   (initialValues)
 case class StringList (override val initialValues: List[String]  = List()) extends ListOptionArgumentAccumulator[String] (initialValues)
 case class FileList   (override val initialValues: List[File]    = List()) extends ListOptionArgumentAccumulator[File]   (initialValues)
+
+case class AsyncByte   (override val initialValues: List[Byte]    = List(), override val callback: FnAsyncAccumulatorCallback[Byte],    override val doneCallback: Option[FnAsyncAccumulatorDone] = None) extends AsyncOptionArgumentAccumulator[Byte]   (initialValues, callback, doneCallback)
+case class AsyncShort  (override val initialValues: List[Short]   = List(), override val callback: FnAsyncAccumulatorCallback[Short],   override val doneCallback: Option[FnAsyncAccumulatorDone] = None) extends AsyncOptionArgumentAccumulator[Short]  (initialValues, callback, doneCallback)
+case class AsyncInteger(override val initialValues: List[Int]     = List(), override val callback: FnAsyncAccumulatorCallback[Int],     override val doneCallback: Option[FnAsyncAccumulatorDone] = None) extends AsyncOptionArgumentAccumulator[Int]    (initialValues, callback, doneCallback)
+case class AsyncLong   (override val initialValues: List[Long]    = List(), override val callback: FnAsyncAccumulatorCallback[Long],    override val doneCallback: Option[FnAsyncAccumulatorDone] = None) extends AsyncOptionArgumentAccumulator[Long]   (initialValues, callback, doneCallback)
+case class AsyncFloat  (override val initialValues: List[Float]   = List(), override val callback: FnAsyncAccumulatorCallback[Float],   override val doneCallback: Option[FnAsyncAccumulatorDone] = None) extends AsyncOptionArgumentAccumulator[Float]  (initialValues, callback, doneCallback)
+case class AsyncDouble (override val initialValues: List[Double]  = List(), override val callback: FnAsyncAccumulatorCallback[Double],  override val doneCallback: Option[FnAsyncAccumulatorDone] = None) extends AsyncOptionArgumentAccumulator[Double] (initialValues, callback, doneCallback)
+case class AsyncBoolean(override val initialValues: List[Boolean] = List(), override val callback: FnAsyncAccumulatorCallback[Boolean], override val doneCallback: Option[FnAsyncAccumulatorDone] = None) extends AsyncOptionArgumentAccumulator[Boolean](initialValues, callback, doneCallback)
+case class AsyncChar   (override val initialValues: List[Char]    = List(), override val callback: FnAsyncAccumulatorCallback[Char],    override val doneCallback: Option[FnAsyncAccumulatorDone] = None) extends AsyncOptionArgumentAccumulator[Char]   (initialValues, callback, doneCallback)
+case class AsyncString (override val initialValues: List[String]  = List(), override val callback: FnAsyncAccumulatorCallback[String],  override val doneCallback: Option[FnAsyncAccumulatorDone] = None) extends AsyncOptionArgumentAccumulator[String] (initialValues, callback, doneCallback)
+case class AsyncFile   (override val initialValues: List[File]    = List(), override val callback: FnAsyncAccumulatorCallback[File],    override val doneCallback: Option[FnAsyncAccumulatorDone] = None) extends AsyncOptionArgumentAccumulator[File]   (initialValues, callback, doneCallback)
 
 case class SingleByte   (val initialAccumulatorValue: Byte         = 0               ) extends SingleOptionArgumentAccumulator[Byte]   (Some(initialAccumulatorValue))
 case class SingleShort  (val initialAccumulatorValue: Short        = 0               ) extends SingleOptionArgumentAccumulator[Short]  (Some(initialAccumulatorValue))
