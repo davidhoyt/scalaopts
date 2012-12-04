@@ -43,7 +43,9 @@ object Translate {
       }
     })
 
-    new TypedCommandLineOption[T](opt.getName(), opt.isRequired(), long_names, short_names, dependencies, opt.getDescription(), opt.getArity(), opt.getMinNumberOfRequiredValues(), opt.getMaxNumberOfRequiredValues(), Some(option_parser))
+    //TODO: Fill in the accumulator -- define this for the Java side of the house
+
+    new TypedCommandLineOption[T](opt.getName(), opt.isRequired(), long_names, short_names, dependencies, opt.getDescription(), opt.getArity(), opt.getMinNumberOfRequiredValues(), opt.getMaxNumberOfRequiredValues(), Some(option_parser), None)
   }
 
   def asTypedCommandLineOptionSeq[T](options: Array[ICommandLineOption[T]]): Seq[TypedCommandLineOption[_]] = {

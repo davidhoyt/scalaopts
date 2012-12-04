@@ -270,6 +270,8 @@ class GNUParserStrategy extends ParserStrategy {
 
     def processSingleOptionArgument(mapValue: CommandLineOptionMapValue, currentValue: String): Unit = {
       logger.info(_ ++= "processing value for " ++= mapValue.name ++= ": " ++= currentValue)
+      val result = mapValue(currentValue)
+      logger.fine(_ ++= "ran option parser for " ++= mapValue.name ++= ", result: " ++= result.toString)
     }
 
     def unrecognizedOption(optionName: String): Unit = {
