@@ -67,8 +67,16 @@ command_line_options {
         arguments   (1 to 4)
         flag        NO
         parseAs     IntegerOption(defaultValue = 100),
-      CommandLineOption named "verbose" shortName "v" dependsOn "size" dependsOn "somethingElse" describedAs "verbose description" parseAs DefaultFlagOption,
-      CommandLineOption named "custom" parseAs new CustomOptionParser[Int](transform = (s: String) => Option(s.length))
+
+      CommandLineOption named "verbose"
+        shortName "v"
+        dependsOn "size"
+        dependsOn "somethingElse"
+        describedAs "verbose description"
+        parseAs DefaultFlagOption,
+
+      CommandLineOption named "custom"
+        parseAs new CustomOptionParser[Int](transform = (s: String) => Option(s.length))
     )
     println(result_3.longNames)
     println(result_3("234").getOrElse(98765))
