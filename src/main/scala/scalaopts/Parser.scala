@@ -39,6 +39,8 @@ class Parser(val configuration: ParserConfiguration, val options: CommandLineOpt
 
   //TODO: Use futures for getting result of parsing or waiting for parsing to complete fully...
 
+  //TODO: Use macros to create an object representing the options (translates the option map into the results of processing it...)
+
   //We don't really want to return a boolean - that's just a placeholder for now
   @tailrec
   private def parse0(values: Seq[String], current_param: Option[String]): Boolean = values match {
