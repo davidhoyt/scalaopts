@@ -19,6 +19,7 @@
 
 package scalaopts
 
+import _root_.java.io.File
 import common.StringUtil
 import StringTransforms._
 import annotation.tailrec
@@ -92,3 +93,6 @@ object DefaultCharOption extends CharOption()
 
 case class StringOption(defaultValue: String = StringUtil.empty) extends CustomOptionParser[String](Some(defaultValue), true, true, TRANSFORM_STRING)
 object DefaultStringOption extends StringOption()
+
+case class FileOption(defaultValue: File = null) extends CustomOptionParser[File](Some(defaultValue), true, true, TRANSFORM_FILE)
+object DefaultFileOption extends FileOption()

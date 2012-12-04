@@ -19,6 +19,7 @@
 
 package scalaopts
 
+import _root_.java.io.File
 import common.StringUtil
 
 /**
@@ -40,6 +41,7 @@ object StringTransforms {
   val TRANSFORM_LONG:    FnTransform[Long]    = s => try { Some(s.toLong)                                   } catch { case _: Throwable => None }
   val TRANSFORM_FLOAT:   FnTransform[Float]   = s => try { Some(s.toFloat)                                  } catch { case _: Throwable => None }
   val TRANSFORM_DOUBLE:  FnTransform[Double]  = s => try { Some(s.toDouble)                                 } catch { case _: Throwable => None }
-  val TRANSFORM_STRING:  FnTransform[String]  = s => try { if (StringUtil.isNonEmpty(s)) Some(s) else None } catch { case _: Throwable => None }
+  val TRANSFORM_STRING:  FnTransform[String]  = s => try { if (StringUtil.isNonEmpty(s)) Some(s) else None  } catch { case _: Throwable => None }
+  val TRANSFORM_FILE:    FnTransform[File]    = s => try { Some(new File(s))                                } catch { case _: Throwable => None }
   val TRANSFORM_NOOP:    FnTransform[Boolean] = s => Some(true)
 }
