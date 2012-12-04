@@ -76,9 +76,9 @@ case object CommandLineOption extends Command {
     , val maxNumberOfArguments: Int
     , val parser: Option[OptionParser[A]]
   ) extends MinimumTypedCommandLineOption[A] {
-    def accumulateWith[B, C](value: OptionArgumentAccumulator[A, B, C]) =
+    def accumulateWith[B, C](value: OptionArgumentAccumulator[A, B, C]): TypedCommandLineOption[A, B, C] =
       accumulateBy(value)
-    def accumulateBy[B, C](value: OptionArgumentAccumulator[A, B, C]) =
+    def accumulateBy[B, C](value: OptionArgumentAccumulator[A, B, C]): TypedCommandLineOption[A, B, C] =
       new FinalTypedCommandLineOption(name, required, longNames, shortNames, dependencies, description, arity, minNumberOfArguments, maxNumberOfArguments, parser, value)
   }
 
@@ -97,10 +97,11 @@ case object CommandLineOption extends Command {
   ) extends TypedCommandLineOption[A, B, C]
 
   implicit def toTypedCommandLineOption[A](value: CommandLineOptionStep3[A]): TypedCommandLineOption[A, _, _] = {
-    if (value.isSingleArgument)
+    if (value.isSingleArgument) {
       new FinalTypedCommandLineOption(value.name, value.required, value.longNames, value.shortNames, value.dependencies, value.description, value.arity, value.minNumberOfArguments, value.maxNumberOfArguments, value.parser, new SingleOptionArgumentAccumulator[A]())
-    else
+    } else {
       new FinalTypedCommandLineOption(value.name, value.required, value.longNames, value.shortNames, value.dependencies, value.description, value.arity, value.minNumberOfArguments, value.maxNumberOfArguments, value.parser, new ListOptionArgumentAccumulator[A]())
+    }
   }
 }
 
