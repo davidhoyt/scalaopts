@@ -37,7 +37,6 @@ public class ParserTest {
     final ICommandLineOption<Integer> option_1 = CommandLineOption
       .named("size")
       .shortName("s")
-      .shortName("sz")
       .arity(CommandLineOption.ARITY_UNBOUNDED)
       .describedAs("size description")
       .parseAs(new IOptionTransform<Integer>() {
@@ -62,7 +61,6 @@ public class ParserTest {
             .named("size")
             .required()
             .shortName("s")
-            .shortName("sz")
             .describedAs("size description")
             .parseAs(new IOptionTransform<Integer>() {
               @Override

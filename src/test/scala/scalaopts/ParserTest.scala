@@ -44,32 +44,10 @@ class ParserTest extends FunSuite {
   }
 
   test("translate") {
-/*
-//http://stackoverflow.com/questions/1025181/hidden-features-of-scala
-
-//push new scope
-command_line_options {
-  opt: "v" %% "verbose" %% "description" %% BooleanOpt/FlagOpt
-  opt: "p" %% "print" %% "print description" %% BooleanOpt
-}
-//pop scope
-*/
-
-    //p.parseArgs("-a", "-p", "-c")
-    //val t = new Parser().translate("a", (t => t))
-    //
-    //assert(t.isInstanceOf[String])
+    //http://stackoverflow.com/questions/1025181/hidden-features-of-scala
 
     //need a glob type that gets everything except valid other command_line_options
 
-    println(OSFamily.systemOSFamily)
-    println(Arch.systemArch)
-    println(Terminal.queryTerminalDimensions())
-
-    val result_1 = CommandLineOption.named("a")
-    val result_2 = CommandLineOption named "a"
-    val result_3 = CommandLineOption named "a" shortName "b" shortName "c" describedAs "my description" parseAs DefaultIntegerOption
-    val result_4 = CommandLineOption named "custom" parseAs new CustomOptionParser[Int](transform = (s: String) => Option(s.length))
     val parser: CommandLineSpecification =
       CommandLineOptions(
         CommandLineOption named "size"
@@ -119,17 +97,4 @@ command_line_options {
     assert(parse_results_1.success)
     println(size_options)
   }
-
-  test("test1") {
-    println("1")
-    val twoPlusTwo = 2 + 2
-    assert(twoPlusTwo == 4)
-  }
-
-  test("test2") {
-    println("2")
-    val twoPlusTwo = 2 + 2
-    assert(twoPlusTwo == 4)
-  }
-
 }
