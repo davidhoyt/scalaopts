@@ -20,6 +20,7 @@
 package scalaopts
 
 import _root_.java.io.File
+import common._
 import common.StringUtil
 import AccumulatorFunctionTypes._
 
@@ -45,13 +46,13 @@ case class AsyncChar   (override val initialValues: List[Char]    = List(), over
 case class AsyncString (override val initialValues: List[String]  = List(), override val callback: FnAsyncAccumulatorCallback[String],  override val doneCallback: Option[FnAsyncAccumulatorDone] = None) extends AsyncOptionArgumentAccumulator[String] (initialValues, callback, doneCallback)
 case class AsyncFile   (override val initialValues: List[File]    = List(), override val callback: FnAsyncAccumulatorCallback[File],    override val doneCallback: Option[FnAsyncAccumulatorDone] = None) extends AsyncOptionArgumentAccumulator[File]   (initialValues, callback, doneCallback)
 
-case class SingleByte   (val initialAccumulatorValue: Byte         = 0               ) extends SingleOptionArgumentAccumulator[Byte]   (Some(initialAccumulatorValue))
-case class SingleShort  (val initialAccumulatorValue: Short        = 0               ) extends SingleOptionArgumentAccumulator[Short]  (Some(initialAccumulatorValue))
-case class SingleInteger(val initialAccumulatorValue: Int          = 0               ) extends SingleOptionArgumentAccumulator[Int]    (Some(initialAccumulatorValue))
-case class SingleLong   (val initialAccumulatorValue: Long         = 0L              ) extends SingleOptionArgumentAccumulator[Long]   (Some(initialAccumulatorValue))
-case class SingleFloat  (val initialAccumulatorValue: Float        = 0.0f            ) extends SingleOptionArgumentAccumulator[Float]  (Some(initialAccumulatorValue))
-case class SingleDouble (val initialAccumulatorValue: Double       = 0.0D            ) extends SingleOptionArgumentAccumulator[Double] (Some(initialAccumulatorValue))
-case class SingleBoolean(val initialAccumulatorValue: Boolean      = false           ) extends SingleOptionArgumentAccumulator[Boolean](Some(initialAccumulatorValue))
-case class SingleChar   (val initialAccumulatorValue: Char         = '\0'            ) extends SingleOptionArgumentAccumulator[Char]   (Some(initialAccumulatorValue))
-case class SingleString (val initialAccumulatorValue: String       = StringUtil.empty) extends SingleOptionArgumentAccumulator[String] (Some(initialAccumulatorValue))
-case class SingleFile   (val initialAccumulatorValue: Option[File] = None            ) extends SingleOptionArgumentAccumulator[File]   (initialAccumulatorValue)
+case class SingleByte   (val initialAccumulatorValue: Byte         = 0               ) extends SingleOptionArgumentAccumulator[Byte]         ((initialAccumulatorValue))
+case class SingleShort  (val initialAccumulatorValue: Short        = 0               ) extends SingleOptionArgumentAccumulator[Short]        ((initialAccumulatorValue))
+case class SingleInteger(val initialAccumulatorValue: Int          = 0               ) extends SingleOptionArgumentAccumulator[Int]          ((initialAccumulatorValue))
+case class SingleLong   (val initialAccumulatorValue: Long         = 0L              ) extends SingleOptionArgumentAccumulator[Long]         ((initialAccumulatorValue))
+case class SingleFloat  (val initialAccumulatorValue: Float        = 0.0f            ) extends SingleOptionArgumentAccumulator[Float]        ((initialAccumulatorValue))
+case class SingleDouble (val initialAccumulatorValue: Double       = 0.0D            ) extends SingleOptionArgumentAccumulator[Double]       ((initialAccumulatorValue))
+case class SingleBoolean(val initialAccumulatorValue: Boolean      = false           ) extends SingleOptionArgumentAccumulator[Boolean]      ((initialAccumulatorValue))
+case class SingleChar   (val initialAccumulatorValue: Char         = '\0'            ) extends SingleOptionArgumentAccumulator[Char]         ((initialAccumulatorValue))
+case class SingleString (val initialAccumulatorValue: String       = StringUtil.empty) extends SingleOptionArgumentAccumulator[String]       ((initialAccumulatorValue))
+case class SingleFile   (val initialAccumulatorValue: File         = default[File]   ) extends SingleOptionArgumentAccumulator[File]          (initialAccumulatorValue)

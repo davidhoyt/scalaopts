@@ -54,11 +54,11 @@ class ParserTest extends FunSuite {
           required       YES
           describedAs    "size description"
           arity          UNBOUNDED
-          arguments      (1 to 4)
+          arguments      (1 to 1)
           flag           NO
           default        50
           parseAs        IntegerOption(defaultValue = 100)
-          accumulateWith IntegerList(initialValues = List(1, 2, 3)),
+          accumulateWith SingleInteger(),
 
         CommandLineOption named "custom"
           default 0

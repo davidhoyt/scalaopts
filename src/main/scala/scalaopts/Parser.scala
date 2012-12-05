@@ -39,6 +39,7 @@ class Parser(val configuration: ParserConfiguration, val options: CommandLineOpt
     }
 
     val results = configuration.strategy.processOptions(values.toStream, options)
+    println(results)
 
     //Takes something like:
     //  List(List(Some(1), Some(2), Some(3), Some(123), Some(100), Some(100), Some(100)), List(Some(1), Some(2), Some(3), Some(456)))

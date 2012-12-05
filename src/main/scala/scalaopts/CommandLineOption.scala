@@ -19,6 +19,8 @@
 
 package scalaopts
 
+import common.Default
+
 /** The starting point of the DSL from which we will build an argument. */
 case object CommandLineOption extends Command {
   def named[A](name: String): CommandLineOptionStep2[A] = new CommandLineOptionStep2(name = name)
@@ -105,9 +107,9 @@ case object CommandLineOption extends Command {
     , val accumulator: OptionArgumentAccumulator[A, B, C]
   ) extends TypedCommandLineOption[A, B, C]
 
-  implicit def toTypedCommandLineOption[A](value: CommandLineOptionStep3[A]): TypedCommandLineOption[A, _, _] = {
+  implicit def toTypedCommandLineOption[A: Default](value: CommandLineOptionStep3[A]): TypedCommandLineOption[A, _, _] = {
     if (value.isSingleArgument) {
-      new FinalTypedCommandLineOption(value.name, value.required, value.longNames, value.shortNames, value.dependencies, value.description, value.arity, value.minNumberOfArguments, value.maxNumberOfArguments, value.defaultValue, value.parser, new SingleOptionArgumentAccumulator[A]())
+      new FinalTypedCommandLineOption(value.name, value.required, value.longNames, value.shortNames, value.dependencies, value.description, value.arity, value.minNumberOfArguments, value.maxNumberOfArguments, value.defaultValue, value.parser, SingleOptionArgumentAccumulator[A]())
     } else {
       new FinalTypedCommandLineOption(value.name, value.required, value.longNames, value.shortNames, value.dependencies, value.description, value.arity, value.minNumberOfArguments, value.maxNumberOfArguments, value.defaultValue, value.parser, new ListOptionArgumentAccumulator[A]())
     }

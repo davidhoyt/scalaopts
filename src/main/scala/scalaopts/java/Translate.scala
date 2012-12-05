@@ -29,7 +29,7 @@ object Translate {
 
   def asStringSeq(arr: Array[String]): Seq[String] = arr
 
-  def asTypedCommandLineOption[T](opt: ICommandLineOption[T]): TypedCommandLineOption[T, List[Option[T]], List[Option[T]]] = {
+  def asTypedCommandLineOption[T](opt: ICommandLineOption[T]): TypedCommandLineOption[T, List[T], List[T]] = {
     val java_option_parser = opt.getOptionParser()
     val java_default = java_option_parser.getDefaultValue()
     val default = Option(java_default)

@@ -22,5 +22,24 @@ package scalaopts
 /**
  */
 package object common {
+  /**
+   * Provides functionality similar to C#'s default keyword.
+   * However, default is now pimped -- you can do much more with it
+   * than you can C#'s.
+   */
+  def default[A: Default] = implicitly[Default[A]].value
 
+  /**
+   * Provides functionality similar to C#'s default keyword.
+   * Use when default[A] doesn't work.
+   *
+   * Alternative is to use "null.asInstanceOf[A]" which will
+   * accomplish the same task.
+   */
+  def defaultValue[A] = {
+    class Temp {
+      var default_value: A = _
+    }
+    (new Temp).default_value
+  }
 }
