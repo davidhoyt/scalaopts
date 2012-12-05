@@ -38,11 +38,17 @@ package object scalaopts {
   val YES = true
   val NO = false
 
-  type CommandLineOptionMapKey = String
-  type CommandLineOptionMapTypedValue = TypedCommandLineOption[_, _, _]
-  type CommandLineOptionMapValue = (CommandLineOptionMapTypedValue, _)
-  type CommandLineOptionMap = Map[CommandLineOptionMapKey, CommandLineOptionMapValue]
-  type CommandLineSpecification = Parser
+  type CommandLineOptionMapKey           = String
+  type CommandLineOptionMapTypedValue    = TypedCommandLineOption[_, _, _]
+  type CommandLineOptionMapValue         = (CommandLineOptionMapTypedValue, _)
+  type CommandLineOptionMap              = Map[CommandLineOptionMapKey, CommandLineOptionMapValue]
+
+  type CommandLineOptionResultKey        = CommandLineOptionMapKey
+  type CommandLineOptionResultTypedValue = CommandLineOptionMapTypedValue
+  type CommandLineOptionResultValue      = Option[List[_]]
+  type CommandLineOptionResults          = Map[CommandLineOptionResultKey, CommandLineOptionResultValue]
+
+  type CommandLineSpecification          = Parser
 
   object CommandLineOptions {
     object DEFAULT_PARSER_CONFIGURATION extends ParserConfiguration(

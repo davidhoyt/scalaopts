@@ -57,33 +57,32 @@ command_line_options {
     val result_2 = CommandLineOption named "a"
     val result_3 = CommandLineOption named "a" shortName "b" shortName "c" describedAs "my description" parseAs DefaultIntegerOption
     val result_4 = CommandLineOption named "custom" parseAs new CustomOptionParser[Int](transform = (s: String) => Option(s.length))
-    val parser = CommandLineOptions(
-      CommandLineOption named "size"
-        longName       "size"
-        shortName      "s"
-        required       YES
-        describedAs    "size description"
-        arity          UNBOUNDED
-        arguments      (1 to 4)
-        flag           NO
-        default        50
-        parseAs        IntegerOption(defaultValue = 100)
-        accumulateWith IntegerList(initialValues = List(1, 2, 3)),
+    val parser: CommandLineSpecification =
+      CommandLineOptions(
+        CommandLineOption named "size"
+          longName       "size"
+          shortName      "s"
+          required       YES
+          describedAs    "size description"
+          arity          UNBOUNDED
+          arguments      (1 to 4)
+          flag           NO
+          default        50
+          parseAs        IntegerOption(defaultValue = 100)
+          accumulateWith IntegerList(initialValues = List(1, 2, 3)),
 
-      CommandLineOption named "custom"
-        default 0
-        parseAs new CustomOptionParser[Int](transform = (s: String) => Some(s.length))
-        accumulateWith AsyncInteger(callback = i => println("async: " + i)),
+        CommandLineOption named "custom"
+          default 0
+          parseAs new CustomOptionParser[Int](transform = (s: String) => Some(s.length))
+          accumulateWith AsyncInteger(callback = i => println("async: " + i)),
 
-      CommandLineOption named "verbose"
-        shortName "v"
-        dependsOn "size"
-        dependsOn "somethingElse"
-        describedAs "verbose description"
-        parseAs DefaultFlagOption
-    )
-    println(result_3.longNames)
-    println(result_3("234").getOrElse(98765))
+        CommandLineOption named "verbose"
+          shortName "v"
+          dependsOn "size"
+          dependsOn "somethingElse"
+          describedAs "verbose description"
+          parseAs DefaultFlagOption
+      )
 
     //parser.parse("--a", "-verbose", "-c")
     //Tests:
@@ -100,8 +99,11 @@ command_line_options {
     //parser.parse("--a", "<my value for a!>", "--a=b", "-verbose", "-c")
     //parser.parse("-a", "<my value for a!>")
     //parser.parse("--a=a_value", "-a", "a2_value", "--a=a3_value") //arity
-    parser.parse("--size=123", "sz1_value", "sz2_value", "sz3_value")
-    parser.parse("--custom=my_value_here")
+    val parse_results_1 = parser.parse("--size=123", "sz1_value", "sz2_value", "sz3_value")
+    //val parse_results_2 = parser.parse("--custom=my_value_here")
+
+    assert(parse_results_1.success)
+    println(parse_results_1("size"))
   }
 
   test("test1") {

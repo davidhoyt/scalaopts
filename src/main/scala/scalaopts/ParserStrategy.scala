@@ -28,5 +28,5 @@ trait ParserStrategy {
    * @param application_arguments
    * @return
    */
-  def processOptions(application_arguments: Stream[String], options: CommandLineOptionMap): Stream[StandardOption[_]]
+  def processOptions(application_arguments: Stream[String], options: CommandLineOptionMap): CommandLineOptionResults
 }

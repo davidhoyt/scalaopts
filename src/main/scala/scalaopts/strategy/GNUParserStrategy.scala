@@ -96,8 +96,8 @@ class GNUParserStrategy extends ParserStrategy {
   /**
    * @see [[scalaopts.ParserStrategy.processOptions()]]
    */
-  def processOptions(application_arguments: Stream[String], command_line_options: CommandLineOptionMap): Stream[StandardOption[_]] = {
-    type OptionArgumentsProcessingResult = (CommandLineOptionMap, Stream[String])
+  def processOptions(application_arguments: Stream[String], command_line_options: CommandLineOptionMap): CommandLineOptionResults = {
+    type OptionArgumentsProcessingResult = (Stream[String], CommandLineOptionMap, CommandLineOptionResults)
     type SingleOptionArgumentProcessingResult = (CommandLineOptionMap, _)
 
     val findCommandLineOption = findMatchingCommandLineOption(command_line_options)_
@@ -105,7 +105,7 @@ class GNUParserStrategy extends ParserStrategy {
     val findCommandLineOptionByShortName = findMatchingCommandLineOptionByShortName(command_line_options)_
 
     @tailrec
-    def processOptions0(application_arguments: Stream[String], command_line_options: CommandLineOptionMap): Stream[StandardOption[_]] = {
+    def processOptions0(application_arguments: Stream[String], command_line_options: CommandLineOptionMap, results: CommandLineOptionResults): CommandLineOptionResults = {
       application_arguments match {
         case potential_option #:: tail if potential_option.isNonEmpty && isCommandLineOption(potential_option) => {
           logger.info(_ ++= "Examining " ++= potential_option)
@@ -117,7 +117,7 @@ class GNUParserStrategy extends ParserStrategy {
             //
             //We should do something more intelligent with this -- provide a stream for non-option arguments?
             logger.info("Found terminator")
-            Stream()
+            results
 
           } else if (isNonOptionArgument(potential_option)) {
 
@@ -126,7 +126,7 @@ class GNUParserStrategy extends ParserStrategy {
             //
             //We should do something more intelligent with this -- provide a stream for non-option arguments?
             logger.info("Found non-option argument")
-            Stream()
+            results
 
           } else if (isLongCommandLineOption(potential_option)) {
 
@@ -144,7 +144,7 @@ class GNUParserStrategy extends ParserStrategy {
               //Unable to find the option.
               case None => {
                 unrecognizedOption(name)
-                Stream()
+                results
               }
               //Found the option.
               case Some((command_line_option, accumulated_values)) => {
@@ -152,22 +152,21 @@ class GNUParserStrategy extends ParserStrategy {
                 if (equals_found) {
 
                   //We found at least one option argument, so evaluate it.
-                  val (revised_option_map, revised_accumulation) = processSingleOptionArgument(command_line_option, value, accumulated_values)
+                  val (revised_option_map, revised_accumulation) = processSingleOptionArgument(command_line_options, command_line_option, value, accumulated_values)
 
                   //Evaluate any other remaining arguments.
-                  val (revised_option_map_2, revised_tail) = processOptionArguments(command_line_option, 1, command_line_option.maxNumberOfArguments - 1, revised_accumulation, tail)
-                  processOptions0(revised_tail, revised_option_map_2)
+                  val (revised_tail, revised_option_map_2, revised_results) = processOptionArguments(revised_option_map, command_line_option, 1, command_line_option.maxNumberOfArguments - 1, revised_accumulation, results, tail)
+                  processOptions0(revised_tail, revised_option_map_2, revised_results)
                 } else if (command_line_option.isFlag) {
                   //This is a flag, but it should still be evaluated.
-                  val (revised_option_map, revised_accumulation) = processSingleOptionArgument(command_line_option, empty, accumulated_values)
-
-                  processOptionArgumentsDone(command_line_option, revised_accumulation)
+                  val (revised_option_map, revised_accumulation) = processSingleOptionArgument(command_line_options, command_line_option, empty, accumulated_values)
+                  val revised_results = processOptionArgumentsDone(command_line_option, revised_accumulation, results)
 
                   //Continue processing.
-                  processOptions0(tail, revised_option_map)
+                  processOptions0(tail, revised_option_map, revised_results)
                 } else {
                   invalidFormat(name, "Missing equals sign for option")
-                  Stream()
+                  results
                 }
               }
             }
@@ -186,7 +185,7 @@ class GNUParserStrategy extends ParserStrategy {
               case None => {
                 //Nothing to see here...move along...
                 //Apparently there's nothing left to examine.
-                processOptions0(tail, command_line_options)
+                processOptions0(tail, command_line_options, results)
               }
               case Some(char_name) => {
                 //Convert the character to a string.
@@ -197,7 +196,7 @@ class GNUParserStrategy extends ParserStrategy {
                   case None => {
                     //I don't know who you're talking about so error out of here.
                     unrecognizedOption(name)
-                    Stream()
+                    results
                   }
                   case Some((command_line_option, accumulated_values)) => {
                     //Found an option by that name. Excellent.
@@ -208,21 +207,21 @@ class GNUParserStrategy extends ParserStrategy {
                     val remaining = potentially_multiple_options.tail
 
                     if (!command_line_option.isFlag) {
-                      val (revised_option_map, revised_tail) = processOptionArguments(command_line_option, 0, command_line_option.maxNumberOfArguments, command_line_option.accumulator.initialValue, remaining #:: tail)
-                      processOptions0(revised_tail, revised_option_map)
+                      val (revised_tail, revised_option_map, revised_results) = processOptionArguments(command_line_options, command_line_option, 0, command_line_option.maxNumberOfArguments, command_line_option.accumulator.initialValue, results, remaining #:: tail)
+                      processOptions0(revised_tail, revised_option_map, revised_results)
                     } else {
                       //This is a flag, but it should still be evaluated.
-                      val (revised_option_map, revised_accumulation) = processSingleOptionArgument(command_line_option, empty, accumulated_values)
+                      val (revised_option_map, revised_accumulation) = processSingleOptionArgument(command_line_options, command_line_option, empty, accumulated_values)
 
                       //Cycle around again, fooling the code into thinking that we're looking at another
                       //short name. This could result in some interesting scenarios. e.g.:
                       //-ooo: Is that the same flag 3 times? Or is it -o with a value of "oo"?
                       //-abc where a is a flag and b is not: Should c be a value for b then?
                       if (remaining.isNonEmpty) {
-                        processOptions0((SHORT_OPTION_PREFIX + remaining) #:: tail, revised_option_map)
+                        processOptions0((SHORT_OPTION_PREFIX + remaining) #:: tail, revised_option_map, results)
                       } else {
-                        val (revised_option_map, revised_tail) = processOptionArguments(command_line_option, 0, command_line_option.maxNumberOfArguments, revised_accumulation, tail)
-                        processOptions0(revised_tail, revised_option_map)
+                        val (revised_tail, revised_option_map_2, revised_results) = processOptionArguments(revised_option_map, command_line_option, 0, command_line_option.maxNumberOfArguments, revised_accumulation, results, tail)
+                        processOptions0(revised_tail, revised_option_map_2, revised_results)
                       }
                     }
                   }
@@ -232,22 +231,22 @@ class GNUParserStrategy extends ParserStrategy {
 
           } else {
 
-            processOptions0(tail, command_line_options)
+            processOptions0(tail, command_line_options, results)
 
           }
         }
         case potential_option #:: tail => {
           logger.warning(_ ++= "Failed to recognize option: " ++= potential_option)
-          processOptions0(tail, command_line_options)
+          processOptions0(tail, command_line_options, results)
         }
-        case _ => Stream()
+        case _ => results
       }
     }
 
-    def processOptionArguments(mapValue: CommandLineOptionMapTypedValue, valuesFound: Int, valuesRemaining: Int, accumulatedValues: Any, args: Stream[String]): OptionArgumentsProcessingResult = {
+    def processOptionArguments(map: CommandLineOptionMap, mapValue: CommandLineOptionMapTypedValue, valuesFound: Int, valuesRemaining: Int, accumulatedValues: Any, results: CommandLineOptionResults, args: Stream[String]): OptionArgumentsProcessingResult = {
 
       @tailrec
-      def processOptionArguments0(valuesFound: Int, valuesRemaining: Int, revised: SingleOptionArgumentProcessingResult, args: Stream[String]): OptionArgumentsProcessingResult = {
+      def processOptionArguments0(valuesFound: Int, valuesRemaining: Int, revised: SingleOptionArgumentProcessingResult, results: CommandLineOptionResults, args: Stream[String]): OptionArgumentsProcessingResult = {
         logger.finer("processing remaining option arguments")
 
         args match {
@@ -256,8 +255,8 @@ class GNUParserStrategy extends ParserStrategy {
 
             //Ensure we haven't exceeded the max number of arguments for this option.
             if (mapValue.isMaxNumberOfArgumentsUnbounded || valuesRemaining > 0) {
-              val revised_by_single = processSingleOptionArgument(mapValue, arg, accumulatedValues)
-              processOptionArguments0(if (!mapValue.isMinNumberOfArgumentsUnbounded) min(valuesFound + 1, mapValue.minNumberOfArguments) else UNBOUNDED, if (!mapValue.isMaxNumberOfArgumentsUnbounded) max(valuesRemaining - 1, -1) else UNBOUNDED, revised_by_single, tail)
+              val revised_by_single = processSingleOptionArgument(map, mapValue, arg, accumulatedValues)
+              processOptionArguments0(if (!mapValue.isMinNumberOfArgumentsUnbounded) min(valuesFound + 1, mapValue.minNumberOfArguments) else UNBOUNDED, if (!mapValue.isMaxNumberOfArgumentsUnbounded) max(valuesRemaining - 1, -1) else UNBOUNDED, revised_by_single, results, tail)
             } else {
               if (!mapValue.isMaxNumberOfArgumentsUnbounded && mapValue.maxNumberOfArguments > 0) {
                 exceededMaximumNumberOfArguments(mapValue.name, mapValue.maxNumberOfArguments)
@@ -268,7 +267,7 @@ class GNUParserStrategy extends ParserStrategy {
               //we've left off.
               //
               //IOW, we're explicitly NOT returning tail!
-              (updatedCommandLineOptionMap(mapValue, accumulatedValues), args)
+              (args, updatedCommandLineOptionMap(map, mapValue, accumulatedValues), results)
             }
           }
           case _ => {
@@ -280,34 +279,37 @@ class GNUParserStrategy extends ParserStrategy {
             }
 
             //Notify accumulators that we're done
-            processOptionArgumentsDone(mapValue, accumulatedValues)
+            val revised_results = processOptionArgumentsDone(mapValue, accumulatedValues, results)
 
             //return unmodified stream at this point so the caller
             //can continue inspecting the arguments at the point where
             //we've left off.
             //
             //IOW, we're explicitly NOT returning tail!
-            (updatedCommandLineOptionMap(mapValue, accumulatedValues), args)
+            (args, updatedCommandLineOptionMap(map, mapValue, accumulatedValues), revised_results)
           }
         }
       }
 
-      processOptionArguments0(valuesFound, valuesRemaining, (command_line_options, accumulatedValues), args)
+      processOptionArguments0(valuesFound, valuesRemaining, (command_line_options, accumulatedValues), results, args)
     }
 
-    def processSingleOptionArgument(mapValue: CommandLineOptionMapTypedValue, currentValue: String, accumulatedValues: Any): SingleOptionArgumentProcessingResult = {
+    def processSingleOptionArgument(map: CommandLineOptionMap, mapValue: CommandLineOptionMapTypedValue, currentValue: String, accumulatedValues: Any): SingleOptionArgumentProcessingResult = {
       logger.info(_ ++= "processing value for " ++= mapValue.name ++= ": " ++= currentValue)
       val result = mapValue(currentValue)
       logger.fine(_ ++= "ran option parser for " ++= mapValue.name ++= ", result: " ++= result.toString)
       logger.fine(_ ++= "processing accumulator for " ++= mapValue.name)
       val accumulation = mapValue.accumulator(result, accumulatedValues)
       logger.fine(_ ++= "completed processing accumulator for " ++= mapValue.name)
-      (updatedCommandLineOptionMap(mapValue, accumulation), accumulation)
+      (updatedCommandLineOptionMap(map, mapValue, accumulation), accumulation)
     }
 
-    def processOptionArgumentsDone(mapValue: CommandLineOptionMapTypedValue, accumulatedValues: Any): Unit = {
+    def processOptionArgumentsDone(mapValue: CommandLineOptionMapTypedValue, accumulatedValues: Any, results: CommandLineOptionResults): CommandLineOptionResults = {
       logger.info(_ ++= "completed processing arguments for " ++= mapValue.name)
-      mapValue.accumulator.done(accumulatedValues)
+
+      val accumulator_result = mapValue.accumulator.done(accumulatedValues)
+      val result_option_list = results.getOrElse(mapValue.name, Some(List())).getOrElse(List())
+      results.updated(mapValue.name, Some(accumulator_result :: result_option_list))
     }
 
     def unrecognizedOption(optionName: String): Unit =
@@ -322,9 +324,9 @@ class GNUParserStrategy extends ParserStrategy {
     def exceededMaximumNumberOfArguments(optionName: String, maximum: Int): Unit =
       logger.warning(_ ++= "exceeded maximum number of expected option arguments for " ++= optionName ++= ": " ++= maximum.toString)
 
-    def updatedCommandLineOptionMap(mapValue: CommandLineOptionMapTypedValue, accumulation: Any): CommandLineOptionMap =
-      command_line_options.updated(mapValue.name, (mapValue, accumulation))
+    def updatedCommandLineOptionMap(map: CommandLineOptionMap, mapValue: CommandLineOptionMapTypedValue, accumulation: Any): CommandLineOptionMap =
+      map.updated(mapValue.name, (mapValue, accumulation))
 
-    processOptions0(application_arguments, command_line_options)
+    processOptions0(application_arguments, command_line_options, Map())
   }
 }

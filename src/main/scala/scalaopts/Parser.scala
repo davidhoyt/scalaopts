@@ -24,19 +24,6 @@ import annotation.tailrec
 
 class Parser(val configuration: ParserConfiguration, val options: CommandLineOptionMap) {
 
-  def parse(values: String*): Boolean = parseArguments(values)
-
-  //We don't really want to return a boolean - that's just a placeholder for now
-  def parseArguments(values: Seq[String]): Boolean = {
-    if (!configuration.strategy.validateOptions(options)) {
-      throw new IllegalArgumentException("The provided options do not meet the parser strategy's requirements.")
-    }
-
-    configuration.strategy.processOptions(values.toStream, options)
-    true
-    //parse0(values.map(s => s.trim), None)
-  }
-
   //TODO: Use futures for getting result of parsing or waiting for parsing to complete fully...
 
   //TODO: Use macros to create an object representing the options (translates the option map into the results of processing it...)
@@ -44,23 +31,36 @@ class Parser(val configuration: ParserConfiguration, val options: CommandLineOpt
   //        before the code that will use it. Please see:
   //        http://www.warski.org/blog/2012/12/starting-with-scala-macros-a-short-tutorial/
 
-  //We don't really want to return a boolean - that's just a placeholder for now
-  @tailrec
-  private def parse0(values: Seq[String], current_param: Option[String]): Boolean = values match {
-    case Nil => {
-      true
+  def parse(values: String*): ParseResults = parseArguments(values)
+
+  def parseArguments(values: Seq[String]): ParseResults = {
+    if (!configuration.strategy.validateOptions(options)) {
+      throw new IllegalArgumentException("The provided options do not meet the parser strategy's requirements.")
     }
-    case Seq(value, tail @_*) => {
-      value match {
-//        case Seq(first_char, param_name @_*) if first_char == configuration.simpleArgumentPattern => {
-//          parse0(tail, Some(param_name))
-//        }
-        case _ => {
-          parse0(tail, current_param)
-        }
-      }
+
+    val results = configuration.strategy.processOptions(values.toStream, options)
+
+    //Post-process results (validate required options, etc.)
+
+    //Are there any required options that are not present?
+    val any_missing_required = options.exists(p => {
+      val opt = p._2._1
+      opt.required && !results.contains(opt.name)
+    })
+
+    //Determine if parsing was overall successful or not.
+    val success = !any_missing_required
+
+    //Send back the results
+    new ParseResults(success, results)
+  }
+}
+
+class ParseResults(val success: Boolean, val optionResults: CommandLineOptionResults) {
+  def apply[T](name: String): List[T] = {
+    optionResults.getOrElse(name, None) match {
+      case None => List()
+      case Some(a) => a.asInstanceOf[List[T]]
     }
   }
-
-  //def process
 }

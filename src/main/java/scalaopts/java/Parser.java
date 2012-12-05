@@ -29,6 +29,7 @@ class Parser implements IParser {
   }
 
   public boolean parse(String...values) {
-    return parser.parseArguments(Translate.asStringSeq(values));
+    //TODO: Fix this to use CommandLineOptionResults
+    return parser.parseArguments(Translate.asStringSeq(values)) != null;
   }
 }
