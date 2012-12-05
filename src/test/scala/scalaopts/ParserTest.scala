@@ -66,10 +66,12 @@ command_line_options {
         arity          UNBOUNDED
         arguments      (1 to 4)
         flag           NO
+        default        50
         parseAs        IntegerOption(defaultValue = 100)
         accumulateWith IntegerList(initialValues = List(1, 2, 3)),
 
       CommandLineOption named "custom"
+        default 0
         parseAs new CustomOptionParser[Int](transform = (s: String) => Some(s.length))
         accumulateWith AsyncInteger(callback = i => println("async: " + i)),
 

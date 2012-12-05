@@ -45,8 +45,9 @@ object Translate {
     })
 
     //TODO: Fill in the accumulator -- define this for the Java side of the house
+    //TODO: Fill in default value
 
-    new FinalTypedCommandLineOption(opt.getName(), opt.isRequired(), long_names, short_names, dependencies, opt.getDescription(), opt.getArity(), opt.getMinNumberOfRequiredValues(), opt.getMaxNumberOfRequiredValues(), Some(option_parser), new ListOptionArgumentAccumulator[T])
+    new FinalTypedCommandLineOption(opt.getName(), opt.isRequired(), long_names, short_names, dependencies, opt.getDescription(), opt.getArity(), opt.getMinNumberOfRequiredValues(), opt.getMaxNumberOfRequiredValues(), None, Some(option_parser), new ListOptionArgumentAccumulator[T])
   }
 
   def asTypedCommandLineOptionSeq[T](options: Array[ICommandLineOption[T]]): Seq[TypedCommandLineOption[_, _, _]] = {
