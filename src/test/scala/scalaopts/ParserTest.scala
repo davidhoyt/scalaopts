@@ -19,6 +19,7 @@
 
 package scalaopts
 
+import common.StringUtil._
 import common.platform.Terminal
 import common.{Arch, OSFamily}
 import org.scalatest.junit.JUnitRunner
@@ -29,6 +30,18 @@ import org.junit.runner.RunWith
   */
 @RunWith(classOf[JUnitRunner])
 class ParserTest extends FunSuite {
+
+  test("StringUtil.toValidIdentifier") {
+    assert("".toValidIdentifier == "_")
+    assert(" ".toValidIdentifier == "_")
+    assert("  ".toValidIdentifier == "__")
+    assert("-".toValidIdentifier == "_")
+    assert("$!@#%^&*()-+{}[]:\"<>/\\|,.~`'?".toValidIdentifier == "$____________________________")
+    assert("$".toValidIdentifier == "$")
+    assert("123".toValidIdentifier == "_123")
+    assert("abc".toValidIdentifier == "abc")
+    assert("abc-123".toValidIdentifier == "abc_123")
+  }
 
   test("translate") {
 /*
@@ -99,11 +112,12 @@ command_line_options {
     //parser.parse("--a", "<my value for a!>", "--a=b", "-verbose", "-c")
     //parser.parse("-a", "<my value for a!>")
     //parser.parse("--a=a_value", "-a", "a2_value", "--a=a3_value") //arity
-    val parse_results_1 = parser.parse("--size=123", "sz1_value", "sz2_value", "sz3_value")
+    val parse_results_1 = parser.parse("--size=123", "sz1_value", "sz2_value", "sz3_value", "--size=456")
+    val size_options = parse_results_1[Int]("size")
     //val parse_results_2 = parser.parse("--custom=my_value_here")
 
     assert(parse_results_1.success)
-    println(parse_results_1("size"))
+    println(size_options)
   }
 
   test("test1") {

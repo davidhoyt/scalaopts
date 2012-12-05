@@ -329,6 +329,8 @@ class GNUParserStrategy extends ParserStrategy {
     def updatedCommandLineOptionMap(map: CommandLineOptionMap, mapValue: CommandLineOptionMapTypedValue, accumulation: Any): CommandLineOptionMap =
       map.updated(mapValue.name, (mapValue, accumulation))
 
-    processOptions0(application_arguments, command_line_options, Map())
+    val end_results = processOptions0(application_arguments, command_line_options, Map())
+    val reversed_results = end_results.mapValues(opts => Some(opts.getOrElse(List.empty).reverse))
+    reversed_results
   }
 }

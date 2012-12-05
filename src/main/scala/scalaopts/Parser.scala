@@ -26,7 +26,7 @@ class Parser(val configuration: ParserConfiguration, val options: CommandLineOpt
 
   //TODO: Use futures for getting result of parsing or waiting for parsing to complete fully...
 
-  //TODO: Use macros to create an object representing the options (translates the option map into the results of processing it...)
+  //TODO: Use macros to create an object representing the options (translates the parse result into an option where field names are option names...)
   //        This will require splitting out the macro definition into a separate module. They have to be compiled separately and
   //        before the code that will use it. Please see:
   //        http://www.warski.org/blog/2012/12/starting-with-scala-macros-a-short-tutorial/
@@ -40,27 +40,36 @@ class Parser(val configuration: ParserConfiguration, val options: CommandLineOpt
 
     val results = configuration.strategy.processOptions(values.toStream, options)
 
+    //Takes something like:
+    //  List(List(Some(1), Some(2), Some(3), Some(123), Some(100), Some(100), Some(100)), List(Some(1), Some(2), Some(3), Some(456)))
+    //and converts it to:
+    //  List(List(1, 2, 3, 123, 100, 100, 100), List(1, 2, 3, 456))
+    val processed_results = results.map(m => m._1 -> m._2.get.map(m2 => m2.asInstanceOf[List[_]].map(_.asInstanceOf[Option[_]].get))) withDefaultValue List(List())
+
     //Post-process results (validate required options, etc.)
 
     //Are there any required options that are not present?
     val any_missing_required = options.exists(p => {
       val opt = p._2._1
-      opt.required && !results.contains(opt.name)
+      opt.required && !processed_results.contains(opt.name)
     })
 
     //Determine if parsing was overall successful or not.
     val success = !any_missing_required
 
     //Send back the results
-    new ParseResults(success, results)
+    new ParseResults(success, processed_results)
   }
 }
 
-class ParseResults(val success: Boolean, val optionResults: CommandLineOptionResults) {
-  def apply[T](name: String): List[T] = {
-    optionResults.getOrElse(name, None) match {
-      case None => List()
-      case Some(a) => a.asInstanceOf[List[T]]
-    }
+class ParseResults(val success: Boolean, val optionResults: CommandLineOptionParseResults) {
+  def apply[T](name: String): List[List[T]] = {
+    optionResults.get(name).get.asInstanceOf[List[List[T]]]
   }
+
+  def find[T](name: String): List[List[T]] =
+    apply(name)
+
+  def first[T](name: String): List[T] =
+    find(name).head
 }

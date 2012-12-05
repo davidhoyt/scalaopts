@@ -19,6 +19,8 @@
 
 package scalaopts.common
 
+import annotation.tailrec
+
 /**
  * Extensions for [[java.lang.String]] classes.
  */
@@ -28,13 +30,35 @@ object StringUtil {
   val empty = ""
 
   /** Returns if the string is either null or empty. */
-  def isNullOrEmpty(s: String): Boolean = (s == null /* ignore style check */ || s.isEmpty || empty == s)
+  @inline def isNullOrEmpty(s: String): Boolean = (s == null /* ignore style check */ || s.isEmpty || empty == s)
 
   /** Returns if the string is not null and not empty. */
-  def isNonEmpty(s: String): Boolean = !isNullOrEmpty(s)
+  @inline def isNonEmpty(s: String): Boolean = !isNullOrEmpty(s)
 
   /** Returns the string if it is not null and not empty, otherwise the empty string. */
-  def checked(s: String): String = if (isNullOrEmpty(s)) empty else s
+  @inline def checked(s: String): String = if (isNullOrEmpty(s)) empty else s
+
+  /** Returns the string as a valid Java/Scala identifier. */
+  def toValidIdentifier(s: String): String = {
+
+    def toValidIdentifier0(s: String): String =
+      s.map(c => if (isValidChar(c)) c else '_')
+
+    def isValidChar(c: Char): Boolean =
+      Character.isLetterOrDigit(c) || c == '_' || c == '$'
+
+    if (isNonEmpty(s)) {
+      if (Character.isLetter(s.head)) {
+        toValidIdentifier0(s)
+      } else if (Character.isDigit(s.head)) {
+        "_" + toValidIdentifier0(s)
+      } else {
+        toValidIdentifier0(s)
+      }
+    } else {
+      "_"
+    }
+  }
 
   @inline case class StringExtensions(s: String) {
     /** @see [[scalaopts.common.StringUtil.isNullOrEmpty()]] */
@@ -45,6 +69,9 @@ object StringUtil {
 
     /** @see [[scalaopts.common.StringUtil.checked()]] */
     def checked: String = StringUtil.checked(s)
+
+    /** @see [[scalaopts.common.StringUtil.toValidIdentifier()]] */
+    def toValidIdentifier: String = StringUtil.toValidIdentifier(s)
   }
 }
 
