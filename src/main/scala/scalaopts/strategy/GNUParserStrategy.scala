@@ -249,6 +249,8 @@ class GNUParserStrategy extends ParserStrategy {
       def processOptionArguments0(valuesFound: Int, valuesRemaining: Int, revised: SingleOptionArgumentProcessingResult, results: CommandLineOptionResults, args: Stream[String]): OptionArgumentsProcessingResult = {
         logger.finer("processing remaining option arguments")
 
+        val accumulatedValues = revised._2
+
         args match {
           case arg #:: tail if !isCommandLineOption(arg) && findCommandLineOption(arg).isEmpty => {
             logger.finer(_ ++= "found option argument: " ++= arg)
