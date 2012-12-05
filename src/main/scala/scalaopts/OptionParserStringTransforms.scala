@@ -25,7 +25,7 @@ import common.StringUtil
 /**
  * Defines common transforms from a [[java.lang.String]] to a value.
  */
-object StringTransforms {
+object OptionParserStringTransforms {
   /**
    * Function that accepts a string and changes it to a value of type A.
    *

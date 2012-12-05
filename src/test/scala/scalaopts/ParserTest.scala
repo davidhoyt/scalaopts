@@ -20,8 +20,6 @@
 package scalaopts
 
 import common.StringUtil._
-import common.platform.Terminal
-import common.{Arch, OSFamily}
 import org.scalatest.junit.JUnitRunner
 import org.scalatest.FunSuite
 import org.junit.runner.RunWith
