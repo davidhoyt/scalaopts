@@ -105,7 +105,7 @@ case object CommandLineOption extends Command {
   }
 }
 
-sealed trait MinimumTypedCommandLineOption[A] {
+sealed trait MinimumTypedCommandLineOption[+A] {
   def name: String
   def required: Boolean
   def longNames: List[String]
@@ -135,7 +135,7 @@ sealed trait MinimumTypedCommandLineOption[A] {
   }
 }
 
-sealed trait TypedCommandLineOption[A, B, C] extends MinimumTypedCommandLineOption[A] {
+sealed trait TypedCommandLineOption[A, +B, +C] extends MinimumTypedCommandLineOption[A] {
   def parser: Option[OptionParser[A]]
   def accumulator: OptionArgumentAccumulator[A, B, C]
 

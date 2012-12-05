@@ -27,7 +27,7 @@ object Accumulators {
    * Function that accepts a value and processes it or references it or something.
    */
   type FnAccumulator[A, B] = (Option[A], B) => B
-  type FnAccumulatorDone[B, C] = B => C
+  type FnAccumulatorDone[B, +C] = B => C
   type FnAsyncAccumulatorCallback[A] = Option[A] => Unit
   type FnAsyncAccumulatorDone = Unit => Unit
 }
