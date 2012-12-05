@@ -32,7 +32,7 @@ case object CommandLineOption extends Command {
    * @param description A description used in usage and help text.
    * @param parser What is intended to convert the argument into a typed value.
    */
-  class CommandLineOptionStep2[A](
+  class CommandLineOptionStep2[+A](
       name: String
     , is_required: Boolean = false
     , longNames: List[String] = List()
@@ -64,7 +64,7 @@ case object CommandLineOption extends Command {
     def parseAs[T](value: OptionParser[T]): CommandLineOptionStep3[T]             = new CommandLineOptionStep3(name, is_required, if (longNames.isEmpty) List(name) else longNames, shortNames, dependencies, description, arity, minNumberOfArguments, maxNumberOfArguments, Some(value))
   }
 
-  class CommandLineOptionStep3[A](
+  class CommandLineOptionStep3[+A](
       val name: String
     , val required: Boolean
     , val longNames: List[String]
@@ -76,13 +76,13 @@ case object CommandLineOption extends Command {
     , val maxNumberOfArguments: Int
     , val parser: Option[OptionParser[A]]
   ) extends MinimumTypedCommandLineOption[A] {
-    def accumulateWith[B, C](value: OptionArgumentAccumulator[A, B, C]): TypedCommandLineOption[A, B, C] =
+    def accumulateWith[X >: A, B, C](value: OptionArgumentAccumulator[X, B, C]): TypedCommandLineOption[X, B, C] =
       accumulateBy(value)
-    def accumulateBy[B, C](value: OptionArgumentAccumulator[A, B, C]): TypedCommandLineOption[A, B, C] =
+    def accumulateBy[X >: A, B, C](value: OptionArgumentAccumulator[X, B, C]): TypedCommandLineOption[X, B, C] =
       new FinalTypedCommandLineOption(name, required, longNames, shortNames, dependencies, description, arity, minNumberOfArguments, maxNumberOfArguments, parser, value)
   }
 
-  class FinalTypedCommandLineOption[A, B, C] (
+  class FinalTypedCommandLineOption[A, +B, +C] (
       val name: String
     , val required: Boolean
     , val longNames: List[String]
@@ -135,7 +135,7 @@ sealed trait MinimumTypedCommandLineOption[+A] {
   }
 }
 
-sealed trait TypedCommandLineOption[A, +B, +C] extends MinimumTypedCommandLineOption[A] {
+sealed trait TypedCommandLineOption[+A, +B, +C] extends MinimumTypedCommandLineOption[A] {
   def parser: Option[OptionParser[A]]
   def accumulator: OptionArgumentAccumulator[A, B, C]
 
