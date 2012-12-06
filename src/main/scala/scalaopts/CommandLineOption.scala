@@ -26,7 +26,7 @@ case object CommandLineOption extends Command {
   def named(name: String): CommandLineOptionStep2[String] = new CommandLineOptionStep2(
       name = name
     , defaultValue = Some(StringUtil.empty)
-    , parser = StringOption(defaultValue = StringUtil.empty)
+    , parser = Some(StringOption(defaultValue = StringUtil.empty))
   )
 
   //TODO: Split this out into multiple steps to ensure that all is_required information is captured in order and can be checked by the compiler.
@@ -51,7 +51,7 @@ case object CommandLineOption extends Command {
     , minNumberOfArguments: Int                     = 1
     , maxNumberOfArguments: Int                     = 1
     , defaultValue:         Option[A]               = None
-    , parser:               OptionParser[A]
+    , parser:               Option[OptionParser[A]] = None
   ) extends Command {
     def required:                                       CommandLineOptionStep2[A] = new CommandLineOptionStep2(name, true,        longNames,          shortNames,          dependencies,             description, arity, minNumberOfArguments, maxNumberOfArguments, defaultValue, parser)
     def notRequired:                                    CommandLineOptionStep2[A] = new CommandLineOptionStep2(name, false,       longNames,          shortNames,          dependencies,             description, arity, minNumberOfArguments, maxNumberOfArguments, defaultValue, parser)
@@ -70,8 +70,8 @@ case object CommandLineOption extends Command {
     def arguments(value: Int):                          CommandLineOptionStep2[A] = numberOfArguments(value)
     def arguments(range: Range):                        CommandLineOptionStep2[A] = arguments(range.start, range.end)
     def flag(value: Boolean):                           CommandLineOptionStep2[A] = if (value) { flag } else { this }
-    def default[T >: A](value: T):                      CommandLineOptionStep3[T] = new CommandLineOptionStep3(name, is_required, if (longNames.isEmpty) List(name) else longNames, shortNames, dependencies, description, arity, minNumberOfArguments, maxNumberOfArguments, defaultValue, parser)
-    def parseAs[T >: A](value: OptionParser[T]):        CommandLineOptionStep3[T] = new CommandLineOptionStep3(name, is_required, if (longNames.isEmpty) List(name) else longNames, shortNames, dependencies, description, arity, minNumberOfArguments, maxNumberOfArguments, defaultValue, value)
+    def default[T](value: T):                           CommandLineOptionStep3[T] = new CommandLineOptionStep3[T](name, is_required, if (longNames.isEmpty) List(name) else longNames, shortNames, dependencies, description, arity, minNumberOfArguments, maxNumberOfArguments, Some(value), None)
+    def parseAs[T](value: OptionParser[T]):             CommandLineOptionStep3[T] = new CommandLineOptionStep3[T](name, is_required, if (longNames.isEmpty) List(name) else longNames, shortNames, dependencies, description, arity, minNumberOfArguments, maxNumberOfArguments, None, Some(value))
   }
 
   //class CommandLineOptionStepEx[+A]()
@@ -88,17 +88,17 @@ case object CommandLineOption extends Command {
     , val minNumberOfArguments: Int
     , val maxNumberOfArguments: Int
     , val defaultValue:         Option[A]
-    , val parser:               OptionParser[A]
+    , val parser:               Option[OptionParser[A]]
   ) extends MinimumTypedCommandLineOption[A] {
     def default[T >: A](value: T): CommandLineOptionStep3[T] =
       new CommandLineOptionStep3(name, required, longNames, shortNames, dependencies, description, arity, minNumberOfArguments, maxNumberOfArguments, Some(value), parser)
     def parseAs[T >: A](value: OptionParser[T]): CommandLineOptionStep3[T] =
-      new CommandLineOptionStep3(name, required, longNames, shortNames, dependencies, description, arity, minNumberOfArguments, maxNumberOfArguments, defaultValue, value)
+      new CommandLineOptionStep3(name, required, longNames, shortNames, dependencies, description, arity, minNumberOfArguments, maxNumberOfArguments, defaultValue, Some(value))
 
     def accumulateWith[X >: A, B, C](value: OptionArgumentAccumulator[X, B, C]): TypedCommandLineOption[X, B, C] =
       accumulateBy(value)
     def accumulateBy[X >: A, B, C](value: OptionArgumentAccumulator[X, B, C]): TypedCommandLineOption[X, B, C] =
-      new FinalTypedCommandLineOption(name, required, longNames, shortNames, dependencies, description, arity, minNumberOfArguments, maxNumberOfArguments, defaultValue, parser, value)
+      new FinalTypedCommandLineOption(name, required, longNames, shortNames, dependencies, description, arity, minNumberOfArguments, maxNumberOfArguments, defaultValue, parser.get, value)
   }
 
   class FinalTypedCommandLineOption[A, +B, +C] (
@@ -117,28 +117,26 @@ case object CommandLineOption extends Command {
   ) extends TypedCommandLineOption[A, B, C]
 
   def toTypedCommandLineOption[A: Default](value: CommandLineOptionStep3[A]): TypedCommandLineOption[A, _, _] = {
+    if (value.parser.isEmpty) {
+      throw new IllegalArgumentException("Parser has not been defined. Please specify the OptionParser via the parseAs() method.")
+    }
+
     if (value.isSingleArgument) {
-      new FinalTypedCommandLineOption(value.name, value.required, value.longNames, value.shortNames, value.dependencies, value.description, value.arity, value.minNumberOfArguments, value.maxNumberOfArguments, value.defaultValue, value.parser, SingleOptionArgumentAccumulator[A]())
+      new FinalTypedCommandLineOption(value.name, value.required, value.longNames, value.shortNames, value.dependencies, value.description, value.arity, value.minNumberOfArguments, value.maxNumberOfArguments, value.defaultValue, value.parser.get, SingleOptionArgumentAccumulator[A]())
     } else {
-      new FinalTypedCommandLineOption(value.name, value.required, value.longNames, value.shortNames, value.dependencies, value.description, value.arity, value.minNumberOfArguments, value.maxNumberOfArguments, value.defaultValue, value.parser, new ListOptionArgumentAccumulator[A]())
+      new FinalTypedCommandLineOption(value.name, value.required, value.longNames, value.shortNames, value.dependencies, value.description, value.arity, value.minNumberOfArguments, value.maxNumberOfArguments, value.defaultValue, value.parser.get, new ListOptionArgumentAccumulator[A]())
     }
   }
 }
 
 case object CommandLineFlag extends Command {
-  def named(name: String): CommandLineOption.CommandLineOptionStep2[Boolean] = new CommandLineOption.CommandLineOptionStep2(
-      name = name
-    , defaultValue = Some(false)
-    , parser = BooleanOption(defaultValue = false)
-  ).flag
-
-//  implicit def toTypedCommandLineOption[A: Default](value: CommandLineOption.CommandLineOptionStep3[A]): TypedCommandLineOption[A, _, _] = {
-//    if (value.isSingleArgument) {
-//      new FinalTypedCommandLineOption(value.name, value.required, value.longNames, value.shortNames, value.dependencies, value.description, value.arity, value.minNumberOfArguments, value.maxNumberOfArguments, value.defaultValue, value.parser, SingleOptionArgumentAccumulator[A]())
-//    } else {
-//      new FinalTypedCommandLineOption(value.name, value.required, value.longNames, value.shortNames, value.dependencies, value.description, value.arity, value.minNumberOfArguments, value.maxNumberOfArguments, value.defaultValue, value.parser, new ListOptionArgumentAccumulator[A]())
-//    }
-//  }
+  def named(name: String): CommandLineOption.CommandLineOptionStep3[Boolean] =
+    new CommandLineOption.CommandLineOptionStep2(
+        name = name
+      , defaultValue = Some(false)
+    )
+    .flag
+    .parseAs(BooleanOption(defaultValue = false))
 }
 
 sealed trait MinimumTypedCommandLineOption[+A] {
