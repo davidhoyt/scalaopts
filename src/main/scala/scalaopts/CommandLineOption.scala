@@ -177,5 +177,5 @@ sealed trait TypedCommandLineOption[+A, +B, +C] extends MinimumTypedCommandLineO
   def accumulator:  OptionArgumentAccumulator[A, B, C]
 
   def apply(value: String): Option[A] =
-    parser(value).asInstanceOf[Option[A]]
+    parser(value)
 }
