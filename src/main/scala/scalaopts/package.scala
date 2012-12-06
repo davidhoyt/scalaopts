@@ -17,6 +17,7 @@
   limitations under the License.
 */
 
+import scalaopts.common.Default
 import scalaopts.strategy.GNUParserStrategy
 
 /** Provides classes for command line argument parsing.
@@ -67,4 +68,7 @@ package object scalaopts {
       ParserTransforms.createParser(configuration, args)
     }
   }
+
+  implicit def toFinal[A: Default](value: CommandLineOption.CommandLineOptionStep3[A]): TypedCommandLineOption[A, _, _] =
+    CommandLineOption.toTypedCommandLineOption(value)
 }

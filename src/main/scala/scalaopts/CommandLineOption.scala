@@ -116,7 +116,7 @@ case object CommandLineOption extends Command {
     , val accumulator: OptionArgumentAccumulator[A, B, C]
   ) extends TypedCommandLineOption[A, B, C]
 
-  implicit def toTypedCommandLineOption[A: Default](value: CommandLineOptionStep3[A]): TypedCommandLineOption[A, _, _] = {
+  def toTypedCommandLineOption[A: Default](value: CommandLineOptionStep3[A]): TypedCommandLineOption[A, _, _] = {
     if (value.isSingleArgument) {
       new FinalTypedCommandLineOption(value.name, value.required, value.longNames, value.shortNames, value.dependencies, value.description, value.arity, value.minNumberOfArguments, value.maxNumberOfArguments, value.defaultValue, value.parser, SingleOptionArgumentAccumulator[A]())
     } else {
