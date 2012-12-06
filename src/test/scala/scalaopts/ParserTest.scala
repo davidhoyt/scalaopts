@@ -41,6 +41,67 @@ class ParserTest extends FunSuite {
     assert("abc-123".toValidIdentifier == "abc_123")
   }
 
+  test("dependencies with cycles") {
+    intercept[IllegalArgumentException] {
+      CommandLineOptions(
+        CommandLineOption named "a" dependsOn "b",
+        CommandLineOption named "b" dependsOn "a"
+      ).parse()
+    }
+//    intercept[IllegalArgumentException] {
+//      CommandLineOptions(
+//        CommandLineOption named "a" dependsOn "b",
+//        CommandLineOption named "b" dependsOn "c",
+//        CommandLineOption named "c" dependsOn "<non-existent>"
+//      ).parse()
+//    }
+//    intercept[IllegalArgumentException] {
+//      CommandLineOptions(
+//        CommandLineOption named "a" dependsOn "b",
+//        CommandLineOption named "b" dependsOn "c",
+//        CommandLineOption named "c" dependsOn "d",
+//        CommandLineOption named "d" dependsOn "a"
+//      ).parse()
+//    }
+//    intercept[IllegalArgumentException] {
+//      CommandLineOptions(
+//        CommandLineOption named "a" dependsOn "b",
+//        CommandLineOption named "b" dependsOn "c",
+//        CommandLineOption named "c" dependsOn "d",
+//        CommandLineOption named "d" dependsOn "c"
+//      ).parse()
+//    }
+    intercept[IllegalArgumentException] {
+      CommandLineOptions(
+        CommandLineOption named  "7" dependsOn "11" dependsOn  "8",
+        CommandLineOption named  "5" dependsOn "11",
+        CommandLineOption named  "3" dependsOn  "8" dependsOn "10",
+        CommandLineOption named "11" dependsOn  "2" dependsOn  "9" dependsOn "10",
+        CommandLineOption named  "8" dependsOn  "9",
+        CommandLineOption named  "2",
+        CommandLineOption named  "9" dependsOn  "3",
+        CommandLineOption named "10"
+      ).parse()
+    }
+  }
+
+  test("valid dependency graphs") {
+    //http://en.wikipedia.org/wiki/Topological_sort
+    val g_1 =
+      CommandLineOptions(
+        CommandLineOption named  "7" dependsOn "11" dependsOn  "8",
+        CommandLineOption named  "5" dependsOn "11",
+        CommandLineOption named  "3" dependsOn  "8" dependsOn "10",
+        CommandLineOption named "11" dependsOn  "2" dependsOn  "9" dependsOn "10",
+        CommandLineOption named  "8" dependsOn  "9",
+        CommandLineOption named  "2",
+        CommandLineOption named  "9",
+        CommandLineOption named "10"
+      )
+      .parse()
+    assert(g_1.success)
+  }
+
   test("translate") {
     //http://stackoverflow.com/questions/1025181/hidden-features-of-scala
 
@@ -88,6 +149,7 @@ class ParserTest extends FunSuite {
     //   unbounded max values
     //   bounded max values
     //   -ooo where o is a flag and the arity is 2 (thus making this an error, but -oo would work)
+    //   cyclic dependencies (a depends on b, b depends on a)
     //parser.parse("--a", "<my value for a!>", "--a=b", "-verbose", "-c")
     //parser.parse("-a", "<my value for a!>")
     //parser.parse("--a=a_value", "-a", "a2_value", "--a=a3_value") //arity
@@ -95,6 +157,9 @@ class ParserTest extends FunSuite {
     val size_options = parse_results_1[Seq[Int]]("size")
     val first_size_options = parse_results_1.first[Seq[Int]]("size")
     //val parse_results_2 = parser.parse("--custom=my_value_here")
+
+    //TODO: Fix GNU parser to return something that indicates a failed parsing -- would like to avoid throwing exceptions...
+    //TODO: Check dependency cycles: see ParserTransforms
 
     println(parse_results_1.optionResults)
     assert(parse_results_1.success)

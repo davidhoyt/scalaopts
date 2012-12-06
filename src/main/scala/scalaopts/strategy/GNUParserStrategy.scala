@@ -247,10 +247,12 @@ class GNUParserStrategy extends ParserStrategy {
           }
         }
         case potential_option #:: tail => {
-          logger.warning(_ ++= "Failed to recognize option: " ++= potential_option)
+          unrecognizedOption(potential_option)
           processOptions0(tail, command_line_options, results)
         }
-        case _ => results
+        case _ => {
+          results
+        }
       }
     }
 
