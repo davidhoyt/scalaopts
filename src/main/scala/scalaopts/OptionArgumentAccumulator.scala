@@ -51,7 +51,7 @@ class CustomOptionArgumentAccumulator[A, B, C](val initialValue: B, val fnAccumu
   def done[Y >: B](accumulatedValues: Y): C = onDone(accumulatedValues.asInstanceOf[B])
 }
 
-class AsyncOptionArgumentAccumulator[A](val initialValues: List[A] = List(), val callback: FnAsyncAccumulatorCallback[A], val doneCallback: Option[FnAsyncAccumulatorDone] = None) extends OptionArgumentAccumulator[A, Unit, Unit] {
+class AsyncOptionArgumentAccumulator[A](val initialValues: Seq[A] = List(), val callback: FnAsyncAccumulatorCallback[A], val doneCallback: Option[FnAsyncAccumulatorDone] = None) extends OptionArgumentAccumulator[A, Unit, Unit] {
   def initialValue: Unit = {
     for (value <- initialValues)
       callback(value)
@@ -63,8 +63,8 @@ class AsyncOptionArgumentAccumulator[A](val initialValues: List[A] = List(), val
     }
 }
 
-class ListOptionArgumentAccumulator[+A](val initialValues: List[A] = List()) extends OptionArgumentAccumulator[A, List[A], List[A]] {
-  def initialValue: List[A] = initialValues.reverse
+class ListOptionArgumentAccumulator[+A](val initialValues: Seq[A] = List()) extends OptionArgumentAccumulator[A, List[A], List[A]] {
+  def initialValue: List[A] = initialValues.toList.reverse
   def accumulate[X >: A, Y >: List[A], Z >: List[A]](value: X, accumulator: Y) = (value :: accumulator.asInstanceOf[List[A]]).asInstanceOf[Z]
   def done[Y >: List[A]](accumulatedValues: Y): List[A] = accumulatedValues.asInstanceOf[List[A]].reverse
 }

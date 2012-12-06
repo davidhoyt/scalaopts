@@ -58,7 +58,9 @@ class ParserTest extends FunSuite {
           flag           NO
           default        50
           parseAs        IntegerOption(defaultValue = 100)
-          accumulateWith SingleInteger(),
+          accumulateWith IntegerList(),
+
+        //CommandLineFlag named  "flag",
 
         CommandLineOption named "custom"
           default 0

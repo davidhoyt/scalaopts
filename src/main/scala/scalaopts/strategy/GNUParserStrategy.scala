@@ -264,12 +264,17 @@ class GNUParserStrategy extends ParserStrategy {
                 exceededMaximumNumberOfArguments(mapValue.name, mapValue.maxNumberOfArguments)
               }
 
+              //Notify accumulators that we're done
+              //Not sure if this is correct. If there are more arguments that need processing, then
+              //this may prematurely cut it off.
+              val revised_results = processOptionArgumentsDone(mapValue, accumulatedValues, results)
+
               //return unmodified stream at this point so the caller
               //can continue inspecting the arguments at the point where
               //we've left off.
               //
               //IOW, we're explicitly NOT returning tail!
-              (args, updatedCommandLineOptionMap(map, mapValue, accumulatedValues), results)
+              (args, updatedCommandLineOptionMap(map, mapValue, accumulatedValues), revised_results)
             }
           }
           case _ => {
@@ -301,7 +306,7 @@ class GNUParserStrategy extends ParserStrategy {
       val result = mapValue(currentValue)
       logger.fine(_ ++= "ran option parser for " ++= mapValue.name ++= ", result: " ++= result.toString)
       logger.fine(_ ++= "processing accumulator for " ++= mapValue.name)
-      val accumulation = mapValue.accumulator(result, accumulatedValues)
+      val accumulation = if (result.isDefined) mapValue.accumulator(result.get, accumulatedValues) else accumulatedValues
       logger.fine(_ ++= "completed processing accumulator for " ++= mapValue.name)
       (updatedCommandLineOptionMap(map, mapValue, accumulation), accumulation)
     }

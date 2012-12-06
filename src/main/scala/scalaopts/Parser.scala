@@ -45,7 +45,8 @@ class Parser(val configuration: ParserConfiguration, val options: CommandLineOpt
     //  List(List(Some(1), Some(2), Some(3), Some(123), Some(100), Some(100), Some(100)), List(Some(1), Some(2), Some(3), Some(456)))
     //and converts it to:
     //  List(List(1, 2, 3, 123, 100, 100, 100), List(1, 2, 3, 456))
-    val processed_results = results.map(m => m._1 -> m._2.get.map(m2 => m2.asInstanceOf[List[_]].map(_.asInstanceOf[Option[_]].get))) withDefaultValue List(List())
+    val processed_results = results.map(m => m._1 -> m._2.get)
+    println(processed_results)
 
     //Post-process results (validate required options, etc.)
 
@@ -59,18 +60,26 @@ class Parser(val configuration: ParserConfiguration, val options: CommandLineOpt
     val success = !any_missing_required
 
     //Send back the results
-    new ParseResults(success, processed_results)
+    new ParseResults(success, processed_results, options)
   }
 }
 
-class ParseResults(val success: Boolean, val optionResults: CommandLineOptionParseResults) {
-  def apply[T](name: String): List[List[T]] = {
-    optionResults.get(name).get.asInstanceOf[List[List[T]]]
+class ParseResults(val success: Boolean, val optionResults: CommandLineOptionParseResults, val options: CommandLineOptionMap) {
+  def apply[T](name: String): Option[Seq[T]] = optionResults.get(name) match {
+    case None => None
+    case Some(value) => Some(value.asInstanceOf[Seq[T]])
   }
 
-  def find[T](name: String): List[List[T]] =
+  def find[T](name: String): Option[Seq[T]] =
     apply(name)
 
-  def first[T](name: String): List[T] =
-    find(name).head
+  def first[T](name: String): Option[T] = find(name) match {
+    case Some(value) if !value.isEmpty => Some(value.head)
+    case Some(value) => options.get(name) match {
+      case None => None
+      case Some(original) => original._1.defaultValue.asInstanceOf[Option[T]]
+    }
+    case None => None
+    case _ => None
+  }
 }
