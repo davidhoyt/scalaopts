@@ -28,7 +28,7 @@ import OptionParserStringTransforms._
  * @tparam A Result type of applying the transform.
  */
 sealed trait OptionParser[+A] {
-  def apply(value: String): Option[Any]
+  def apply(value: String): Option[A]
 }
 
 /**
@@ -39,16 +39,17 @@ sealed trait OptionParser[+A] {
  * @param transform Function that transforms the [[java.lang.String]] into a value.
  * @tparam A Result type of applying the transform.
  */
-class CustomOptionParser[+A](val optionDefaultValue: Option[Any] = None, val useDefaultValue: Boolean = true, val requiresAssociatedValue: Boolean = true, val transform: FnTransform[Any]) extends OptionParser[A] {
-  def withDefault(default_value: Any): CustomOptionParser[A]                = new CustomOptionParser(Some(default_value), useDefaultValue, requiresAssociatedValue, transform)
-  def withTransform(new_transform: FnTransform[Any]): CustomOptionParser[A] = new CustomOptionParser(optionDefaultValue,  useDefaultValue, requiresAssociatedValue, new_transform)
-  def withUseDefaultValue(value: Boolean): CustomOptionParser[A]            = new CustomOptionParser(optionDefaultValue,  value,           requiresAssociatedValue, transform)
-  def withRequiresAssociatedValue(value: Boolean): CustomOptionParser[A]    = new CustomOptionParser(optionDefaultValue,  useDefaultValue, value,                   transform)
-  def apply(value: String): Option[Any] = {
+class CustomOptionParser[+A](val optionDefaultValue: Option[A] = None, val useDefaultValue: Boolean = true, val requiresAssociatedValue: Boolean = true, val transform: FnTransform[A]) extends OptionParser[A] {
+  def withDefault[X >: A](default_value: X): CustomOptionParser[X]                = new CustomOptionParser(Some(default_value), useDefaultValue, requiresAssociatedValue, transform)
+  def withTransform[X >: A](new_transform: FnTransform[X]): CustomOptionParser[X] = new CustomOptionParser(optionDefaultValue,  useDefaultValue, requiresAssociatedValue, new_transform)
+  def withUseDefaultValue(value: Boolean): CustomOptionParser[A]                  = new CustomOptionParser(optionDefaultValue,  value,           requiresAssociatedValue, transform)
+  def withRequiresAssociatedValue(value: Boolean): CustomOptionParser[A]          = new CustomOptionParser(optionDefaultValue,  useDefaultValue, value,                   transform)
+
+  def apply(value: String): Option[A] = {
     val result = transform(value)
     result match {
       case None => if (useDefaultValue) optionDefaultValue else None
-      case Some(_) => result
+      case Some(_) => result.asInstanceOf[Option[A]]
     }
   }
 }

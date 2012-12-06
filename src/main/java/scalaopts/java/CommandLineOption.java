@@ -154,7 +154,7 @@ public class CommandLineOption<T> {
     final IOptionTransform<T> optionTransform = new IOptionTransform<T>() {
       @Override
       public T apply(String value) {
-        final Option<Object> result = optionParser.apply(value);
+        final Option<T> result = optionParser.apply(value);
         if (result == null || result.isEmpty())
           return (T)null;
         else
@@ -194,7 +194,7 @@ public class CommandLineOption<T> {
     final IOptionTransform<T> optionTransform = new IOptionTransform<T>() {
       @Override
       public T apply(String value) {
-        final Option<Object> result = optionParser.apply(value);
+        final Option<T> result = optionParser.apply(value);
         if (result == null || result.isEmpty())
           return (T)null;
         else
