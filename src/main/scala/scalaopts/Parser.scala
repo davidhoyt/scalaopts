@@ -19,9 +19,6 @@
 
 package scalaopts
 
-import common.StringUtil._
-import annotation.tailrec
-
 class Parser(val configuration: ParserConfiguration, val options: CommandLineOptionMap) {
 
   //TODO: Use futures for getting result of parsing or waiting for parsing to complete fully...
@@ -39,14 +36,12 @@ class Parser(val configuration: ParserConfiguration, val options: CommandLineOpt
     }
 
     val results = configuration.strategy.processOptions(values.toStream, options)
-    println(results)
 
     //Takes something like:
-    //  List(List(Some(1), Some(2), Some(3), Some(123), Some(100), Some(100), Some(100)), List(Some(1), Some(2), Some(3), Some(456)))
+    //  size -> Some(List(List(1, 2, 3)))
     //and converts it to:
-    //  List(List(1, 2, 3, 123, 100, 100, 100), List(1, 2, 3, 456))
+    //  size -> List(List(1, 2, 3))
     val processed_results = results.map(m => m._1 -> m._2.get)
-    println(processed_results)
 
     //Post-process results (validate required options, etc.)
 

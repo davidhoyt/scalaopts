@@ -33,7 +33,7 @@ object OptionParserStringTransforms {
    */
   type FnTransform[+A] = String => Option[A]
 
-  val TRANSFORM_BOOLEAN: FnTransform[Boolean] = s => try { Some(s.toBoolean)                                } catch { case _: Throwable => None }
+  val TRANSFORM_BOOLEAN: FnTransform[Boolean] = s => try { Some("1".equals(s) || s.toBoolean)               } catch { case _: Throwable => None }
   val TRANSFORM_CHAR:    FnTransform[Char]    = s => try { s.toCharArray.headOption                         } catch { case _: Throwable => None }
   val TRANSFORM_BYTE:    FnTransform[Byte]    = s => try { Some(s.toByte)                                   } catch { case _: Throwable => None }
   val TRANSFORM_SHORT:   FnTransform[Short]   = s => try { Some(s.toShort)                                  } catch { case _: Throwable => None }

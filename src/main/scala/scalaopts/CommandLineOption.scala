@@ -70,12 +70,12 @@ case object CommandLineOption extends Command {
     def arguments(value: Int):                          CommandLineOptionStep2[A] = numberOfArguments(value)
     def arguments(range: Range):                        CommandLineOptionStep2[A] = arguments(range.start, range.end)
     def flag(value: Boolean):                           CommandLineOptionStep2[A] = if (value) { flag } else { this }
-    def default[T](value: T):                           CommandLineOptionStep3[T] = new CommandLineOptionStep3[T](name, is_required, if (longNames.isEmpty) List(name) else longNames, shortNames, dependencies, description, arity, minNumberOfArguments, maxNumberOfArguments, Some(value), None)
-    def parseAs[T](value: OptionParser[T]):             CommandLineOptionStep3[T] = new CommandLineOptionStep3[T](name, is_required, if (longNames.isEmpty) List(name) else longNames, shortNames, dependencies, description, arity, minNumberOfArguments, maxNumberOfArguments, None, Some(value))
-  }
+    def default[T](value: T):                           CommandLineOptionStep3[T] = new CommandLineOptionStep2[T](name, is_required, longNames, shortNames, dependencies, description, arity, minNumberOfArguments, maxNumberOfArguments, Some(value), None).toNextStep
+    def parseAs[T](value: OptionParser[T]):             CommandLineOptionStep3[T] = new CommandLineOptionStep2[T](name, is_required, longNames, shortNames, dependencies, description, arity, minNumberOfArguments, maxNumberOfArguments, None, Some(value)).toNextStep
 
-  //class CommandLineOptionStepEx[+A]()
-  //  extends
+    def toNextStep: CommandLineOptionStep3[A] =
+      new CommandLineOptionStep3(name, is_required, if (longNames.isEmpty) List(name) else longNames, shortNames, dependencies, description, arity, minNumberOfArguments, maxNumberOfArguments, defaultValue, parser)
+  }
 
   class CommandLineOptionStep3[+A](
       val name:                 String
@@ -115,6 +115,10 @@ case object CommandLineOption extends Command {
     , val parser: OptionParser[A]
     , val accumulator: OptionArgumentAccumulator[A, B, C]
   ) extends TypedCommandLineOption[A, B, C]
+
+  def toTypedCommandLineOption[A: Default](value: CommandLineOptionStep2[A]): TypedCommandLineOption[A, _, _] = {
+    toTypedCommandLineOption(value.toNextStep)
+  }
 
   def toTypedCommandLineOption[A: Default](value: CommandLineOptionStep3[A]): TypedCommandLineOption[A, _, _] = {
     if (value.parser.isEmpty) {

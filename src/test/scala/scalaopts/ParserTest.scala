@@ -71,8 +71,9 @@ class ParserTest extends FunSuite {
           shortName "v"
           dependsOn "size"
           dependsOn "somethingElse"
-          describedAs "verbose description"
-          parseAs DefaultFlagOption
+          describedAs "verbose description",
+
+        CommandLineOption named "string1" shortName "z"
       )
 
     //parser.parse("--a", "-verbose", "-c")
@@ -90,11 +91,14 @@ class ParserTest extends FunSuite {
     //parser.parse("--a", "<my value for a!>", "--a=b", "-verbose", "-c")
     //parser.parse("-a", "<my value for a!>")
     //parser.parse("--a=a_value", "-a", "a2_value", "--a=a3_value") //arity
-    val parse_results_1 = parser.parse("--size=123", "sz1_value", "sz2_value", "sz3_value", "--size=456")
-    val size_options = parse_results_1[Int]("size")
+    val parse_results_1 = parser.parse("--size=123", "sz1_value", "sz2_value", "sz3_value", "-znn", "-zmm", "--size=456")
+    val size_options = parse_results_1[Seq[Int]]("size")
+    val first_size_options = parse_results_1.first[Seq[Int]]("size")
     //val parse_results_2 = parser.parse("--custom=my_value_here")
 
+    println(parse_results_1.optionResults)
     assert(parse_results_1.success)
     println(size_options)
+    println(first_size_options)
   }
 }

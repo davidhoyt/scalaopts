@@ -69,6 +69,9 @@ package object scalaopts {
     }
   }
 
-  implicit def toFinal[A: Default](value: CommandLineOption.CommandLineOptionStep3[A]): TypedCommandLineOption[A, _, _] =
+  implicit def step2ToFinal[A: Default](value: CommandLineOption.CommandLineOptionStep2[A]): TypedCommandLineOption[A, _, _] =
+    CommandLineOption.toTypedCommandLineOption(value)
+
+  implicit def step3ToFinal[A: Default](value: CommandLineOption.CommandLineOptionStep3[A]): TypedCommandLineOption[A, _, _] =
     CommandLineOption.toTypedCommandLineOption(value)
 }
