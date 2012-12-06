@@ -20,7 +20,6 @@
 package scalaopts
 
 import OptionParserStringTransforms._
-import collection.immutable.Stream.Empty
 
 /**
  * Holds information that will be used later when arguments are evaluated. Used in a builder fashion and meant to
@@ -30,7 +29,6 @@ import collection.immutable.Stream.Empty
  */
 sealed trait OptionParser[+A] {
   def apply(value: String): Option[Any]
-  def apply(value: Stream[String]): Stream[Option[Any]]
 }
 
 /**
@@ -51,12 +49,6 @@ class CustomOptionParser[+A](val optionDefaultValue: Option[Any] = None, val use
     result match {
       case None => if (useDefaultValue) optionDefaultValue else None
       case Some(_) => result
-    }
-  }
-  def apply(value: Stream[String]): Stream[Option[Any]] = value match {
-    case Empty => Stream()
-    case head #:: tail => {
-      apply(head) #:: apply(tail)
     }
   }
 }
