@@ -65,9 +65,9 @@ class GNUParserStrategy extends ParserStrategy {
   import Log.formatter._
 
   val SHORT_OPTION_PREFIX = "-"
-  val LONG_OPTION_PREFIX = "--"
+  val LONG_OPTION_PREFIX  = "--"
   val NON_OPTION_ARGUMENT = "-"
-  val TERMINATOR = "--"
+  val TERMINATOR          = "--"
 
   def isTerminator(s: String): Boolean = TERMINATOR.equals(s)
   def isNonOptionArgument(s: String): Boolean = NON_OPTION_ARGUMENT.equals(s)
