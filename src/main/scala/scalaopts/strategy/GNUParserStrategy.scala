@@ -148,24 +148,29 @@ class GNUParserStrategy extends ParserStrategy {
               }
               //Found the option.
               case Some((command_line_option, accumulated_values)) => {
-                //If there's an equals sign then process this value and any remaining required values
-                if (equals_found) {
+                if (!hasReachedMaximumArity(command_line_option, results)) {
+                  //If there's an equals sign then process this value and any remaining required values
+                  if (equals_found) {
 
-                  //We found at least one option argument, so evaluate it.
-                  val (revised_option_map, revised_accumulation) = processSingleOptionArgument(command_line_options, command_line_option, value, accumulated_values)
+                    //We found at least one option argument, so evaluate it.
+                    val (revised_option_map, revised_accumulation) = processSingleOptionArgument(command_line_options, command_line_option, value, accumulated_values)
 
-                  //Evaluate any other remaining arguments.
-                  val (revised_tail, revised_option_map_2, revised_results) = processOptionArguments(revised_option_map, command_line_option, 1, command_line_option.maxNumberOfArguments - 1, revised_accumulation, results, tail)
-                  processOptions0(revised_tail, revised_option_map_2, revised_results)
-                } else if (command_line_option.isFlag) {
-                  //This is a flag, but it should still be evaluated.
-                  val (revised_option_map, revised_accumulation) = processSingleOptionArgument(command_line_options, command_line_option, empty, accumulated_values)
-                  val revised_results = processOptionArgumentsDone(command_line_option, revised_accumulation, results)
+                    //Evaluate any other remaining arguments.
+                    val (revised_tail, revised_option_map_2, revised_results) = processOptionArguments(revised_option_map, command_line_option, 1, command_line_option.maxNumberOfArguments - 1, revised_accumulation, results, tail)
+                    processOptions0(revised_tail, revised_option_map_2, revised_results)
+                  } else if (command_line_option.isFlag) {
+                    //This is a flag, but it should still be evaluated.
+                    val (revised_option_map, revised_accumulation) = processSingleOptionArgument(command_line_options, command_line_option, empty, accumulated_values)
+                    val revised_results = processOptionArgumentsDone(command_line_option, revised_accumulation, results)
 
-                  //Continue processing.
-                  processOptions0(tail, revised_option_map, revised_results)
+                    //Continue processing.
+                    processOptions0(tail, revised_option_map, revised_results)
+                  } else {
+                    invalidFormat(name, "Missing equals sign for option")
+                    results
+                  }
                 } else {
-                  invalidFormat(name, "Missing equals sign for option")
+                  exceededMaximumArity(name, command_line_option.arity)
                   results
                 }
               }
@@ -204,25 +209,31 @@ class GNUParserStrategy extends ParserStrategy {
                     //text is a value.
                     logger.fine(_ ++= "Recognized option (name: " ++= command_line_option.name ++= ")")
 
-                    val remaining = potentially_multiple_options.tail
+                    if (!hasReachedMaximumArity(command_line_option, results)) {
 
-                    if (!command_line_option.isFlag) {
-                      val (revised_tail, revised_option_map, revised_results) = processOptionArguments(command_line_options, command_line_option, 0, command_line_option.maxNumberOfArguments, command_line_option.accumulator.initialValue, results, remaining #:: tail)
-                      processOptions0(revised_tail, revised_option_map, revised_results)
-                    } else {
-                      //This is a flag, but it should still be evaluated.
-                      val (revised_option_map, revised_accumulation) = processSingleOptionArgument(command_line_options, command_line_option, empty, accumulated_values)
+                      val remaining = potentially_multiple_options.tail
 
-                      //Cycle around again, fooling the code into thinking that we're looking at another
-                      //short name. This could result in some interesting scenarios. e.g.:
-                      //-ooo: Is that the same flag 3 times? Or is it -o with a value of "oo"?
-                      //-abc where a is a flag and b is not: Should c be a value for b then?
-                      if (remaining.isNonEmpty) {
-                        processOptions0((SHORT_OPTION_PREFIX + remaining) #:: tail, revised_option_map, results)
+                      if (!command_line_option.isFlag) {
+                          val (revised_tail, revised_option_map, revised_results) = processOptionArguments(command_line_options, command_line_option, 0, command_line_option.maxNumberOfArguments, command_line_option.accumulator.initialValue, results, remaining #:: tail)
+                          processOptions0(revised_tail, revised_option_map, revised_results)
                       } else {
-                        val (revised_tail, revised_option_map_2, revised_results) = processOptionArguments(revised_option_map, command_line_option, 0, command_line_option.maxNumberOfArguments, revised_accumulation, results, tail)
-                        processOptions0(revised_tail, revised_option_map_2, revised_results)
+                        //This is a flag, but it should still be evaluated.
+                        val (revised_option_map, revised_accumulation) = processSingleOptionArgument(command_line_options, command_line_option, empty, accumulated_values)
+
+                        //Cycle around again, fooling the code into thinking that we're looking at another
+                        //short name. This could result in some interesting scenarios. e.g.:
+                        //-ooo: Is that the same flag 3 times? Or is it -o with a value of "oo"?
+                        //-abc where a is a flag and b is not: Should c be a value for b then?
+                        if (remaining.isNonEmpty) {
+                          processOptions0((SHORT_OPTION_PREFIX + remaining) #:: tail, revised_option_map, results)
+                        } else {
+                          val (revised_tail, revised_option_map_2, revised_results) = processOptionArguments(revised_option_map, command_line_option, 0, command_line_option.maxNumberOfArguments, revised_accumulation, results, tail)
+                          processOptions0(revised_tail, revised_option_map_2, revised_results)
+                        }
                       }
+                    } else {
+                      exceededMaximumArity(command_line_option.name, command_line_option.arity)
+                      results
                     }
                   }
                 }
@@ -331,8 +342,22 @@ class GNUParserStrategy extends ParserStrategy {
     def exceededMaximumNumberOfArguments(optionName: String, maximum: Int): Unit =
       logger.warning(_ ++= "exceeded maximum number of expected option arguments for " ++= optionName ++= ": " ++= maximum.toString)
 
+    def exceededMaximumArity(optionName: String, maximum: Int): Unit =
+      logger.warning(_ ++= "exceeded the maximum number of expected options for " ++= optionName ++= ": " ++= maximum.toString)
+
     def updatedCommandLineOptionMap(map: CommandLineOptionMap, mapValue: CommandLineOptionMapTypedValue, accumulation: Any): CommandLineOptionMap =
       map.updated(mapValue.name, (mapValue, accumulation))
+
+    def hasReachedMaximumArity(mapValue: CommandLineOptionMapTypedValue, results: CommandLineOptionResults): Boolean = {
+      if (!mapValue.isArityUnbounded) {
+        results.get(mapValue.name) match {
+          case Some(Some(l)) => l.length >= mapValue.arity
+          case _ => false
+        }
+      } else {
+        false
+      }
+    }
 
     val end_results = processOptions0(application_arguments, command_line_options, Map())
     val reversed_results = end_results.mapValues(opts => Some(opts.getOrElse(List.empty).reverse))
