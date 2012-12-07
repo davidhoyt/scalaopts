@@ -28,6 +28,10 @@ object StringUtil {
   implicit final def extend(s: String): StringExtensions = StringExtensions(s)
 
   val empty = ""
+  val newLine = querySystemNewLine
+
+  /** Requests the system's default new line character(s). Could be \n (Unix) or \r\n (Windows) or something else. **/
+  @inline def querySystemNewLine = System.getProperty("line.separator")
 
   /** Returns if the string is either null or empty. */
   @inline def isNullOrEmpty(s: String): Boolean = (s == null /* ignore style check */ || s.isEmpty || empty == s)
