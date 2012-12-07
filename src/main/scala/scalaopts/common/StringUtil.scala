@@ -38,6 +38,14 @@ object StringUtil {
   /** Returns the string if it is not null and not empty, otherwise the empty string. */
   @inline def checked(s: String): String = if (isNullOrEmpty(s)) empty else s
 
+  /** Returns a string that represents a class' package name and it's simple name appended with a period (.). */
+  def toKeyPrefix(c: Class[_]): String = {
+    val package_name = c.getPackage.getName
+    val simple_name = c.getSimpleName
+    val name = if (simple_name.endsWith("$")) simple_name.substring(0, simple_name.length - "$".length) else simple_name
+    package_name + "." + name + "."
+  }
+
   /** Returns the string as a valid Java/Scala identifier. */
   def toValidIdentifier(s: String): String = {
 

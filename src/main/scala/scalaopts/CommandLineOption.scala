@@ -30,8 +30,6 @@ case object CommandLineOption extends Command {
   )
 
   //TODO: Split this out into multiple steps to ensure that all is_required information is captured in order and can be checked by the compiler.
-  //TODO: Create CommandLineFlag version of CommandLineOption that sets up appropriate option parser, etc.
-  //TODO: Default parser/accumulator should be StringOption/StringList
 
   /**
    * Used as a builder to describe an option.
@@ -134,13 +132,13 @@ case object CommandLineOption extends Command {
 }
 
 case object CommandLineFlag extends Command {
-  def named(name: String): CommandLineOption.CommandLineOptionStep3[Boolean] =
+  def named(name: String): CommandLineOption.CommandLineOptionStep2[Boolean] =
     new CommandLineOption.CommandLineOptionStep2(
         name = name
       , defaultValue = Some(false)
+      , parser = Some(BooleanOption(defaultValue = true))
     )
     .flag
-    .parseAs(BooleanOption(defaultValue = false))
 }
 
 sealed trait MinimumTypedCommandLineOption[+A] {
@@ -153,6 +151,8 @@ sealed trait MinimumTypedCommandLineOption[+A] {
   def arity:                Int
   def minNumberOfArguments: Int
   def maxNumberOfArguments: Int
+
+  override def toString = name
 
   def isFlag: Boolean = isMinNumberOfArgumentsUnbounded || minNumberOfArguments == 0
   def isRequired: Boolean = required

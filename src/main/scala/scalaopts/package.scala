@@ -52,6 +52,7 @@ package object scalaopts {
   type CommandLineOptionParseResultKey   = String
   type CommandLineOptionParseResultValue = List[Any]
   type CommandLineOptionParseResults     = Map[CommandLineOptionParseResultKey, CommandLineOptionParseResultValue]
+  type CommandLineOptionParseErrors      = Map[ParserError.EnumVal, Any]
 
   type CommandLineSpecification          = Parser
 

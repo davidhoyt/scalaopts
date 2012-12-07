@@ -19,6 +19,8 @@
 
 package scalaopts
 
+import scala.Iterable
+
 class Parser(val configuration: ParserConfiguration, val options: CommandLineOptionMap) {
 
   //TODO: Use futures for getting result of parsing or waiting for parsing to complete fully...
@@ -45,21 +47,61 @@ class Parser(val configuration: ParserConfiguration, val options: CommandLineOpt
 
     //Post-process results (validate required options, etc.)
 
+    val errors: CommandLineOptionParseErrors = Map()
+
     //Are there any required options that are not present?
-    val any_missing_required = options.exists(p => {
-      val opt = p._2._1
-      opt.required && !processed_results.contains(opt.name)
-    })
+    val all_missing_required =
+      for {
+        entry <- options
+        opt = entry._2._1
+        if opt.required && processed_results.contains(opt.name)
+      }
+        yield opt
+    val any_missing_required = !all_missing_required.isEmpty
+    val errors_1 = if (any_missing_required) errors.updated(ParserError.MissingRequired, all_missing_required) else errors
+
+    //Find options that are missing dependencies
+    val all_missing =
+      for {
+        entry <- results
+        name = entry._1 if options.contains(name)
+        opt = options(name)._1
+        missing = opt.dependencies.filter(!results.contains(_)).toSeq if !missing.isEmpty
+      }
+        yield opt -> missing.reverse
+    val any_missing_dependencies = !all_missing.isEmpty
+    val errors_2 = if (any_missing_dependencies) errors_1.updated(ParserError.MissingDependencies, all_missing.toMap) else errors_1
 
     //Determine if parsing was overall successful or not.
-    val success = !any_missing_required
+    val success = !any_missing_required && !any_missing_dependencies
 
     //Send back the results
-    new ParseResults(success, processed_results, options)
+    new ParseResults(success, processed_results, errors_2, options)
   }
 }
 
-class ParseResults(val success: Boolean, val optionResults: CommandLineOptionParseResults, val options: CommandLineOptionMap) {
+/** Simple wrapper for a map so we can access elements by either a string name or an instance of a typed command line option. */
+class CommandLineOptionParseErrorMap[A >: CommandLineOptionMapTypedValue, B](val map: Map[A, B]) extends Map[A, B] {
+  def iterator = map.iterator
+  def get(key: A) = map.get(key)
+  def -(key: A) = new CommandLineOptionParseErrorMap[A, B](map.-(key))
+  def +[B1 >: B](kv: (A, B1)) = new CommandLineOptionParseErrorMap[A, B1](map.+(kv))
+
+  def apply(name: String): Option[B] = {
+    val entry = map.find(_._1.asInstanceOf[CommandLineOptionMapTypedValue].name.equalsIgnoreCase(name))
+    if (entry.isDefined) {
+      Some(entry.get._2)
+    } else {
+      None
+    }
+  }
+
+  override def apply(opt: A): B =
+    map.get(opt).get
+}
+
+/** What callers work with. */
+class ParseResults(val success: Boolean, val optionResults: CommandLineOptionParseResults, val errors: CommandLineOptionParseErrors, val options: CommandLineOptionMap) {
   def apply[T](name: String): Option[Seq[T]] = optionResults.get(name) match {
     case None => None
     case Some(value) => Some(value.asInstanceOf[Seq[T]])
@@ -76,5 +118,36 @@ class ParseResults(val success: Boolean, val optionResults: CommandLineOptionPar
     }
     case None => None
     case _ => None
+  }
+
+  def anyMissingRequired:     Boolean = errors.contains(ParserError.MissingRequired)
+  def anyMissingDependencies: Boolean = errors.contains(ParserError.MissingDependencies)
+
+  def missingRequired: Iterable[CommandLineOptionMapTypedValue] =
+    if (anyMissingRequired) {
+      errors(ParserError.MissingRequired).asInstanceOf[Iterable[CommandLineOptionMapTypedValue]]
+    } else {
+      Iterable()
+    }
+
+  def missingDependencies: CommandLineOptionParseErrorMap[CommandLineOptionMapTypedValue, Seq[String]] =
+    if (anyMissingDependencies) {
+      new CommandLineOptionParseErrorMap[CommandLineOptionMapTypedValue, Seq[String]](errors(ParserError.MissingDependencies).asInstanceOf[Map[CommandLineOptionMapTypedValue, Seq[String]]] withDefaultValue Seq[String]())
+    } else {
+      new CommandLineOptionParseErrorMap[CommandLineOptionMapTypedValue, Seq[String]](Map() withDefaultValue Seq[String]())
+    }
+
+  def visitMissingRequired(visitor: CommandLineOptionMapTypedValue => Boolean): Unit = {
+    val iter = missingRequired.iterator
+    while(iter.hasNext && visitor(iter.next())) {
+      ;
+    }
+  }
+
+  def visitMissingDependencies(visitor: ((CommandLineOptionMapTypedValue, Seq[String])) => Boolean): Unit = {
+    val iter = missingDependencies.iterator
+    while(iter.hasNext && visitor(iter.next())) {
+      ;
+    }
   }
 }
