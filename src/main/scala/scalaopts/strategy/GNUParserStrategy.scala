@@ -23,7 +23,7 @@ import scalaopts._
 import scalaopts.common.StringUtil._
 import scala.math._
 import annotation.tailrec
-import util.logging.Logged
+import com.dongxiguo.fastring.Fastring.Implicits._
 
 /**
  * GNU has laid out a set of rules for creating options and non-options, and
@@ -57,12 +57,7 @@ import util.logging.Logged
  */
 class GNUParserStrategy extends ParserStrategy {
   //Configure the logger.
-  private[GNUParserStrategy] object Log {
-    val (logger, formatter) = ZeroLoggerFactory.newLogger(this)
-  }
-
-  import Log.logger
-  import Log.formatter._
+  private[GNUParserStrategy] implicit val (logger, formatter, appender) = ZeroLoggerFactory.newLogger
 
   val SHORT_OPTION_PREFIX = "-"
   val LONG_OPTION_PREFIX  = "--"
@@ -108,7 +103,7 @@ class GNUParserStrategy extends ParserStrategy {
     def processOptions0(application_arguments: Stream[String], command_line_options: CommandLineOptionMap, results: CommandLineOptionResults): CommandLineOptionResults = {
       application_arguments match {
         case potential_option #:: tail if potential_option.isNonEmpty && isCommandLineOption(potential_option) => {
-          logger.info(_ ++= "Examining " ++= potential_option)
+          logger.info(fast"Examining $potential_option")
 
           if (isTerminator(potential_option)) {
 
@@ -137,7 +132,7 @@ class GNUParserStrategy extends ParserStrategy {
             //Divide up the option into the name and value if it contains an equals sign.
             val (name, value, equals_found) = splitAtEquals(opt)
 
-            logger.info(_ ++= "Found long option (name: " ++= name ++= ", value: " ++= value ++= ")")
+            logger.info(fast"Found long option (name: $name, value: $value)")
 
             //Attempt to lookup the option and hopefully it exists.
             findCommandLineOptionByLongName(name) match {
@@ -182,7 +177,7 @@ class GNUParserStrategy extends ParserStrategy {
             //Recall that an option like "-abc" is actually equivalent to "-a -b -c" (assuming they're all flags)
             val potentially_multiple_options = stripLeadingHyphens(potential_option)
 
-            logger.info(_ ++= "Found short option(s): " ++= potentially_multiple_options)
+            logger.info(fast"Found short option(s): $potentially_multiple_options")
 
             //Check if the first character is an option and *NOT* a flag. If so, treat the rest as a value for that option.
             //Otherwise, pick it off, prepend to the arg stream a hyphen and the rest of the current arg and continue processing.
@@ -207,7 +202,7 @@ class GNUParserStrategy extends ParserStrategy {
                     //Found an option by that name. Excellent.
                     //Let's see if you're a flag or not. If you're not, then the remaining
                     //text is a value.
-                    logger.fine(_ ++= "Recognized option (name: " ++= command_line_option.name ++= ")")
+                    logger.fine(fast"Recognized option (name: ${command_line_option.name})")
 
                     if (!hasReachedMaximumArity(command_line_option, results)) {
 
@@ -266,7 +261,7 @@ class GNUParserStrategy extends ParserStrategy {
 
         args match {
           case arg #:: tail if !isCommandLineOption(arg) && findCommandLineOption(arg).isEmpty => {
-            logger.finer(_ ++= "found option argument: " ++= arg)
+            logger.finer(fast"found option argument: $arg")
 
             //Ensure we haven't exceeded the max number of arguments for this option.
             if (mapValue.isMaxNumberOfArgumentsUnbounded || valuesRemaining > 0) {
@@ -315,17 +310,17 @@ class GNUParserStrategy extends ParserStrategy {
     }
 
     def processSingleOptionArgument(map: CommandLineOptionMap, mapValue: CommandLineOptionMapTypedValue, currentValue: String, accumulatedValues: Any): SingleOptionArgumentProcessingResult = {
-      logger.info(_ ++= "processing value for " ++= mapValue.name ++= ": " ++= currentValue)
+      logger.info(fast"processing value for ${mapValue.name}: $currentValue")
       val result = mapValue(currentValue)
-      logger.fine(_ ++= "ran option parser for " ++= mapValue.name ++= ", result: " ++= result.toString)
-      logger.fine(_ ++= "processing accumulator for " ++= mapValue.name)
+      logger.fine(fast"ran option parser for ${mapValue.name}, result: ${result.toString}")
+      logger.fine(fast"processing accumulator for ${mapValue.name}")
       val accumulation = if (result.isDefined) mapValue.accumulator(result.get, accumulatedValues) else accumulatedValues
-      logger.fine(_ ++= "completed processing accumulator for " ++= mapValue.name)
+      logger.fine(fast"completed processing accumulator for ${mapValue.name}")
       (updatedCommandLineOptionMap(map, mapValue, accumulation), accumulation)
     }
 
     def processOptionArgumentsDone(mapValue: CommandLineOptionMapTypedValue, accumulatedValues: Any, results: CommandLineOptionResults): CommandLineOptionResults = {
-      logger.info(_ ++= "completed processing arguments for " ++= mapValue.name)
+      logger.info(fast"completed processing arguments for ${mapValue.name}")
 
       val accumulator_result = mapValue.accumulator.done(accumulatedValues)
       val result_option_list = results.getOrElse(mapValue.name, Some(List())).getOrElse(List())
@@ -333,19 +328,19 @@ class GNUParserStrategy extends ParserStrategy {
     }
 
     def unrecognizedOption(optionName: String): Unit =
-      logger.warning(_ ++= "unrecognized option: " ++= optionName)
+      logger.warning(fast"unrecognized option: $optionName")
 
     def invalidFormat(optionName: String, description: String): Unit =
-      logger.warning(_ ++= "invalid format for option. " ++= description)
+      logger.warning(fast"invalid format for option. $description")
 
     def missingMinimumNumberOfArguments(optionName: String, number_found: Int, minimum: Int): Unit =
-      logger.warning(_ ++= "missing minimum number of expected arguments for " ++= optionName ++= ": " ++= minimum.toString ++= ", found: " ++= number_found.toString)
+      logger.warning(fast"missing minimum number of expected arguments for $optionName: ${minimum.toString }, found: ${number_found.toString}")
 
     def exceededMaximumNumberOfArguments(optionName: String, maximum: Int): Unit =
-      logger.warning(_ ++= "exceeded maximum number of expected option arguments for " ++= optionName ++= ": " ++= maximum.toString)
+      logger.warning(fast"exceeded maximum number of expected option arguments for $optionName: ${maximum.toString}")
 
     def exceededMaximumArity(optionName: String, maximum: Int): Unit =
-      logger.warning(_ ++= "exceeded the maximum number of expected options for " ++= optionName ++= ": " ++= maximum.toString)
+      logger.warning(fast"exceeded the maximum number of expected options for $optionName: ${maximum.toString}")
 
     def updatedCommandLineOptionMap(map: CommandLineOptionMap, mapValue: CommandLineOptionMapTypedValue, accumulation: Any): CommandLineOptionMap =
       map.updated(mapValue.name, (mapValue, accumulation))

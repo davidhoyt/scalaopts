@@ -19,15 +19,25 @@
 
 package scalaopts
 
-import com.dongxiguo.zeroLog.formatters.{Formatter, SimpleFormatter}
-import com.dongxiguo.zeroLog.{Logger, Filter}
-import util.logging.ConsoleLogger
+import com.dongxiguo.zeroLog.formatters.SimpleFormatter
+import com.dongxiguo.zeroLog.Filter
+import com.dongxiguo.zeroLog.appenders.ConsoleAppender
+import strategy.GNUParserStrategy
 
 /**
  * Commands describe available directives that will be used when actually parsing command line
  * arguments down the line.
  */
 object ZeroLoggerFactory {
-  final def newLogger(singleton: Singleton): (Logger, Formatter) =
-    (Filter.Finest, new SimpleFormatter(singleton) with ConsoleLogger)
+  def isAssignableFrom(runtimeClass: Class[_])(cls: Class[_]): Boolean = runtimeClass.isAssignableFrom(cls)
+
+  final def newLogger[T](implicit desired:Manifest[T]) = {
+    val cls = desired.runtimeClass
+    val is = isAssignableFrom(cls)_
+
+    cls match {
+      case _ if is(classOf[GNUParserStrategy]) => (Filter.Finest, SimpleFormatter, ConsoleAppender)
+      case _ => (Filter.Finest, SimpleFormatter, ConsoleAppender)
+    }
+  }
 }
