@@ -89,7 +89,7 @@ class GNUParserStrategy extends ParserStrategy {
   }
 
   /**
-   * @see [[scalaopts.ParserStrategy.processOptions()]]
+   * @see [[scalaopts.ParserStrategy]]
    */
   def processOptions(application_arguments: Stream[String], command_line_options: CommandLineOptionMap): CommandLineOptionResults = {
     type OptionArgumentsProcessingResult = (Stream[String], CommandLineOptionMap, CommandLineOptionResults)

@@ -23,7 +23,7 @@ import scalaopts.common.Default
 import scalaopts.strategy.GNUParserStrategy
 
 /** Provides classes for command line argument parsing.
-  * Also provides implicits for [[java.lang.String]] processing.
+  * Also provides implicits for String processing.
   *
   * ==Overview==
   * Begin by defining command_line_options. For example:

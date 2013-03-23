@@ -22,7 +22,7 @@ package scalaopts.common
 import language.implicitConversions
 
 /**
- * Extensions for [[java.lang.String]] classes.
+ * Extensions for String and Option[String].
  */
 object StringUtil {
   val empty = ""
@@ -83,27 +83,27 @@ object StringUtil {
   }
 
   @inline implicit class OptionStringExtensions(s: Option[String]) {
-    /** @see [[scalaopts.common.StringUtil.isNoneOrEmpty()]] */
+    /** @see [[scalaopts.common.StringUtil]] */
     def isNoneOrEmpty: Boolean = StringUtil.isNoneOrEmpty(s)
 
-    /** @see [[scalaopts.common.StringUtil.isNonEmpty()]] */
+    /** @see [[scalaopts.common.StringUtil]] */
     def isNonEmpty: Boolean = StringUtil.isNonEmpty(s)
 
-    /** @see [[scalaopts.common.StringUtil.checked()]] */
+    /** @see [[scalaopts.common.StringUtil]] */
     def checked: String = StringUtil.checked(s)
   }
 
   @inline implicit class StringExtensions(s: String) {
-    /** @see [[scalaopts.common.StringUtil.isNullOrEmpty()]] */
+    /** @see [[scalaopts.common.StringUtil]] */
     def isNullOrEmpty: Boolean = StringUtil.isNullOrEmpty(s)
 
-    /** @see [[scalaopts.common.StringUtil.isNonEmpty()]] */
+    /** @see [[scalaopts.common.StringUtil]] */
     def isNonEmpty: Boolean = StringUtil.isNonEmpty(s)
 
-    /** @see [[scalaopts.common.StringUtil.checked()]] */
+    /** @see [[scalaopts.common.StringUtil]] */
     def checked: String = StringUtil.checked(s)
 
-    /** @see [[scalaopts.common.StringUtil.toValidIdentifier()]] */
+    /** @see [[scalaopts.common.StringUtil]] */
     def toValidIdentifier: String = StringUtil.toValidIdentifier(s)
   }
 }

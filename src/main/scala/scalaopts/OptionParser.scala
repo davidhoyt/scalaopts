@@ -32,11 +32,11 @@ sealed trait OptionParser[+A] {
 }
 
 /**
- * Defines a custom parser that transforms a [[java.lang.String]] into a value.
+ * Defines a custom parser that transforms a String into a value.
  *
  * @param optionDefaultValue The default value to use if the argument is not defined.
  * @param requiresAssociatedValue True if, when processed, the next value parsed should be applied to this instance.
- * @param transform Function that transforms the [[java.lang.String]] into a value.
+ * @param transform Function that transforms the String into a value.
  * @tparam A Result type of applying the transform.
  */
 class CustomOptionParser[+A](val optionDefaultValue: Option[A] = None, val useDefaultValue: Boolean = true, val requiresAssociatedValue: Boolean = true, val transform: FnTransform[A]) extends OptionParser[A] {

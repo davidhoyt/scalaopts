@@ -23,7 +23,7 @@ import _root_.java.io.File
 import common.StringUtil
 
 /**
- * Defines common transforms from a [[java.lang.String]] to a value.
+ * Defines common transforms from a String to a value.
  */
 object OptionParserStringTransforms {
   /**
