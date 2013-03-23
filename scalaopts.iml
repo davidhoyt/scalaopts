@@ -28,13 +28,6 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="Maven: org.scala-lang:scala-library:2.10.1" level="project" />
-    <orderEntry type="library" name="Maven: com.dongxiguo:zero-log_2.10:0.3.3" level="project" />
-    <orderEntry type="library" name="Maven: com.dongxiguo.zero-log:context_2.10:0.3.3" level="project" />
-    <orderEntry type="library" name="Maven: org.scala-lang:scala-reflect:2.10.0-RC5" level="project" />
-    <orderEntry type="library" name="Maven: com.dongxiguo:fastring_2.10:0.2.1" level="project" />
-    <orderEntry type="library" scope="TEST" name="Maven: org.scalatest:scalatest_2.10:1.9.1" level="project" />
-    <orderEntry type="library" scope="TEST" name="Maven: org.scala-lang:scala-actors:2.10.0" level="project" />
-    <orderEntry type="library" name="Maven: org.scala-lang:scala-library:2.10.1" level="project" />
     <orderEntry type="library" name="Maven: net.java.dev.jna:jna:3.5.1" level="project" />
     <orderEntry type="library" name="Maven: com.dongxiguo:zero-log_2.10:0.3.3" level="project" />
     <orderEntry type="library" name="Maven: com.dongxiguo.zero-log:context_2.10:0.3.3" level="project" />
