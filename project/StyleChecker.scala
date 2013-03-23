@@ -19,8 +19,8 @@ object StyleChecker {
       case EndFile(file) =>
         if (fileCount == 0) println(" OK!")
       case StyleError(file, clazz, key, level, args, line, column, customMessage) =>
-        report(line, column, messageHelper.text(level.name),
-            findMessage(messageHelper, clazz, key, args, customMessage))
+        report(line, column, messageHelper.text(level.name), customMessage.getOrElse(
+            messageHelper.message(this.getClass().getClassLoader(), key, args)))
       case StyleException(file, clazz, message, stacktrace, line, column) =>
         report(line, column, "error", message)
     }
@@ -51,7 +51,8 @@ object StyleChecker {
 
     val messages = new ScalastyleChecker().checkFiles(
       ScalastyleConfiguration.readFromXml(configFile),
-      Directory.getFiles(sources : _*))
+      Directory.getFiles(None, sources)
+    )
 
     val output = new ByteArrayOutputStream()
     val outputResult = Console.withOut(new PrintStream(output)) {
