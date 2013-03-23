@@ -85,7 +85,7 @@ class CommandLineOptionParseErrorMap[A >: CommandLineOptionMapTypedValue, B](val
   def iterator = map.iterator
   def get(key: A) = map.get(key)
   def -(key: A) = new CommandLineOptionParseErrorMap[A, B](map.-(key))
-  def +[B1 >: B](kv: (A, B1)) = new CommandLineOptionParseErrorMap[A, B1](map.+(kv))
+  def +[B1 >: B](kv: (A, B1)) = new CommandLineOptionParseErrorMap[A, B1](map + kv)
 
   def apply(name: String): Option[B] = {
     val entry = map.find(_._1.asInstanceOf[CommandLineOptionMapTypedValue].name.equalsIgnoreCase(name))
