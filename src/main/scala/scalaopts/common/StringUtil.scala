@@ -25,8 +25,6 @@ import language.implicitConversions
  * Extensions for [[java.lang.String]] classes.
  */
 object StringUtil {
-  implicit final def extend(s: String): StringExtensions = StringExtensions(s)
-
   val empty = ""
   val newLine = querySystemNewLine
 
@@ -34,13 +32,25 @@ object StringUtil {
   @inline def querySystemNewLine = System.getProperty("line.separator")
 
   /** Returns if the string is either null or empty. */
-  @inline def isNullOrEmpty(s: String): Boolean = (s == null /* ignore style check */ || s.isEmpty || empty == s)
+  @inline def isNullOrEmpty(s: Option[String]): Boolean = isNoneOrEmpty(s)
+
+  /** Returns if the string is either null or empty. */
+  @inline def isNullOrEmpty(s: String): Boolean = (s == null /* ignore style check */ || s.isEmpty || (empty eq s) || empty == s)
+
+  /** Returns if the string is either null, None, or empty. */
+  @inline def isNoneOrEmpty(s: Option[String]): Boolean = (s == null /* ignore style check */ || s.isEmpty || (empty eq s.get) || empty == s.get)
 
   /** Returns if the string is not null and not empty. */
   @inline def isNonEmpty(s: String): Boolean = !isNullOrEmpty(s)
 
+  /** Returns if the string is not null, not None, and not empty. */
+  @inline def isNonEmpty(s: Option[String]): Boolean = !isNoneOrEmpty(s)
+
   /** Returns the string if it is not null and not empty, otherwise the empty string. */
   @inline def checked(s: String): String = if (isNullOrEmpty(s)) empty else s
+
+  /** Returns the string if it is not null, not None, and not empty, otherwise the empty string. */
+  @inline def checked(s: Option[String]): String = if (isNoneOrEmpty(s)) empty else s.get
 
   /** Returns a string that represents a class' package name and it's simple name appended with a period (.). */
   def toKeyPrefix(c: Class[_]): String = {
@@ -72,7 +82,18 @@ object StringUtil {
     }
   }
 
-  @inline case class StringExtensions(s: String) {
+  @inline implicit class OptionStringExtensions(s: Option[String]) {
+    /** @see [[scalaopts.common.StringUtil.isNoneOrEmpty()]] */
+    def isNoneOrEmpty: Boolean = StringUtil.isNoneOrEmpty(s)
+
+    /** @see [[scalaopts.common.StringUtil.isNonEmpty()]] */
+    def isNonEmpty: Boolean = StringUtil.isNonEmpty(s)
+
+    /** @see [[scalaopts.common.StringUtil.checked()]] */
+    def checked: String = StringUtil.checked(s)
+  }
+
+  @inline implicit class StringExtensions(s: String) {
     /** @see [[scalaopts.common.StringUtil.isNullOrEmpty()]] */
     def isNullOrEmpty: Boolean = StringUtil.isNullOrEmpty(s)
 
