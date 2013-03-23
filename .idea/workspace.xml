@@ -1,22 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="194416cc-139c-4245-b94d-30497d73f6c4" name="Default" comment="Retrieve terminal dimensions on Windows.">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__junit_junit_4_11.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_scala_lang_scala_reflect_2_10_0_RC5.xml" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/Maven__junit_junit_4_10.xml" afterPath="" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_hamcrest_hamcrest_core_1_1.xml" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_hamcrest_hamcrest_core_1_3.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/project/StyleChecker.scala" afterPath="$PROJECT_DIR$/project/StyleChecker.scala" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build.sbt" afterPath="$PROJECT_DIR$/build.sbt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/project/buildSettings.sbt" afterPath="$PROJECT_DIR$/project/buildSettings.sbt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/compiler.xml" afterPath="$PROJECT_DIR$/.idea/compiler.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/pom.xml" afterPath="$PROJECT_DIR$/pom.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/scalaopts.iml" afterPath="$PROJECT_DIR$/scalaopts.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+    <list default="true" id="194416cc-139c-4245-b94d-30497d73f6c4" name="Default" comment="Removing workspace.xml.">
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gitignore" afterPath="$PROJECT_DIR$/.gitignore" />
     </list>
     <ignored path="scalaopts.iws" />
     <ignored path=".idea/workspace.xml" />
-    <file path="/Dummy.txt" changelist="194416cc-139c-4245-b94d-30497d73f6c4" time="1364009989517" ignored="false" />
+    <file path="/Dummy.txt" changelist="194416cc-139c-4245-b94d-30497d73f6c4" time="1364010760379" ignored="false" />
     <file path="/pom.xml" changelist="194416cc-139c-4245-b94d-30497d73f6c4" time="1363930511553" ignored="false" />
     <file path="/package.scala" changelist="194416cc-139c-4245-b94d-30497d73f6c4" time="1363927365452" ignored="false" />
     <file path="/zero-log.config.scala" changelist="194416cc-139c-4245-b94d-30497d73f6c4" time="1363930280435" ignored="false" />
@@ -28,6 +19,7 @@
     <file path="/build.sbt" changelist="194416cc-139c-4245-b94d-30497d73f6c4" time="1364008618662" ignored="false" />
     <file path="/a.dummy" changelist="194416cc-139c-4245-b94d-30497d73f6c4" time="1364008831718" ignored="false" />
     <file path="/scalastyle.xml" changelist="194416cc-139c-4245-b94d-30497d73f6c4" time="1364009504166" ignored="false" />
+    <file path="/.gitignore" changelist="194416cc-139c-4245-b94d-30497d73f6c4" time="1364010784866" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -91,10 +83,19 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="plugins.sbt" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="plugins.sbt" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/project/plugins.sbt">
           <provider selected="true" editor-type-id="text-editor">
             <state line="0" column="32" selection-start="32" selection-end="32" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name=".gitignore" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/.gitignore">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="16" column="0" selection-start="174" selection-end="174" vertical-scroll-proportion="0.36585367">
               <folding />
             </state>
           </provider>
@@ -119,7 +120,6 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/src/main/scala/scalaopts/Parser.scala" />
         <option value="$PROJECT_DIR$/src/test/scala/scalaopts/ParserTest.scala" />
         <option value="$PROJECT_DIR$/src/main/scala/scalaopts/Accumulators.scala" />
         <option value="$PROJECT_DIR$/src/main/scala/scalaopts/OptionArgumentAccumulator.scala" />
@@ -135,6 +135,7 @@
         <option value="$PROJECT_DIR$/project/config/scalastyle.xml" />
         <option value="$PROJECT_DIR$/project/plugins.sbt" />
         <option value="$PROJECT_DIR$/project/buildSettings.sbt" />
+        <option value="$PROJECT_DIR$/.gitignore" />
       </list>
     </option>
   </component>
@@ -349,24 +350,6 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value=".idea" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="scalaopts" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="scalaopts" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value=".idea" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="libraries" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -860,7 +843,11 @@
       <created>1354582425126</created>
       <updated>1354582425126</updated>
     </task>
-    <option name="localTasksCounter" value="29" />
+    <task id="LOCAL-00029" summary="Fixed SBT build with Scala 2.10.">
+      <created>1364010735687</created>
+      <updated>1364010735687</updated>
+    </task>
+    <option name="localTasksCounter" value="30" />
     <servers />
   </component>
   <component name="TodoView" selected-index="0">
@@ -950,7 +937,7 @@
     <option name="MAXIMUM_HISTORY_ROWS" value="1000" />
     <option name="FORCE_NON_EMPTY_COMMENT" value="false" />
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="false" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added simple note." />
+    <option name="LAST_COMMIT_MESSAGE" value="Fixed SBT build with Scala 2.10." />
     <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="false" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_FILES_UP_TO_DATE_BEFORE_COMMIT" value="false" />
@@ -963,7 +950,6 @@
     <option name="UPDATE_GROUP_BY_CHANGELIST" value="false" />
     <option name="SHOW_FILE_HISTORY_AS_TREE" value="false" />
     <option name="FILE_HISTORY_SPLITTER_PROPORTION" value="0.6" />
-    <MESSAGE value="Basic project setup for IntelliJ, maven, and SBT." />
     <MESSAGE value="Adding IntelliJ file." />
     <MESSAGE value="Added Eclipse support and fixed up the pom a bit." />
     <MESSAGE value="Minor fixes and refactoring." />
@@ -988,6 +974,7 @@
     <MESSAGE value="Add option parser based on java.io.File." />
     <MESSAGE value="Minor setup and reminder to later use macros for creating objects that represent the options." />
     <MESSAGE value="Added simple note." />
+    <MESSAGE value="Fixed SBT build with Scala 2.10." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -1001,13 +988,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/LICENSE.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/project/ProjectBuild.scala">
       <provider selected="true" editor-type-id="text-editor">
         <state line="20" column="7" selection-start="658" selection-end="658" vertical-scroll-proportion="0.0">
@@ -1111,6 +1091,13 @@
     <entry file="file://$PROJECT_DIR$/project/plugins.sbt">
       <provider selected="true" editor-type-id="text-editor">
         <state line="0" column="32" selection-start="32" selection-end="32" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.gitignore">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="16" column="0" selection-start="174" selection-end="174" vertical-scroll-proportion="0.36585367">
           <folding />
         </state>
       </provider>
