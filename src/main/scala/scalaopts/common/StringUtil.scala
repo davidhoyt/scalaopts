@@ -19,7 +19,7 @@
 
 package scalaopts.common
 
-import annotation.tailrec
+import language.implicitConversions
 
 /**
  * Extensions for [[java.lang.String]] classes.

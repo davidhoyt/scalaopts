@@ -17,6 +17,8 @@
   limitations under the License.
 */
 
+import language.implicitConversions
+
 import scalaopts.common.Default
 import scalaopts.strategy.GNUParserStrategy
 
