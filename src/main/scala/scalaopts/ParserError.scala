@@ -34,4 +34,5 @@ object ParserError extends Enum {
   val Unknown             = EnumVal( 0, "Unknown",              KEY_PREFIX + "Unknown",             "An unknown error has occurred")
   val MissingRequired     = EnumVal( 1, "Missing Required",     KEY_PREFIX + "MissingRequired",     "Required options are missing")
   val MissingDependencies = EnumVal( 2, "Missing Dependencies", KEY_PREFIX + "MissingDependencies", "One or more required dependencies are missing")
+  val InvalidOptions      = EnumVal( 3, "Invalid Options",      KEY_PREFIX + "InvalidOptions",      "One or more invalid option was specified")
 }

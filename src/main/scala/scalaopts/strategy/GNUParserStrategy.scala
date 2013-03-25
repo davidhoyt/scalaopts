@@ -139,7 +139,7 @@ class GNUParserStrategy extends ParserStrategy {
               //Unable to find the option.
               case None => {
                 unrecognizedOption(name)
-                results
+                results.copy(errors = results.errors.updated(ParserError.InvalidOptions, ParserError.InvalidOptions.message))
               }
               //Found the option.
               case Some((command_line_option, accumulated_values)) => {
@@ -196,7 +196,7 @@ class GNUParserStrategy extends ParserStrategy {
                   case None => {
                     //I don't know who you're talking about so error out of here.
                     unrecognizedOption(name)
-                    results
+                    results.copy(errors = results.errors.updated(ParserError.InvalidOptions, ParserError.InvalidOptions.message))
                   }
                   case Some((command_line_option, accumulated_values)) => {
                     //Found an option by that name. Excellent.
@@ -244,7 +244,7 @@ class GNUParserStrategy extends ParserStrategy {
         }
         case potential_option #:: tail => {
           unrecognizedOption(potential_option)
-          processOptions0(tail, command_line_options, results)
+          processOptions0(tail, command_line_options, results.copy(errors = results.errors.updated(ParserError.InvalidOptions, ParserError.InvalidOptions.message)))
         }
         case _ => {
           results
@@ -324,8 +324,9 @@ class GNUParserStrategy extends ParserStrategy {
       logger.info(fast"completed processing arguments for ${mapValue.name}")
 
       val accumulator_result = mapValue.accumulator.done(accumulatedValues)
-      val result_option_list = results.getOrElse(mapValue.name, Some(List())).getOrElse(List())
-      results.updated(mapValue.name, Some(accumulator_result :: result_option_list))
+      val result_option_list = results.results.getOrElse(mapValue.name, Some(List())).getOrElse(List())
+
+      results.copy(results = results.results.updated(mapValue.name, Some(accumulator_result :: result_option_list)))
     }
 
     def unrecognizedOption(optionName: String): Unit =
@@ -348,7 +349,7 @@ class GNUParserStrategy extends ParserStrategy {
 
     def hasReachedMaximumArity(mapValue: CommandLineOptionMapTypedValue, results: CommandLineOptionResults): Boolean = {
       if (!mapValue.isArityUnbounded) {
-        results.get(mapValue.name) match {
+        results.results.get(mapValue.name) match {
           case Some(Some(l)) => l.length >= mapValue.arity
           case _ => false
         }
@@ -357,8 +358,8 @@ class GNUParserStrategy extends ParserStrategy {
       }
     }
 
-    val end_results = processOptions0(application_arguments, command_line_options, Map())
-    val reversed_results = end_results.mapValues(opts => Some(opts.getOrElse(List.empty).reverse))
-    reversed_results
+    val end_results = processOptions0(application_arguments, command_line_options, CommandLineOptionResults(Map(), Map()))
+    val reversed_results = end_results.results.mapValues(opts => Some(opts.getOrElse(List.empty).reverse))
+    end_results.copy(results = reversed_results)
   }
 }

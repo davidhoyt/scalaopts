@@ -49,7 +49,7 @@ package object scalaopts {
   type CommandLineOptionResultKey        = CommandLineOptionMapKey
   type CommandLineOptionResultTypedValue = CommandLineOptionMapTypedValue
   type CommandLineOptionResultValue      = Option[List[_]]
-  type CommandLineOptionResults          = Map[CommandLineOptionResultKey, CommandLineOptionResultValue]
+  type CommandLineOptionResultsMap       = Map[CommandLineOptionResultKey, CommandLineOptionResultValue]
 
   type CommandLineOptionParseResultKey   = String
   type CommandLineOptionParseResultValue = List[Any]

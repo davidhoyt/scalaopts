@@ -19,6 +19,7 @@
 
 package scalaopts
 
+import _root_.java.io.{PrintStream, OutputStream}
 import scala.Iterable
 
 class Parser(val configuration: ParserConfiguration, val options: CommandLineOptionMap) {
@@ -30,6 +31,10 @@ class Parser(val configuration: ParserConfiguration, val options: CommandLineOpt
   //        before the code that will use it. Please see:
   //        http://www.warski.org/blog/2012/12/starting-with-scala-macros-a-short-tutorial/
 
+  def showUsage(programName: String = System.getProperty("sun.java.command"), out: PrintStream = System.out): Unit = {
+    out.println("USAGE: " + programName)
+  }
+
   def parse(values: String*): ParseResults = parseArguments(values)
 
   def parseArguments(values: Seq[String]): ParseResults = {
@@ -37,7 +42,8 @@ class Parser(val configuration: ParserConfiguration, val options: CommandLineOpt
       throw new IllegalArgumentException("The provided options do not meet the parser strategy's requirements.")
     }
 
-    val results = configuration.strategy.processOptions(values.toStream, options)
+    val processing = configuration.strategy.processOptions(values.toStream, options)
+    val results = processing.results
 
     //Takes something like:
     //  size -> Some(List(List(1, 2, 3)))
@@ -47,7 +53,9 @@ class Parser(val configuration: ParserConfiguration, val options: CommandLineOpt
 
     //Post-process results (validate required options, etc.)
 
-    val errors: CommandLineOptionParseErrors = Map()
+    val errors: CommandLineOptionParseErrors = processing.errors
+
+    val any_standard_parsing_errors = !errors.isEmpty
 
     //Are there any required options that are not present?
     val all_missing_required =
@@ -73,7 +81,7 @@ class Parser(val configuration: ParserConfiguration, val options: CommandLineOpt
     val errors_2 = if (any_missing_dependencies) errors_1.updated(ParserError.MissingDependencies, all_missing.toMap) else errors_1
 
     //Determine if parsing was overall successful or not.
-    val success = !any_missing_required && !any_missing_dependencies
+    val success = !any_standard_parsing_errors && !any_missing_required && !any_missing_dependencies
 
     //Send back the results
     new ParseResults(success, processed_results, errors_2, options)
@@ -130,6 +138,7 @@ class ParseResults(val success: Boolean, val optionResults: CommandLineOptionPar
 
   def anyMissingRequired:     Boolean = errors.contains(ParserError.MissingRequired)
   def anyMissingDependencies: Boolean = errors.contains(ParserError.MissingDependencies)
+  def anyInvalidOptions:      Boolean = errors.contains(ParserError.InvalidOptions)
 
   def missingRequired: Iterable[CommandLineOptionMapTypedValue] =
     if (anyMissingRequired) {

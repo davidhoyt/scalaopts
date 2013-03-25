@@ -136,6 +136,9 @@ class ParserTest extends FunSuite with ShouldMatchers with SeveredStackTraces {
       CommandLineFlag named "all" shortName "a" longName "all",
       CommandLineFlag named "longListing" shortName "l" longName "long"
     )
+
+    specification.showUsage()
+
     val result_01 = specification.parse("-la")
     assert(result_01.success)
     result_01.first[Seq[Boolean]]("longListing") should be (Some(Seq(true)))
@@ -145,6 +148,11 @@ class ParserTest extends FunSuite with ShouldMatchers with SeveredStackTraces {
     assert(result_02.success)
     result_02.single[Boolean]("all") should be (Some(false))
     result_02.single[Boolean]("longListing") should be (Some(true))
+
+    //Invalid option provided
+    val result_03 = specification.parse("-li")
+    assert(!result_03.success)
+    assert(result_03.anyInvalidOptions)
   }
 
   test("translate") {
