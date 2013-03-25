@@ -220,7 +220,8 @@ class GNUParserStrategy extends ParserStrategy {
                         //-ooo: Is that the same flag 3 times? Or is it -o with a value of "oo"?
                         //-abc where a is a flag and b is not: Should c be a value for b then?
                         if (remaining.isNonEmpty) {
-                          processOptions0((SHORT_OPTION_PREFIX + remaining) #:: tail, revised_option_map, results)
+                          val (revised_tail, revised_option_map_2, revised_results) = processOptionArguments(revised_option_map, command_line_option, 0, command_line_option.maxNumberOfArguments, revised_accumulation, results, tail)
+                          processOptions0((SHORT_OPTION_PREFIX + remaining) #:: revised_tail, revised_option_map_2, revised_results)
                         } else {
                           val (revised_tail, revised_option_map_2, revised_results) = processOptionArguments(revised_option_map, command_line_option, 0, command_line_option.maxNumberOfArguments, revised_accumulation, results, tail)
                           processOptions0(revised_tail, revised_option_map_2, revised_results)

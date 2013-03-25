@@ -112,13 +112,21 @@ class ParseResults(val success: Boolean, val optionResults: CommandLineOptionPar
 
   def first[T](name: String): Option[T] = find(name) match {
     case Some(value) if !value.isEmpty => Some(value.head)
-    case Some(value) => options.get(name) match {
-      case None => None
-      case Some(original) => original._1.defaultValue.asInstanceOf[Option[T]]
-    }
+    case Some(value) => defaultFor[T](name)
     case None => None
     case _ => None
   }
+
+  private def defaultFor[T](name: String): Option[T] = options.get(name) match {
+    case None => None
+    case Some(original) => original._1.defaultValue.asInstanceOf[Option[T]]
+  }
+
+  def single[T](name: String): Option[T] = first[Seq[T]](name)
+    .map(_.head)
+    .orElse {
+      defaultFor[T](name)
+    }
 
   def anyMissingRequired:     Boolean = errors.contains(ParserError.MissingRequired)
   def anyMissingDependencies: Boolean = errors.contains(ParserError.MissingDependencies)
@@ -150,4 +158,6 @@ class ParseResults(val success: Boolean, val optionResults: CommandLineOptionPar
       ;
     }
   }
+
+  override def toString: String = optionResults.mkString("\n")
 }

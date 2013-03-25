@@ -21,14 +21,15 @@ package scalaopts
 
 import common.StringUtil._
 import org.scalatest.junit.JUnitRunner
-import org.scalatest.FunSuite
+import org.scalatest.{SeveredStackTraces, FunSuite}
 import org.scalatest.matchers.ShouldMatchers._
 import org.junit.runner.RunWith
+import org.scalatest.matchers.ShouldMatchers
 
 /**
   */
 @RunWith(classOf[JUnitRunner])
-class ParserTest extends FunSuite {
+class ParserTest extends FunSuite with ShouldMatchers with SeveredStackTraces {
 
   test("StringUtil.toValidIdentifier") {
     assert("".toValidIdentifier == "_")
@@ -128,6 +129,22 @@ class ParserTest extends FunSuite {
       )
       .parse()
     assert(g_1.success)
+  }
+
+  test("simple flags") {
+    val specification = CommandLineOptions(
+      CommandLineFlag named "all" shortName "a" longName "all",
+      CommandLineFlag named "longListing" shortName "l" longName "long"
+    )
+    val result_01 = specification.parse("-la")
+    assert(result_01.success)
+    result_01.first[Seq[Boolean]]("longListing") should be (Some(Seq(true)))
+    result_01.single[Boolean]("longListing") should be (Some(true))
+
+    val result_02 = specification.parse("-l")
+    assert(result_02.success)
+    result_02.single[Boolean]("all") should be (Some(false))
+    result_02.single[Boolean]("longListing") should be (Some(true))
   }
 
   test("translate") {
