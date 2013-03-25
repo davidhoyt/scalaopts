@@ -133,13 +133,13 @@ class ParserTest extends FunSuite with ShouldMatchers with SeveredStackTraces {
 
   test("simple flags") {
     val specification = CommandLineOptions(
-      CommandLineFlag named "all" shortName "a" longName "all",
-      CommandLineFlag named "longListing" shortName "l" longName "long"
+      CommandLineFlag named "all" shortName "a" shortName "e" longName "all" describedAs "Show all files",
+      CommandLineFlag named "longListing" shortName "l" longName "long" describedAs "Provides a long listing format"
     )
 
     specification.showUsage()
 
-    val result_01 = specification.parse("-la")
+    val result_01 = specification.parse("-l")
     assert(result_01.success)
     result_01.first[Seq[Boolean]]("longListing") should be (Some(Seq(true)))
     result_01.single[Boolean]("longListing") should be (Some(true))

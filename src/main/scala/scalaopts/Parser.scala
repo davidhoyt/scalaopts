@@ -19,7 +19,7 @@
 
 package scalaopts
 
-import _root_.java.io.{PrintStream, OutputStream}
+import _root_.java.io.PrintStream
 import scala.Iterable
 
 class Parser(val configuration: ParserConfiguration, val options: CommandLineOptionMap) {
@@ -32,7 +32,19 @@ class Parser(val configuration: ParserConfiguration, val options: CommandLineOpt
   //        http://www.warski.org/blog/2012/12/starting-with-scala-macros-a-short-tutorial/
 
   def showUsage(programName: String = System.getProperty("sun.java.command"), out: PrintStream = System.out): Unit = {
-    out.println("USAGE: " + programName)
+    out.println(s"USAGE: ${programName}")
+
+    options.foreach(_ match {
+      case(key, (opt, _)) => {
+        val longNames = opt.longNames.sorted.mkString("--", ", --", "")
+        val shortNames = opt.shortNames.sorted.mkString("-", ", -", "")
+
+        val output = s"""${longNames} [${shortNames}] ${opt.description}""".stripMargin
+
+        out.print(output)
+      }
+    })
+
   }
 
   def parse(values: String*): ParseResults = parseArguments(values)
