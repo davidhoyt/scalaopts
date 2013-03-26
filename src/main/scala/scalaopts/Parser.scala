@@ -41,7 +41,7 @@ class Parser(val configuration: ParserConfiguration, val options: CommandLineOpt
 
         val output = s"""${longNames} [${shortNames}] ${opt.description}""".stripMargin
 
-        out.print(output)
+        out.println(output)
       }
     })
 
